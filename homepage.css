@@ -19,7 +19,7 @@ body {
 
 /* Create two unequal columns that floats next to each other */
 /* Left column */
-.leftcolumn {   
+.leftcolumn {
     float: left;
     width: 75%;
 }
@@ -62,7 +62,7 @@ body {
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 800px) {
-    .leftcolumn, .rightcolumn {   
+    .leftcolumn, .rightcolumn {
         width: 100%;
         padding: 0;
     }
@@ -84,7 +84,7 @@ body {
 }
 
 .bg {
-    background: url('sunset.jpg') no-repeat center center;
+    background: url('boys.jpg') no-repeat center center;
     position: fixed;
     width: 100%;
     height: 350px;
