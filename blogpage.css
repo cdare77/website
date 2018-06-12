@@ -60,6 +60,9 @@ body {
 .post:hover {
   background-position: 100% 100%;
   animation: up-bump 0.4s ease;
+  -webkit-box-shadow: 0 16px 12px -12px black;
+  -moz-box-shadow: 0 16px 12px -12px black;
+  box-shadow: 0 16px 12px -12px black;
 }
 .post:hover h2 {
   color: white;
