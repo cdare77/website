@@ -62,7 +62,7 @@ body {
   animation: up-bump 0.4s ease;
 }
 .post:hover h2 {
-  color: #48ad26;
+  color: white;
 }
 .post:hover h2 span {
   color: white;
