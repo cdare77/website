@@ -45,6 +45,16 @@ body {
      margin-top: 20px;
 }
 
+/* Add effect when mouseover */
+.post:hover p {
+    transform: scaleY(0.85714);
+}
+
+.post:hover {
+    transform: scaleY(1.166666);
+    transform-origin: bottom;
+}
+
 /* Clear floats after the columns */
 .row:after {
     content: "";
