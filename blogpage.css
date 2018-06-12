@@ -76,6 +76,9 @@ body {
 .post:hover h5 {
   color: #999;
 }
+.post:hover p {
+  color: #999;
+}
 
 /* Clear floats after the columns */
 .row:after {
