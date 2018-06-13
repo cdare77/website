@@ -4,12 +4,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Bootstrap 4.0 -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link href="homepage.css" rel="stylesheet" type="text/css">
+  <link href="mymusicpage.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+
+
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
 
 <!-- Navigation bar -->
-
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Chris Dare</a>
@@ -19,8 +20,8 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="homepage.html">Home</a>
       </li>
       <!-- Blog Dropdown -->
       <li class="nav-item">
@@ -36,22 +37,29 @@
           <a class="dropdown-item" href="#">Code2</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="mymusicpage.html">My Music</a>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">My Music<span class="sr-only">(current)</span></a>
       </li>
     </ul>
   </div>
 </nav>
 
-<!-- webpage header -->
-
 <div class="bg"></div>
 <div class="jumbotron vertical-center">
-  <h2>Home</h2>
-  <p> Generic info you probably couldn't care less about</p>
+  <h2>My (Incredible Taste in) Music</h2>
+  <p> No I'm serious </p>
 </div>
 
 <div class="row">
+  <!-- Left column elements -->
+  <div class="leftcolumn">
+    <h4 id="list-item-1">Classic Rock</h4>
+    <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="450" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/classicrock-daydrink/pl.u-EdAVVGduqEv31J?app=music" width="660"></iframe>
+    <h4 id="list-item-2">Country</h4>
+    <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="450" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/country-daydrink/pl.u-zPyLLlLu8ypj5B?app=music" width="660"></iframe>
+    <h4 id="list-item-3">Hip-Hop/Rap</h4>
+    <iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="450" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/playlist/cd-bumps/pl.u-qxyllNxTdAR47r?app=music" width="660"></iframe>
+  </div>
   <!-- Right column elements -->
   <div class="rightcolumn">
     <div class="card">
