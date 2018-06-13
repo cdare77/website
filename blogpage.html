@@ -10,29 +10,7 @@
   <link href="https://fonts.googleapis.com/css?family=Crete+Round|Open+Sans|Quattrocento|Roboto|Roboto+Condensed" rel="stylesheet">
   <!-- jquery -->
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
-  <script>
-    // DOM ready
-    $(function() {
-      var originalBGfooter = $(".footer").css("background-color"),
-          x, y, xy, bgWebKit, bgMoz,
-          lightColor = "rgba(255,255,255,0.75)",
-          gradientSize = 125;
-      
-      $(".footer").mousemove(function(e) {
-        x  = e.pageX - this.offsetLeft;
-        y  = e.pageY - this.offsetTop;
-        xy = x + " " + y;
-        bgWebKit = "-webkit-gradient(radial, " + xy + ", 0, " + xy + ", " + gradientSize + ", from(" + lightColor + "), to(rgba(255,255,255,0.0))), " + originalBGfooter;
-        bgMoz    = "-moz-radial-gradient(" + x + "px " + y + "px 45deg, circle, " + lightColor + " 0%, " + originalBGfooter + " " + gradientSize + "px)";
-
-				$(this)
-          .css({ background: bgWebKit })
-          .css({ background: bgMoz });
-			}).mouseleave(function() {
-        $(this).css({ background: originalBGfooter });
-      });
-    });
-  </script>
+  <script src="footerscript.js"></script>
 </head>
 <body>
 
