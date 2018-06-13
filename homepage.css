@@ -32,14 +32,6 @@ body {
     background: #f1f1f1;
 }
 
-/* Header/Blog Title */
-.header {
-    padding: 30px;
-    font-size: 40px;
-    text-align: center;
-    background: white;
-}
-
 /* Create two unequal columns that floats next to each other */
 /* Left column */
 .leftcolumn {
@@ -75,13 +67,7 @@ body {
     clear: both;
 }
 
-/* Footer */
-.footer {
-    padding: 20px;
-    text-align: center;
-    background: #333;
-    margin-top: 20px;
-}
+
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 800px) {
@@ -95,16 +81,24 @@ body {
     text-align: center;
 }
 
-@media (min-width: 576px) {
-    .jumbotron {
-      height: 350px;
-      color: white;
-      text-shadow: #444 1px 1px;
-      background: transparent;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-    }
+/* Header */
+.header {
+    height: 350px;
+    color: white;
+    text-shadow: #444 1px 1px;
+    background: transparent;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
+
+/* Footer */
+.footer {
+    padding: 20px;
+    text-align: center;
+    background: #333;
+    margin-top: 20px;
+}
+
 
 /*.bg {
     background: url('boys.jpg') no-repeat center center;
