@@ -9,13 +9,10 @@ body {
     background: #f1f1f1;
 }
 
-/* Header/Blog Title */
-.header {
-    padding: 30px;
-    font-size: 40px;
-    text-align: center;
-    background: white;
+.navbar-brand {
+    font-family: 'Aldrich', sans-serif;
 }
+
 
 /* Create two unequal columns that floats next to each other */
 /* Left column */
@@ -90,6 +87,16 @@ body {
     clear: both;
 }
 
+/* Header */
+.header {
+    height: 350px;
+    color: white;
+    text-shadow: #444 1px 1px;
+    background: transparent;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
 /* Footer */
 .footer {
     padding: 20px;
@@ -108,17 +115,6 @@ body {
 
 .vertical-center {
     text-align: center;
-}
-
-@media (min-width: 576px) {
-    .jumbotron {
-      height: 350px;
-      color: white;
-      text-shadow: #444 1px 1px;
-      background: transparent;
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-    }
 }
 
 .bg {
