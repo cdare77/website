@@ -2,6 +2,13 @@
     box-sizing: border-box;
 }
 
+html {
+    background: url('beach.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    overflow: hidden;
+}
+
 /* Add a gray background color with some padding */
 body {
     font-family: 'Quattrocento', Verdana, sans-serif;
@@ -83,7 +90,7 @@ body {
     }
 }
 
-.bg {
+/*.bg {
     background: url('boys.jpg') no-repeat center center;
     position: fixed;
     width: 100%;
@@ -91,4 +98,4 @@ body {
     top: 0;
     left: 0;
     z-index: -1;
-}
+}*/
