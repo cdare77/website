@@ -13,6 +13,9 @@ body {
     font-family: 'Aldrich', sans-serif;
 }
 
+.dropdown:hover > .dropdown-menu {
+    display: block;
+}
 
 /* Create two unequal columns that floats next to each other */
 /* Left column */
