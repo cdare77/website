@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap 4.1 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <!-- actual stylesheet -->
+  <link href="aes.css" rel="stylesheet" type="text/css">
+  <!-- google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite" rel="stylesheet">
+  <!-- jquery -->
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+  <script src="footerscript.js"></script>
+</head>
+<body>
+
+<!-- Navigation bar -->
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Chris Dare</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="../homepage.html">Home<span class="sr-only">(current)</span></a>
+      </li>
+      <!-- Blog Dropdown -->
+      <li class="nav-item active dropdown">
+        <a class="nav-link dropdown-toggle" href="../blogpage.html" id="navbarDropdownBlogLink"  aria-haspopup="true" aria-expanded="false">Blog<span class="sr-only">(current)</span></a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownBlogLink">
+          <a class="dropdown-item" href="../blogposts/manifoldsparti.html">Manifolds: Part I</a>
+          <a class="dropdown-item" href="#">Post2</a>
+        </div>
+      </li>
+      <!-- Code Dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCodeLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
+          Code
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
+          <a class="dropdown-item active" href="#" style="font-family: 'Courier New', Courier;">AES</a>
+          <a class="dropdown-item" href="#" style="font-family: 'Courier New', Courier;">Code2</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../mymusicpage.html">My Music</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../photospage.html">Photos</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- webpage header -->
+
+<div class="jumbotron vertical-center header">
+  <h1 style="font-family:'Special Elite', cursive;">AES</h1>
+  <h5 style="font-family:'Special Elite', cursive;">Advanced Encryption Standard (FIPS 197)</h5>
+</div>
+
+<!-- Side navbar -->
+<div class="row">
+  <div class="col-2">
+    <nav id="content-nav" class="navbar navbar-light bg-light">
+      <nav class="nav nav-pills flex-column">
+        <a class="nav-link" href="#item-1">Introduction To Ciphers</a>
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link ml-3 my-1" href="#item-1-1">Item 1-1</a>
+          <a class="nav-link ml-3 my-1" href="#item-1-2">Item 1-2</a>
+        </nav>
+        <a class="nav-link" href="#item-2">Item2</a>
+        <a class="nav-link" href="#item-3">Item3</a>
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
+          <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>
+        </nav>
+      </nav>
+    </nav>
+  </div>
+
+  <div class="col-10">
+    <div data-spy="scroll" data-target="#content-nav" data-offset="0" style="padding-left: 5px;">
+      <h4 id="item-1">Introduction to ciphers</h4>
+      <p>In today's world there is a massive effort to secure data that we wish private - and for good reason. Clearly, things like our social-security number, credit card information, and passwords should be hidden from anyone who could use them maliciously, but seldom do we ask ourselves how this data is <em>actually</em> hidden. Clearly the answer is encryption, or else I wouldn't be wasting my Tuesday evening writing a post about the U.S. government's endorsed encryption (and thus most of the U.S.'s as well since many tech companies have government contracts and there's no need to write separate ciphers for the public and private sectors). For those who don't know what a block cipher and actually care, a good analogy would be an old safe: our cipher is the safe itself, our data is whatever valuable you intend to put in the safe, and our key is also called a key (but is really just a big number of our choosing).</p>
+      <img src="../images/ciphersafe.png" style="width: 1000px; height: auto;">
+      <h5 id="item-1-1">Item 1-1</h5>
+      <p>...</p>
+      <h5 id="item-1-2">Item 2-2</h5>
+      <p>...</p>
+      <h4 id="item-2">Item 2</h4>
+      <p>...</p>
+      <h4 id="item-3">Item 3</h4>
+      <p>...</p>
+      <h5 id="item-3-1">Item 3-1</h5>
+      <p>...</p>
+      <h5 id="item-3-2">Item 3-2</h5>
+      <p>...</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- webpage footer -->
+<div class="jumbotron vertical-center footer">
+  <h6>All webpages are self-coded using a combination of HTML5, CSS3, Bootstrap4, and JavaScript</h6>
+  <h6>No third-party software is used except to host the domain root directory</h6>
+</div>
+
+<!-- Bootstrap 4.1 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
