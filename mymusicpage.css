@@ -124,3 +124,6 @@ h4 {
     z-index: -1;
 }
 
+.navbar {
+    border-radius: 25px 25px 25px 25px;
+}
