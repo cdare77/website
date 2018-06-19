@@ -105,7 +105,7 @@ h4 {
 
 
 .header {
-    color: #333;
+    color: #f1f1f1;
     text-shadow: #444 1px 1px;
     background: transparent;
     padding-top: 1rem;
@@ -126,13 +126,33 @@ h4 {
 .carousel {
   border-radius: 55px 55px 55px 55px;
   overflow: hidden;
-  max-width: 350px;
-
-  .item img {
-    width: 100%;
-    height: auto;
-  }
 }
 
+#carouselVideos {
+   max-width: 350px;
+}
 
+#carouselPhotos {
+   max-width: 350px;
+}
 
+#carouselSide {
+   max-width: 700px;
+}
+
+.carousel-item .img-fluid {
+    height:100%;
+    width: 100%;
+}
+
+.carousel-inner > .carousel-item > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  max-height: 800px;
+  width:640px;
+  height:360px;
+}
