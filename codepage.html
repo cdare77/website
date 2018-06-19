@@ -5,7 +5,7 @@
   <!-- Bootstrap 4.1 -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <!-- actual stylesheet -->
-  <link href="blogpage.css" rel="stylesheet" type="text/css">
+  <link href="codepage.css" rel="stylesheet" type="text/css">
   <!-- google fonts -->
   <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich" rel="stylesheet">
   <!-- jquery -->
@@ -15,8 +15,6 @@
 <body>
 
 <!-- Navigation bar -->
-
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Chris Dare</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,16 +27,17 @@
         <a class="nav-link" href="homepage.html">Home</a>
       </li>
       <!-- Blog Dropdown -->
-      <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlogLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog<span class="sr-only">(current)</span></a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="blogpage.html" id="navbarDropdownBlogLink"  aria-haspopup="true" aria-expanded="false">Blog</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownBlogLink">
           <a class="dropdown-item" href="blogposts/manifoldparti.html">Manifolds: Part I</a>
           <a class="dropdown-item" href="#">Post2</a>
         </div>
       </li>
       <!-- Code Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="codepage.html" id="navbarDropdownCodeLink" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
+      <li class="nav-item active dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCodeLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
+          <span class="sr-only">(current)</span>
           Code
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
@@ -58,13 +57,12 @@
 
 <!-- webpage header -->
 
-<img src="images/sunset.png" class="bg">
+<img src="images/binary.png" class="bg">
 <div class="jumbotron vertical-center header">
-  <h2>Blog</h2>
+  <h2>Code</h2>
   <br>
-  <br>
-  <p>The majority of this blog is dedicated to special and advanced topics in higher level mathematics, as well as their applications in theoretical physics. </p>
-  <p>If you find any inconsistencies or incorrect information, please do not hesitate to comment or contact me.<p>
+  <p>Though a portion of my code is on <a href="https://github.com/cdare77">GitHub</a>, I find that drawn-out monotonous explanations of code are, </p>
+  <p> in fact, the one thing that can make reading code more monotonous. One can never have too much eye strain. </p>
 </div>
 
 <div class="row">
@@ -119,3 +117,4 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 </body>
 </html>
+
