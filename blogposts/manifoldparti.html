@@ -5,9 +5,9 @@
   <!-- Bootstrap 4.1 -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <!-- actual stylesheet -->
-  <link href="blogpage.css" rel="stylesheet" type="text/css">
+  <link href="manifoldparti.css" rel="stylesheet" type="text/css">
   <!-- google fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite" rel="stylesheet">
   <!-- jquery -->
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
   <script src="footerscript.js"></script>
@@ -22,23 +22,23 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="homepage.html">Home</a>
+      <li class="nav-item active">
+        <a class="nav-link" href="../homepage.html">Home<span class="sr-only">(current)</span></a>
       </li>
       <!-- Blog Dropdown -->
       <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlogLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog<span class="sr-only">(current)</span></a>
+        <a class="nav-link dropdown-toggle" href="../blogpage.html" id="navbarDropdownBlogLink"  aria-haspopup="true" aria-expanded="false">Blog<span class="sr-only">(current)</span></a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownBlogLink">
-          <a class="dropdown-item" href="blogposts/manifoldparti.html">Manifolds: Part I</a>
+          <a class="dropdown-item active" href="#">Manifolds: Part I</a>
           <a class="dropdown-item" href="#">Post2</a>
         </div>
       </li>
       <!-- Code Dropdown -->
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="codepage.html" id="navbarDropdownCodeLink" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCodeLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
           Code
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
@@ -47,65 +47,62 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="mymusicpage.html">My Music</a>
+        <a class="nav-link" href="../mymusicpage.html">My Music</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="photospage.html">Photos</a>
+        <a class="nav-link" href="../photospage.html">Photos</a>
       </li>
     </ul>
-  </div> 
+  </div>
 </nav>
 
 <!-- webpage header -->
 
-<img src="images/sunset.png" class="bg">
 <div class="jumbotron vertical-center header">
-  <h2>Blog</h2>
-  <br>
-  <br>
-  <p>The majority of this blog is dedicated to special and advanced topics in higher level mathematics, as well as their applications in theoretical physics. </p>
-  <p>If you find any inconsistencies or incorrect information, please do not hesitate to comment or contact me.<p>
+  <h1 style="font-family:'Special Elite', cursive;">Manifolds</h1>
+  <h5 style="font-family:'Special Elite', cursive;">Part I: Topology</h5>
 </div>
 
+<!-- Side navbar -->
 <div class="row">
-  <!-- Blog elements -->
-  <div class="leftcolumn">
-    <div class="card post">
-      <h2>TITLE HEADING</h2>
-      <h5>Title description, Dec 7, 2017</h5>
-      <div class="fakeimg" style="height:200px;">Image</div>
-      <p>Some text..</p>
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-    </div>
-    <div class="card post">
-      <h2>TITLE HEADING</h2>
-      <h5>Title description, Sep 2, 2017</h5>
-      <div class="fakeimg" style="height:200px;">Image</div>
-      <p>Some text..</p>
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-    </div>
+  <div class="col-2">
+    <nav id="content-nav" class="navbar navbar-light bg-light">
+      <nav class="nav nav-pills flex-column">
+        <a class="nav-link" href="#item-1">Item 1</a>
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link ml-3 my-1" href="#item-1-1">Item 1-1</a>
+          <a class="nav-link ml-3 my-1" href="#item-1-2">Item 1-2</a>
+        </nav>
+        <a class="nav-link" href="#item-2">Item2</a>
+        <a class="nav-link" href="#item-3">Item3</a>
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
+          <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>
+        </nav>
+      </nav>
+    </nav>
   </div>
 
-  <!-- Right column elements -->
-  <div class="rightcolumn">
-    <div class="card">
-      <h2>About Me</h2>
-      <div class="fakeimg" style="height:100px;">Image</div>
-      <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-    </div>
-    <div class="card">
-      <h3>Popular Post</h3>
-      <div class="fakeimg">Image</div><br>
-      <div class="fakeimg">Image</div><br>
-      <div class="fakeimg">Image</div>
-    </div>
-    <div class="card">
-      <h3>Follow Me</h3>
-      <iframe src="https://open.spotify.com/embed/track/4KoecuyOpZaNFZ0UqVsllc" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
-      <p>Some text..</p>
+  <div class="col-10">
+    <div data-spy="scroll" data-target="#content-nav" data-offset="0" style="padding-left: 5px;">
+      <h4 id="item-1">Item 1</h4>
+      <p>...</p>
+      <h5 id="item-1-1">Item 1-1</h5>
+      <p>...</p>
+      <h5 id="item-1-2">Item 2-2</h5>
+      <p>...</p>
+      <h4 id="item-2">Item 2</h4>
+      <p>...</p>
+      <h4 id="item-3">Item 3</h4>
+      <p>...</p>
+      <h5 id="item-3-1">Item 3-1</h5>
+      <p>...</p>
+      <h5 id="item-3-2">Item 3-2</h5>
+      <p>...</p>
     </div>
   </div>
 </div>
+
 
 <!-- webpage footer -->
 <div class="jumbotron vertical-center footer">
@@ -119,3 +116,4 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 </body>
 </html>
+
