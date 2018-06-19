@@ -156,3 +156,7 @@ h4 {
   width:640px;
   height:360px;
 }
+
+.navbar {
+    border-radius: 25px 25px 25px 25px;
+}

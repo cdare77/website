@@ -91,8 +91,8 @@ body {
 
 /* Header */
 .header {
-    height: 350px;
-    color: white;
+    height: 200px;
+    color: #333;
     text-shadow: #444 1px 1px;
     background: transparent;
     padding-top: 1rem;
@@ -111,4 +111,7 @@ body {
     border-radius: 25px 25px 25px 25px;
 }
 
-
+#content-nav {
+    position: fixed;
+    top: 33%;
+}

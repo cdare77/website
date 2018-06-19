@@ -163,3 +163,7 @@ img.bg {
   50% { padding-top: 24px; }
   100% { padding-top: 20px; }
 }
+
+.navbar {
+    border-radius: 25px 25px 25px 25px;
+}
