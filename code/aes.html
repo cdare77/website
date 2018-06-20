@@ -10,7 +10,8 @@
   <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite" rel="stylesheet">
   <!-- jquery -->
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
-  <script src="footerscript.js"></script>
+  <script src="../footerscript.js"></script>
+  <script src="../tooltip.js"></script>
 </head>
 <body>
 
@@ -25,11 +26,11 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="../homepage.html">Home<span class="sr-only">(current)</span></a>
       </li>
       <!-- Blog Dropdown -->
-      <li class="nav-item active dropdown">
+      <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="../blogpage.html" id="navbarDropdownBlogLink"  aria-haspopup="true" aria-expanded="false">Blog<span class="sr-only">(current)</span></a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownBlogLink">
           <a class="dropdown-item" href="../blogposts/manifoldsparti.html">Manifolds: Part I</a>
@@ -38,7 +39,7 @@
       </li>
       <!-- Code Dropdown -->
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCodeLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
+        <a class="nav-link dropdown-toggle" href="../codepage.html" id="navbarDropdownCodeLink" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
           Code
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
@@ -69,11 +70,7 @@
     <nav id="content-nav" class="navbar navbar-light bg-light">
       <nav class="nav nav-pills flex-column">
         <a class="nav-link" href="#item-1">Introduction To Ciphers</a>
-        <nav class="nav nav-pills flex-column">
-          <a class="nav-link ml-3 my-1" href="#item-1-1">Item 1-1</a>
-          <a class="nav-link ml-3 my-1" href="#item-1-2">Item 1-2</a>
-        </nav>
-        <a class="nav-link" href="#item-2">Item2</a>
+        <a class="nav-link" href="#item-2">Why AES?</a>
         <a class="nav-link" href="#item-3">Item3</a>
         <nav class="nav nav-pills flex-column">
           <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
@@ -84,16 +81,27 @@
   </div>
 
   <div class="col-10">
-    <div data-spy="scroll" data-target="#content-nav" data-offset="0" style="padding-left: 5px;">
+    <div data-spy="scroll" data-target="#content-nav" data-offset="0">
       <h4 id="item-1">Introduction to ciphers</h4>
-      <p>In today's world there is a massive effort to secure data that we wish private - and for good reason. Clearly, things like our social-security number, credit card information, and passwords should be hidden from anyone who could use them maliciously, but seldom do we ask ourselves how this data is <em>actually</em> hidden. Clearly the answer is encryption, or else I wouldn't be wasting my Tuesday evening writing a post about the U.S. government's endorsed encryption (and thus most of the U.S.'s as well since many tech companies have government contracts and there's no need to write separate ciphers for the public and private sectors). For those who don't know what a block cipher and actually care, a good analogy would be an old safe: our cipher is the safe itself, our data is whatever valuable you intend to put in the safe, and our key is also called a key (but is really just a big number of our choosing).</p>
+      <p>In today's world there is a massive effort to secure data that we wish private - and for good reason. 
+Clearly, things like our social-security number, credit card information, and passwords should be hidden from anyone who could use them maliciously, but seldom do we ask ourselves how this data is <em>actually</em> hidden. 
+Clearly the answer is encryption, or else I wouldn't be spending my Tuesday evening writing a post about the U.S. government's current endorsed encryption (and thus most of the commercial industry as well since many government contractors feel no need to write separate software for the public and private sectors).
+ For those who don't know what a block cipher is, a good analogy would be an old safe: our cipher is the safe itself, our data is whatever valuable you intend to put in the safe, and our key is also called a key (but is really just a big number of our choosing used for calculations).</p>
       <img src="../images/ciphersafe.png" style="width: 1000px; height: auto;">
-      <h5 id="item-1-1">Item 1-1</h5>
-      <p>...</p>
-      <h5 id="item-1-2">Item 2-2</h5>
-      <p>...</p>
-      <h4 id="item-2">Item 2</h4>
-      <p>...</p>
+      <h4 id="item-2">Why AES?</h4>
+      <p>Great question. You'd probably need a masters in computer science or mathematics with respect to algebra to get a full answer.
+The simple answer is that it remains very resiliant under years of scrutiny without sacrificing much speed. 
+Note that this does not mean that it is an efficient cipher (see <a href="#">PRINCE</a>); nonetheless, would you rather keep your money in a national bank that probably takes half-an-hour to withdraw from or in a safe under your bed?</p>
+      <p> For those interested in the security aspect, the previous analogy of the safe breaks down when it comes to the motive of the hackers/thieves.
+ Just as a thief is interested in the money inside a safe, one would expect that the motive of a hacker is to get the passwords / sensitive information; however, it is truly the motive of a hacker to retrieve the key (this is a bit subjective since I'm interchanging hacker and cryptanalyst a bit loosely -- in reality I think most hackers would be perfectly happy with a few hundred passwords).
+Therefore, the objective of a cipher (i.e. our safe) is to make it as hard as possible to retrieve the safe's key. </p>
+
+      <p> Clearly, as all computer information is stored in binary, our key is just a fixed number of bits (either 128, 192, or 256 for AES); thus, for every bit that we add the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The abstract set / collection  of all possible keys">key space</a> effectively doubles. 
+In order to break a cipher, one must find some sort of algorithm which produces a key with greater efficiency than a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Trying every key possible to match a plaintext (unencrypted) / ciphertext (encrypted) pair">brute-force</a> solution. 
+Though I have not gone into the details of AES yet, this is the rational behind adding extra rounds to larger key sizes.
+There are essentially no efficient attacks on AES itself (<a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Attacking the underlying hardware or operating system to bypass an algorithm">side-channel attacks</a> are irrelevant) that are a significant improvement over brute-force. 
+While there are currently other ciphers just as strong as AES (i.e. Serpent and Twofish), the attention given to AES over the past two decades has allowed for speedups and security updates to patch commonly-known side-channel attacks.
+      </p>
       <h4 id="item-3">Item 3</h4>
       <p>...</p>
       <h5 id="item-3-1">Item 3-1</h5>

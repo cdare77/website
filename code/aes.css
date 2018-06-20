@@ -114,5 +114,6 @@ body {
 #content-nav {
     position: fixed;
     top: 33%;
+    font-size: 14px;
 }
 
