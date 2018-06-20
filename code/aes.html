@@ -10,6 +10,9 @@
   <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite" rel="stylesheet">
   <!-- jquery -->
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+  <!-- MathJax -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+  <!-- My scripts -->
   <script src="../footerscript.js"></script>
   <script src="../tooltip.js"></script>
 </head>
@@ -71,10 +74,11 @@
       <nav class="nav nav-pills flex-column">
         <a class="nav-link" href="#item-1">Introduction To Ciphers</a>
         <a class="nav-link" href="#item-2">Why AES?</a>
-        <a class="nav-link" href="#item-3">Item3</a>
+        <a class="nav-link" href="#item-3">The Cipher</a>
         <nav class="nav nav-pills flex-column">
-          <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
-          <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>
+          <a class="nav-link ml-3 my-1" href="#item-3-1"><code>SubBytes()</code></a>
+          <a class="nav-link ml-3 my-1" href="#item-3-2"><code>ShiftRows()</code></a>
+          <a class="nav-link ml-3 my-1" href="#item-3-3"><code>MixColumns()</code></a>
         </nav>
       </nav>
     </nav>
@@ -85,8 +89,8 @@
       <h4 id="item-1">Introduction to ciphers</h4>
       <p>In today's world there is a massive effort to secure data that we wish private - and for good reason. 
 Clearly, things like our social-security number, credit card information, and passwords should be hidden from anyone who could use them maliciously, but seldom do we ask ourselves how this data is <em>actually</em> hidden. 
-Clearly the answer is encryption, or else I wouldn't be spending my Tuesday evening writing a post about the U.S. government's current endorsed encryption (and thus most of the commercial industry as well since many government contractors feel no need to write separate software for the public and private sectors).
- For those who don't know what a block cipher is, a good analogy would be an old safe: our cipher is the safe itself, our data is whatever valuable you intend to put in the safe, and our key is also called a key (but is really just a big number of our choosing used for calculations).</p>
+Clearly the answer is <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Translating data or plain text into a masked cipher text through the use of a cipher">encryption</a>, or else I wouldn't be spending my Tuesday evening writing a post about the U.S. government's current endorsed encryption (and thus most of the commercial industry as well since many government contractors feel no need to write separate software for the public and private sectors).
+ For those who don't know what a block <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An algorithm used to mask data in a covert manner">cipher</a> is, a good analogy would be an old safe: our cipher is the safe itself, our data is whatever valuable you intend to put in the safe, and our key is also called a key (but is really just a big number of our choosing used for calculations).</p>
       <img src="../images/ciphersafe.png" style="width: 1000px; height: auto;">
       <h4 id="item-2">Why AES?</h4>
       <p>Great question. You'd probably need a masters in computer science or mathematics with respect to algebra to get a full answer.
@@ -102,12 +106,232 @@ Though I have not gone into the details of AES yet, this is the rational behind 
 There are essentially no efficient attacks on AES itself (<a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Attacking the underlying hardware or operating system to bypass an algorithm">side-channel attacks</a> are irrelevant) that are a significant improvement over brute-force. 
 While there are currently other ciphers just as strong as AES (i.e. Serpent and Twofish), the attention given to AES over the past two decades has allowed for speedups and security updates to patch commonly-known side-channel attacks.
       </p>
-      <h4 id="item-3">Item 3</h4>
-      <p>...</p>
-      <h5 id="item-3-1">Item 3-1</h5>
-      <p>...</p>
-      <h5 id="item-3-2">Item 3-2</h5>
-      <p>...</p>
+      <h4 id="item-3">The Cipher</h4>
+      <p>Now that you have all the background that you probably didn't ask for in the first place, it's time to discuss the actual algorithm of AES.
+AES is what cryptographers call a <a style="color: #00c624" data-toggle="tooltip" title data-original-title="A cipher who's algorithm is based off translating a fixed number of bits, then swapping the order of the bits">Substitution-Permutation Network</a> (SPN): every round or iteration of the algorithm takes the chunk of data, breaks the data into small chunks that are fed through a substitution box and thereafter swapped around according to some sort of permutation (although AES also applies a <code>MixColumns()</code> transformation which modifies AES from a typical SPN.
+ </p>
+<p> In order to truly understand what is going on in AES, the reader would first have to become fimiliar with the basics of ring theory and Galois fields (also referred to as finite fields); I will leave a section at the end to cover these things for the reader who spends too much time in front of a computer screen, but in the meantime I will continue with the algorithm. Now as I briefly mentioned in an aside earlier, the AES algorithm is somewhat dependent on the key-length which is either 128 bits, 192 bits, or 256 bits (note, however, that the size of the data we wish to encrypt is fixed at 128 bytes). The reason I say somewhat is because AES is essentially a collection of functions ( <code>SubBytes()</code>, <code>ShiftRows()</code>, <code>MixColumns</code>, and <code>AddRoundKey()</code> ) that are repeatedly executed; each iteration of these functions is referred to as a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A single repetition/iteration of an iterative algorithm">round</a>. Each of AES-128, AES-192, and AES-256 execute the same round, however the number of rounds differs for each variant: AES-128 executes 10 rounds, AES-192 executes 12 rounds, and AES-256 executes 14 rounds. Going back to the rational of more rounds for longer keys (if you actually read the last section), the 14 rounds extends the computation time of most <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Decoding encrypted text without the key">crypanalysis</a> just enough so that it takes as long as a brute-force solution. Without further ado, here's a breakdown of each round's function:
+</p>
+    <h5 id="item-3-1"><code>SubBytes()</code></h5>
+    <p>The first item on our list is that pesky "substitution" part of our whole substitution-permutation network. The reason our substitution layer is so important is that it provides a non-linear system in \(GF(2^8)\), so that cryptanalsis cannot reduce the cipher to a linear system of equations (which would allow the cipher to be easily broken using GPUs and a sufficient knowledge of finite field arithmetic). Since the size of data that we wish to encrypt is fixed at 16 bytes (hence the term "block" cipher -- we only encrypt one 16-byte block at a time), we choose to represent this data as a 4x4 matrix of bytes which will be hereafter referred to as the
+     <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Our data / plaintext represented as a matrix of bytes for ease of linear transformations">state</a>:
+         $$\begin{pmatrix} p_0 & p_4 & p_8 & p_{12} \\\\ p_1 & p_5 & p_9 & p_{13} \\\\ p_2 & p_6 & p_{10} & p_{14} \\\\ p_3 & p_7 & p_{11} & p_{15} \end{pmatrix}$$
+         we use the variable \(p_i \) for \( 0 \leq i \leq 15 \) to denote splitting of plaintext here since we will use \( b_j \) for \( 0 \leq j \leq 7 \) in a moment to denote bits of an arbitrary byte. Now let \( b \) be an arbitrary byte (i.e. \( b = p_i \) for some \( 0 \leq i \leq 15\) ) and let \( b_j \) denote the \( j^{th}\) bit for \( 0 \leq j \leq 7 \). The transformation the Substitution layer is applying to \(b\) is
+             $$ \tilde{b_i} = b^{-1}_i \oplus b^{-1}_{(i + 4)\mathrm{mod} 8} \oplus b^{-1}_{(i + 5)\mathrm{mod} 8} \oplus b^{-1}_{(i + 6)\mathrm{mod} 8} \oplus b^{-1}_{(i + 7)\mathrm{mod} 8} + c_i $$
+         where \(c_i\) denotes the \(i^{th}\) bit of the fixed constant \( 01100011\). Note that the symbols \(\oplus \) here represent addition in \(GF(2^8)\) which <em>just so happens</em> to be the exclusive or <code>XOR</code> operation (i.e. \(0 \oplus 0 = 1 \oplus 1 = 0 \) and \(1 \oplus 0 = 0 \oplus 1 = 1 \) ).
+    </p>
+    <p> Now if we decided to apply that information bit by bit to a 128-bit state, we would be wasting a <b>YUGE</b> amount of computing power because inversion in \(GF(2^8)\) is ridiculouly tolling; instead, the National Institute of Standards and Technology (NIST) was gracious enough to provide a precomputed <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An array contains precomputed solutions to a given byte at the index of that byte; a finite mapping">lookup-table</a>:
+    </p>
+    <div class="showbar">
+      <button type="button" id="showSubBoxBut" onclick="showSubBox()" class="btn btn-dark">Show Array</button>
+      <div id="subbox" style="display: none; text-align: left; padding-left: 15px;">
+      <code>
+      { <br>
+      0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76, <br>
+      0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0, <br>
+      0xb7, 0xfd, 0x93, 0x26, 0x36, 0x3f, 0xf7, 0xcc, 0x34, 0xa5, 0xe5, 0xf1, 0x71, 0xd8, 0x31, 0x15, <br>
+      0x04, 0xc7, 0x23, 0xc3, 0x18, 0x96, 0x05, 0x9a, 0x07, 0x12, 0x80, 0xe2, 0xeb, 0x27, 0xb2, 0x75, <br>
+      0x09, 0x83, 0x2c, 0x1a, 0x1b, 0x6e, 0x5a, 0xa0, 0x52, 0x3b, 0xd6, 0xb3, 0x29, 0xe3, 0x2f, 0x84, <br>
+      0x53, 0xd1, 0x00, 0xed, 0x20, 0xfc, 0xb1, 0x5b, 0x6a, 0xcb, 0xbe, 0x39, 0x4a, 0x4c, 0x58, 0xcf, <br>
+      0xd0, 0xef, 0xaa, 0xfb, 0x43, 0x4d, 0x33, 0x85, 0x45, 0xf9, 0x02, 0x7f, 0x50, 0x3c, 0x9f, 0xa8, <br>
+      0x51, 0xa3, 0x40, 0x8f, 0x92, 0x9d, 0x38, 0xf5, 0xbc, 0xb6, 0xda, 0x21, 0x10, 0xff, 0xf3, 0xd2, <br>
+      0xcd, 0x0c, 0x13, 0xec, 0x5f, 0x97, 0x44, 0x17, 0xc4, 0xa7, 0x7e, 0x3d, 0x64, 0x5d, 0x19, 0x73, <br>
+      0x60, 0x81, 0x4f, 0xdc, 0x22, 0x2a, 0x90, 0x88, 0x46, 0xee, 0xb8, 0x14, 0xde, 0x5e, 0x0b, 0xdb, <br>
+      0xe0, 0x32, 0x3a, 0x0a, 0x49, 0x06, 0x24, 0x5c, 0xc2, 0xd3, 0xac, 0x62, 0x91, 0x95, 0xe4, 0x79, <br>
+      0xe7, 0xc8, 0x37, 0x6d, 0x8d, 0xd5, 0x4e, 0xa9, 0x6c, 0x56, 0xf4, 0xea, 0x65, 0x7a, 0xae, 0x08, <br>
+      0xba, 0x78, 0x25, 0x2e, 0x1c, 0xa6, 0xb4, 0xc6, 0xe8, 0xdd, 0x74, 0x1f, 0x4b, 0xbd, 0x8b, 0x8a, <br>
+      0x70, 0x3e, 0xb5, 0x66, 0x48, 0x03, 0xf6, 0x0e, 0x61, 0x35, 0x57, 0xb9, 0x86, 0xc1, 0x1d, 0x9e, <br>
+      0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf, <br>
+      0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16 <br>
+      }
+      </code>
+      </div>
+    </div>
+    <script>
+      function showSubBox() {
+        var x = document.getElementById("subbox");
+        var but = document.getElementById("showSubBoxBut");
+        if (x.style.display == "none") {
+          x.style.display = "block";
+          but.innerHTML = "Hide Array";
+        }
+        else {
+          x.style.display = "none";
+          but.innerHTML = "Show Array";
+        }
+      }
+    </script>
+    <p> Now that we have that, creating a function to send the state through the substitution layer is pretty simple:
+    </p>
+    <div class="showbar">
+      <button type="button" id="showSubPyBut" onclick="showSubPython()" class="btn btn-dark">Show Python</button>
+      <div id="subpycode" style="display: none; text-align: left; padding-left: 15px;">
+          <pre style="color: #b0b747;">
+def SubBytes():
+    return [[SBox[state[col][row]] for col in range(4)] for row in range(4)] # SBox is array above
+      </pre>
+      </div>
+    </div>
+    <script>
+        function showSubPython() {
+            var x = document.getElementById("subpycode");
+            var but = document.getElementById("showSubPyBut");
+            if (x.style.display == "none") {
+                x.style.display = "block";
+                but.innerHTML = "Hide Python";
+            }
+            else {
+                x.style.display = "none";
+                but.innerHTML = "Show Python";
+            }
+        }
+    </script>
+    <div class="showbar">
+        <button type="button" id="showSubCBut" onclick="showSubC()" class="btn btn-dark">Show C</button>
+        <div id="subCcode" style="display: none; text-align: left; padding-left: 15px;">
+            <pre style="color: #00c624;">
+static void SubBytes() {
+    char row, col;
+    for (row = 0; row < 4; row++)
+        for (col = 0; col < 4; col++)
+            (*state)[col][row] = SBox[(*state)[col][row]]; // SBox is array above
+}
+            </pre>
+        </div>
+    </div>
+    <script>
+        function showSubC() {
+            var x = document.getElementById("subCcode");
+            var but = document.getElementById("showSubCBut");
+            if (x.style.display == "none") {
+                x.style.display = "block";
+                but.innerHTML = "Hide C";
+            }
+            else {
+                x.style.display = "none";
+                but.innerHTML = "Show C";
+            }
+        }
+    </script>
+    
+    <h5 id="item-3-2"><code>ShiftRows()</code></h5>
+    <p> Next on our agenda is the <code>ShiftRows()</code> method, which basically does just what it sounds like if you're still picturing the state as a \(4 \times 4\) matrix of bytes. Using zero indexed origin (i.e. for \(0 \leq i \leq 3\)), we cyclically shift each row in the state over by \(i\) bytes:
+    $$ \begin{pmatrix} p_0 & p_4 & p_8 & p_{12} \\\\ p_1 & p_5 & p_9 & p_{13} \\\\ p_2 & p_6 & p_{10} & p_{14} \\\\ p_3 & p_7 & p_{11} & p_{15} \end{pmatrix} \longmapsto_{ShiftRows()} \begin{pmatrix} p_0 & p_4 & p_8 & p_{12} \\\\ p_5 & p_9 & p_{13} & p_1 \\\\ p_{10} & p_{14} & p_2 & p_6 \\\\ p_{15} & p_{3} & p_{7} & p_{11} \end{pmatrix}  $$
+    </p>
+    <div class="showbar">
+      <button type="button" id="showShiftPyBut" onclick="showShiftPython()" class="btn btn-dark">Show Python</button>
+      <div id="shiftpycode" style="display: none; text-align: left; padding-left: 15px;">
+    <pre style="color: #b0b747;">
+def ShiftRows():
+    return [[state[(col + row) % 4][row] for col in range(4)] for row in range(4)]
+    </pre>
+    </div>
+    </div>
+    <script>
+        function showShiftPython() {
+            var x = document.getElementById("shiftpycode");
+            var but = document.getElementById("showShiftPyBut");
+            if (x.style.display == "none") {
+                x.style.display = "block";
+                but.innerHTML = "Hide Python";
+            }
+            else {
+                x.style.display = "none";
+                but.innerHTML = "Show Python";
+            }
+        }
+    </script>
+    <div class="showbar">
+        <button type="button" id="showShiftCBut" onclick="showShiftC()" class="btn btn-dark">Show C</button>
+        <div id="shiftCcode" style="display: none; text-align: left; padding-left: 15px;">
+            <pre style="color: #00c624;">
+static void ShiftRows() {
+    char temp;
+
+    // Rotate first row 1 columns to left
+    temp           = (*state)[0][1];
+    (*state)[0][1] = (*state)[1][1];
+    (*state)[1][1] = (*state)[2][1];
+    (*state)[2][1] = (*state)[3][1];
+    (*state)[3][1] = temp;
+
+    // Rotate second row 2 columns to left
+    temp           = (*state)[0][2];
+    (*state)[0][2] = (*state)[2][2];
+    (*state)[2][2] = temp;
+    temp       = (*state)[1][2];
+    (*state)[1][2] = (*state)[3][2];
+    (*state)[3][2] = temp;
+
+    // Rotate third row 3 columns to left
+    temp       = (*state)[0][3];
+    (*state)[0][3] = (*state)[3][3];
+    (*state)[3][3] = (*state)[2][3];
+    (*state)[2][3] = (*state)[1][3];
+    (*state)[1][3] = temp;
+}
+            </pre>
+        </div>
+    </div>
+    <script>
+        function showShiftC() {
+            var x = document.getElementById("shiftCcode");
+            var but = document.getElementById("showShiftCBut");
+            if (x.style.display == "none") {
+                x.style.display = "block";
+                but.innerHTML = "Hide C";
+            }
+            else {
+                x.style.display = "none";
+                but.innerHTML = "Show C";
+            }
+        }
+    </script>
+    
+    <h5 id="item-3-3"><code>MixColumns()</code></h5>
+    <p> Third is our <code>MixColumns()</code> function, and this is where things start to get trickier. The reason things get tricky is because this function is essentially an affine (linear) transform over \(GF(2^8)\), and is thus heavily dependent on polynomial multiplication. I briefly mentioned in the <code>SubBytes()</code> section that inversion (i.e. division, inverse multiplication) in a Galois field is very computationally taxing -- that basically applies the same to multiplication, except you don't have to go looking for a pair of numbers that satisfy the outcome. Let \(a(x)\) denote the polynomial
+        $$ a(x) = 3x^3 + x^2 + x + 2 $$
+        with all coefficients in \(GF(2^8)\) and \(s(x)\) the state; then our <code>MixColumns()</code> function is actually just returning \( a(x) \otimes s(x) \).
+        As I just mentioned, it is absolutely not that easy. For the Advanced Encryption Standard's irreducible polynomial \( x^4 + 1\), this gives us the transform
+        
+        $$ \begin{pmatrix} 02 & 03 & 01 & 01 \\\\ 01 & 02 & 03 & 01 \\\\ 01 & 01 & 02 & 03 \\\\ 03 & 01 & 01 & 02 \end{pmatrix} \begin{pmatrix} p_0 & p_4 & p_8 & p_{12} \\\\ p_1 & p_5 & p_9 & p_{13} \\\\ p_2 & p_6 & p_{10} & p_{14} \\\\ p_3 & p_7 & p_{11} & p_{15} \end{pmatrix} $$
+        
+        If you're interested in why multiplication with reduce to the above irreducible polynomial results in this sort of cyclic <code>ShiftRows()</code> behavior that we saw previously, feel free to read up on <a id="popLink" href="https://csrc.nist.gov/csrc/media/publications/fips/197/final/documents/fips-197.pdf">this</a>. It's not super complicated but it's a good 15 minutes worth of calculations, assuming you're familiar with finite field arithmetic.
+    </p>
+    <p> So going forward, we basically have two options here: since multiplication isn't <em>as</em> hard as division in \(GF(2^8)\), we could formulate a solution for how to brute-force multiply by small numbers; alternatively, we could just do what we did before with the substituion layer and precompute everything into an array. Since this is the coolest damn website you've ever stumbled upon (in the last 15 minutes), I'll go ahead and show both. For the brute-force multiplication, I stumbled a few years ago on a trick that worked numbers under 0x15 (which is honestly all we need):
+    <div class="showbar">
+        <button type="button" id="showMultPyBut" onclick="showMultPython()" class="btn btn-dark">Show Python</button>
+        <div id="multpycode" style="display: none; text-align: left; padding-left: 15px;">
+            <pre style="color: #b0b747;">
+def xtime(x):
+    return (x << 1) ^ (((x >> 7) & 0x01) * 0x1b)
+        
+def gmult(x, y):
+    result = (y & 0x01) * x
+    result ^= (y>>1 & 1) * xtime(x)
+    result ^= (y>>2 & 1) * xtime(xtime(x))
+    result ^= (y>>3 & 1) * xtime(xtime(xtime(x)))
+    result ^= (y>>4 & 1) * xtime(xtime(xtime(xtime(x)))))
+    return result
+    
+            </pre>
+        </div>
+    </div>
+    <script>
+        function showMultPython() {
+            var x = document.getElementById("multpycode");
+            var but = document.getElementById("showMultPyBut");
+            if (x.style.display == "none") {
+                x.style.display = "block";
+                but.innerHTML = "Hide Python";
+            }
+            else {
+                x.style.display = "none";
+                but.innerHTML = "Show Python";
+            }
+        }
+    </script>
+    
     </div>
   </div>
 </div>
