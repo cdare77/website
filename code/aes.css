@@ -153,9 +153,13 @@ li .popLink:hover {
 
 #content-nav {
     position: fixed;
-    top: 25%;
+    top: 20%;
     font-size: 14px;
     width: 200px;
+    background: radial-gradient(rgba(15, 132, 132, 0), rgba(15, 132, 132, 0.3));
+    -webkit-box-shadow: 12px 16px 12px -12px black;
+    -moz-box-shadow: 12px 16px 12px -12px black;
+    box-shadow: 12px 16px 12px -12px black;
 }
 
 .showbar {
@@ -195,6 +199,5 @@ li .popLink:hover {
 
 li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
     list-style-type: decimal !important;
-}
 }
 
