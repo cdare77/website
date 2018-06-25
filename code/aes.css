@@ -163,7 +163,7 @@ li .popLink:hover {
     margin-bottom: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
-    background: #333; /*linear-gradient(to right, rgba(84, 84, 84, 1), rgba(0,0,0,1));*/
+    background: black; /*linear-gradient(to right, rgba(84, 84, 84, 1), rgba(0,0,0,1));*/
     width: 100%;
     text-align: center;
     border-radius: 10px 10px 10px 10px;
@@ -191,5 +191,10 @@ li .popLink:hover {
     text-align: left;
     background-color: #216FED;
     color: white;
+}
+
+li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
+    list-style-type: decimal !important;
+}
 }
 
