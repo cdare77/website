@@ -155,7 +155,7 @@ li .popLink:hover {
     position: fixed;
     top: 20%;
     font-size: 14px;
-    width: 200px;
+    width: 15%;
     background: radial-gradient(rgba(15, 132, 132, 0), rgba(15, 132, 132, 0.3));
     -webkit-box-shadow: 12px 16px 12px -12px black;
     -moz-box-shadow: 12px 16px 12px -12px black;
@@ -173,6 +173,31 @@ li .popLink:hover {
     border-radius: 10px 10px 10px 10px;
     border: 2px solid #333;
 }
+
+button {
+  cursor: pointer;
+  box-shadow: 0px 0px 0px rgba( 255, 255, 255, 0.9 );
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+          transform: translateZ(0);
+
+  -webkit-transition: all 0.2s ease;
+     -moz-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+}
+
+button:hover {
+  top: -10px;
+  box-shadow: 0px 10px 10px rgba( 255, 255, 255, 0.9 ) !important;
+  
+  -webkit-transform: rotateX(30deg) !important;
+     -moz-transform: rotateX(30deg) !important;
+      -ms-transform: rotateX(30deg) !important;
+          transform: rotateX(30deg) !important;
+}
+
 
 #xortab {
     font-family: "Courier New", Courier;
