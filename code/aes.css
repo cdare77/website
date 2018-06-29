@@ -151,15 +151,32 @@ li .popLink:hover {
     border-radius: 25px 25px 25px 25px;
 }
 
+#content-nav a:hover {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2)
+    color: #FC7918;
+}
+
+#content-nav a {
+    scale: 1.0;
+    color: #FFA059;
+}
+
 #content-nav {
     position: fixed;
-    top: 20%;
+    top: 14%;
     font-size: 14px;
     width: 15%;
     background: radial-gradient(rgba(15, 132, 132, 0), rgba(15, 132, 132, 0.3));
-    -webkit-box-shadow: 12px 16px 12px -12px black;
-    -moz-box-shadow: 12px 16px 12px -12px black;
-    box-shadow: 12px 16px 12px -12px black;
+    -webkit-box-shadow: 0px 16px 12px -8px black;
+    -moz-box-shadow: 0px 16px 12px -8px black;
+    box-shadow: 0px 16px 12px -8px black;
+      -webkit-transform: rotateX(15deg);
+     -moz-transform: rotateX(15deg);
+      -ms-transform: rotateX(15deg);
+          transform: rotateX(15deg);
 }
 
 .showbar {
