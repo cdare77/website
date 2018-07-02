@@ -151,6 +151,7 @@ li .popLink:hover {
     border-radius: 25px 25px 25px 25px;
 }
 
+
 #content-nav a:hover {
     -webkit-transform: scale(1.2);
     -moz-transform: scale(1.2);
@@ -169,7 +170,7 @@ li .popLink:hover {
     top: 14%;
     font-size: 14px;
     width: 15%;
-    background: radial-gradient(rgba(15, 132, 132, 0), rgba(15, 132, 132, 0.3));
+    background: radial-gradient(rgba(115, 0, 0, 0.5), rgba(115, 0, 0, 0.7));
     -webkit-box-shadow: 0px 16px 12px -8px black;
     -moz-box-shadow: 0px 16px 12px -8px black;
     box-shadow: 0px 16px 12px -8px black;
@@ -177,6 +178,15 @@ li .popLink:hover {
      -moz-transform: rotateX(15deg);
       -ms-transform: rotateX(15deg);
           transform: rotateX(15deg);
+}
+
+@media only screen and (max-width: 991px) {
+    #leftrow {
+        display: none;
+    }
+    #content-nav {
+        display: none;
+    }
 }
 
 .showbar {

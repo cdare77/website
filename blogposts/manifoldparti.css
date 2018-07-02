@@ -18,6 +18,10 @@ img.bg {
   z-index: -1;
 }
 
+p {
+  font-family: 'Roboto', sans-serif;
+}
+
 @media screen and (max-width: 1182px) { /* Specific to this particular image */
   img.bg {
     left: 50%;
@@ -166,10 +170,10 @@ li .popLink:hover {
 
 #content-nav {
     position: fixed;
-    top: 14%;
+    top: 19%;
     font-size: 14px;
-    width: 15%;
-    background: radial-gradient(rgba(15, 132, 132, 0), rgba(15, 132, 132, 0.3));
+    width: 14%;
+    background: radial-gradient(rgba(115, 0, 0, 0.5), rgba(115, 0, 0, 0.7));
     -webkit-box-shadow: 0px 16px 12px -8px black;
     -moz-box-shadow: 0px 16px 12px -8px black;
     box-shadow: 0px 16px 12px -8px black;
@@ -177,6 +181,15 @@ li .popLink:hover {
      -moz-transform: rotateX(15deg);
       -ms-transform: rotateX(15deg);
           transform: rotateX(15deg);
+}
+
+@media only screen and (max-width: 991px) {
+    #leftrow {
+        display: none;
+    }
+    #content-nav {
+        display: none;
+    }
 }
 
 .showbar {

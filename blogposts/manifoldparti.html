@@ -7,7 +7,7 @@
   <!-- actual stylesheet -->
   <link href="manifoldparti.css" rel="stylesheet" type="text/css">
   <!-- google fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite|Roboto" rel="stylesheet">
   <!-- jquery -->
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
   <!-- MathJax -->
@@ -15,9 +15,8 @@
   <script src="footerscript.js"></script>
   <script src="../tooltip.js"></script>
   <script src="../showbutton.js"></script>
-
 </head>
-<body data-spy="scroll" data-target="#content-nav" data-offset="50" style="height: 100%;">
+<body data-spy="scroll" data-target="#content-nav" data-offset="100" style="height: 100%;">
 
 <!-- Navigation bar -->
 
@@ -71,144 +70,306 @@
 <div class="row">
 
   <!-- Side navbar -->
-  <div class="col-2">
+  <div class="col-2" id="leftrow">
     <nav id="content-nav" class="navbar navbar-light bg-light">
       <nav class="nav nav-pills flex-column">
         <a class="nav-link" href="#item-1">Introduction</a>
-        <a class="nav-link" href="#item-2">Topological Spaces</a>
-        <a class="nav-link" href="#item-3">Connectedness</a>
-        <a class="nav-link" href="#item-4">Compactness</a>
-        <nav class="nav nav-pills flex-column">
-          <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
-          <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>
-        </nav>
+        <a class="nav-link" href="#item-2">The Problem with Infinity</a>
+        <a class="nav-link" href="#item-3">What is a Topology?</a>
+        <a class="nav-link" href="#item-4">Connectedness</a>
+        <a class="nav-link" href="#item-5">Compactness</a>
+        <a class="nav-link" href="#item-6">Hausdorff Spaces</a>
+        <a class="nav-link" href="#item-7">Bases</a>
       </nav>
     </nav>
   </div>
 
-  <div class="col-10">
+  <div class="col-10" id="rightrow">
     <h4 id="item-1">Introduction</h4>
-    <p>I would honestly love to know why the average reader clicked on this blog post - where have you ever heard the term <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The most abstract notion of what open sets are over a space">'topology'</a> used in your life, except maybe used incorrectly by I.T. hotshots trying to describe some flash-array cluster deployment (and for the record that's not what a topology is, that's a whiteboard topography). Suppose we have some mathematical set, call it \( X \). At it's pure definition, a topology \( \tau \) is a collection of subsets of \( X \) which satisfy the three topological axioms:
+    <br/>
+    <p>I would love to know why the average reader clicked on this blog post - where have you ever heard the term <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The most abstract notion of what open sets are over a space">'topology'</a> used in your life, except maybe by I.T. people trying to describe some flash-array cluster deployment (which, for the record, is a whiteboard topography). For mathematicians and physicists, the significance of a topology is that it generalizes the concept of what an open sets is over an arbitrary space. To shed a little light on what I'm getting at: what exactly makes the set \( (-1, 1) \) open? Moreover, What makes the set \( [-1, 1] \) closed? Is the set \( \{1, 2\} \) (i.e. the set containing only the numbers 1 and 2) open or closed or neither? Unfortunately, the vast majority of you would say the first is open because it's surrounded by parentheses and the second is closed because it is surrounded by brackets (I'm not really sure what the general population's consensus is for the third, but you'll find out what the correct answer is if you manage to retain interest throughout the first half of the article).
+    </p>
+    <p> Now suppose we have some mathematical set, call it \( X \). At it's pure definition, a topology \( \tau \) is a collection of subsets of \( X \) which satisfy the three topological axioms:
+    </p>
     <ol>
-      <li>The <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The set with no elements { } -- it is a subset of every set">null set, \( \emptyset \)</a>, and the entire set, \( X \), are both elements of \( \tau \).
+      <li>The <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The set with no elements { } - it is a subset of every set">null set, \( \emptyset \)</a>, and the entire set, \( X \), are both elements of \( \tau \).
       <li>The arbitrary union of (i.e. combination of however many) sets in \( \tau \) is also in \( \tau \)
       <li>The intersection of finitely many elements in \( \tau \) is in \(\tau\)
     </ol>
-    (actually if you were to look the third one up in most text books it would only say two, but finitely many is a direct result under induction). The significance of a topology is that it generalizes the concept of what an open sets is over an arbitrary space. To shed a little light on what I'm getting at, what makes the set \( (-1, 1) \) open? What makes the set \( [-1, 1] \) closed? Is the set \( \{1, 2\} \) (i.e. the set containing only the numbers 1 and 2) open or closed or neither? Unfortunately, the vast majority of you would say the first is open because it's surrounded by parentheses and the second because it is surrounded by brackets (I'm not really sure what the general uninformed consensus is for the third, but you'll find out what the correct answer is if you manage to retain interest throughout the first half of the article).
+    <p>If you were to actually look the third one up in most text books it would only say the intersection of two sets, but finitely many is a direct result under induction.
     </p>
     <p>So why the hell do you or should you care about the study of open sets? Well for the first part, you probably don't, but for the second part, my answer is this: elementary topology by itself is a unique area of mathematics whose logic dances between the elegance of algebra and the tenacity of analysis. Alone, elementary topology seems a mere quest of reasoning to deduce the greatest structure from the fewest assumptions (well, that's actually all theoretical mathematics, but I have a soft spot in my heart for topology); however, with a little formation, it leads to paramount subjects such as algebraic topology and differential geometry which are crucial to understanding advanced topics in relativity and even string theory.
     </p>
-    <p>I would love to get to discuss string theory with you all, but it's going to be a bit of a long road to get there -- topology must come before manifolds, manifolds is required before relativity, somewhere along the way there should be a discussion of Chern classes, and after that, well who's really reading at that point? This is likely going to be a series of posts for this blog, so when it comes to answering questions I may choose to answer some in the comments while answering others in subsequent posts. For those of you who are truly aquainted with the subject: feel free to speak up and correct me where I'm wrong. For those of you who have no experience in the subject: everyone who ever told you there's no such thing as a stupid question was probably born before search engines became relevant (ha didn't expect that twist -- seriously though, Google first then ask I'm a 21 year-old college student not a professor).
+    <p>I would love to get to discuss string theory with you all, but it's going to be a bit of a long road to get there. Topology must come before manifolds, manifolds is required before relativity, somewhere along the way there should be a discussion of Chern classes, and after that - well, who's really reading at that point? This is likely going to be a series of posts for this blog, so when it comes to answering questions I may choose to answer some in the comments while answering others in subsequent posts. For those of you who are truly aquainted with the subject: feel free to speak up and correct me where I'm wrong. For those of you who have no experience in the subject: everyone who ever told you there's no such thing as a stupid question was probably born before search engines became relevant (ha didn't expect that twist - seriously though, Google first then ask I'm a 21 year-old college student not a professor).
     </p>
-    <h4 id="item-2">Topological Spaces</h4>
-    <p>The premiere of topological spaces (as we define them today) became a large area of interest around the mid-ninteenth century, when mathematicians such as Gauss and Riemann built upon the earlier studies of Euler on surfaces. This work would eventually spark a huge interest, leading to a vast amount of research on homology and cohomology groups in the mid-twentieth century under by mathematicians such as Heinz Hopf, Armand Borel, and Frank Adams.</p>
-    <p> The idea of a topological space was conspired to be an archetype of <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The real number system with structure that satisfies the axioms of regular Euclidean geometry ">Euclidean Space</a> such that there is just enough structure to support continuous functions; that is, a topological space was constructed to be the bare minimum and crux of continuity. So before we go any further, it seems appropriate to introduce an important theorem:
+    <br/>
+    <h4 id="item-2">The Problem with Infinity</h4>
+    <br/>
+        <p> Most of the stuff I plan to talk about later in the article will probably not be familiar to the average reader; however, in order to correctly introduce such topics, I must first delve deeper into a concept that many people think they know well: <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The idea that a proper subset has the same cardinality as the original set">infinity</a>. The reason I say concept and not number is because that's exactly what it is; infinite is an adjective which describes asymptotic behavior for functions and equal cardinality of proper subsets for sets. An unfortunate coincidince is that many high school teachers or freshman calculus professors introduce infinity as if it were a number through notations like \( \lim_{x \to \infty} \sqrt{x} = \infty \). The equals sign in the equation often leads people to believe that infinity can be treated numberically, and thus interchanged with other numbers in many equations - this is not the case for \(\mathbb{R}\). A more accurate notation that I prefer is \(\sqrt{x} \to \infty\) as \(x \to \infty\).
     </p>
+    <p>As an aside, one can bypass the conceptual behavior of infinity described above through adopting the  extended real line, \( \overline{\mathbb{R}} = \mathbb{R} \cup \{-\infty, \infty\}\), or the Riemann sphere \( \overline{\mathbb{C}} = \mathbb{C} \cup \{ \infty\}\). For both of these sets, the symbol \{\infty\} describes an extension of the ordered field such that \(x < \infty\) for all \(x \in \mathbb{R}\) and arithmetic operations such as \( x \cdot \infty = \infty \) and \(\frac{x}{0} = \infty\) apply. It is a bit difficult for me to answer why, in general, a high school or college student learning calculus should not simply always use the extended real line; it is widely accepted in measure theory since naturally many sets seem to have 'infinite' volume. I can say, however, that the general topology student should not get \(\mathbb{R}\) and \(\overline{\mathbb{R}}\) confused, as one is compact and one is not.
+    </p>
+    <p> Though a concept, there must be some sort of way for us to tell which sets are 'infinitely more infinite' than others; in a sense, we need some sort of number system to keep track of our infinities. This is where <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="the generalization of natural numbers to describe the sizes of sets">cardinality</a> comes into play. For finite sets, cardinality is simply a natural number no different from the size of the set. However, for infinite sets it no longer makes sense to count upwards to determine the magnitude of such a set; instead, mathematicians use bijections. Think about it - if a function \(f: X \to Y\) is surjective, every element of the codomain \(Y\) is mapped to, so the cardinality of \(X\) must be greater than or equal to the cardinality of \(Y\). On the other hand, if a function is injective, no two distinct elements of the domain \(X\) map to the same element in \(Y\), so the cardinality of \(Y\) must be greater than or equal to that of \(X\). Therefore, if we can find a bijection between two sets, then we know the sets must have equal cardinality.
+    </p>
+    <p> By convention, the baseline cardinality for infinite sets is the cardinality of the natural numbers \(\mathbb{N} = \{1, 2, 3, \dots\}\), denoted by the character \(\aleph_0\) (pronounced aleph null). If a set is finite or has a bijection with \(\mathbb{N}\), it is said to be <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The class of sets which can be shown to have the same cardinality as the natural numbers">countable</a>. For example, take the integers \(\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}\). Then we can easily find a bijection \(f(n): \mathbb{N} \to \mathbb{Z}\) defined by \(n \mapsto (-1)^n \lfloor n/2 \rfloor\), which basically just bounces ad infinitum in both directions (i.e. \(f(1) = 0, f(2) = 1, f(3) = -1, f(4) = 2, f(5) = -2\), and so on).
+    </p>
+    <p>Another example that is important for me to discuss is the countability rational numbers \(\mathbb{Q}\) (i.e. numbers which can be represented as fractions). To start off, consider \( \mathbb{N} \times \mathbb{N} \) and think of the first coordinate as the numerator and the second coordinate as the denominator.
+    </p>
+    <img src="../images/rationals.png" style="width: 60% !important; height: auto; padding-left:35%;">
+    <p>If we try to enumerate the positive rationals by starting with the first row and going to the right in anticipation of a snake pattern, we will never make it to the second row. In fact, it is impossible to tackle the entirity of \(\mathbb{N} \times \mathbb{N}\) with any sort of snake pattern, as tackling one row / column at a time will exhaust our infinite process.
+    </p>
+    <img src="../images/rationalshorizontal.png" style="width: 60% !important; height: auto; padding-left:35%;">
+    <p>
+     However, in the late nineteenth century the father of set theory, Georg Cantor, devised a way to traverse the positive rationals without getting lost in the infinity of any one row or column: proceed along the diagonal lines connecting the coordinates \( (n, 1) \) to \( (1, n) \) for each \(n \in \mathbb{N}\). Although the sizes of the diagonal lines grow asymptotically larger each iteration, for a fixed \(n \in \mathbb{N}\) its length is always finite; therefore, we are able to cover \(\mathbb{N} \times \mathbb{N}\) as \(n \to \infty\).
+    </p>
+    <img src="../images/rationalsdiagonal.png" style="width: 60% !important; height: auto; padding-left:35%;">
+    <p> Now if we extend the same logic from the the countability of the integers, the transitive property tells us that there exists a bijection from \(\mathbb{N}\) to \(\mathbb{Z} \times \mathbb{N}\). This is effectively all we need, as the rationals are the set of equivalence classes over \(\mathbb{Z} \times \mathbb{N}\) (i.e. notice how the diagonal elements along \( (n, n) \) are all the same number equal to \(1\)).
+    </p>
+    <p> The last thing I want to do is show that the  <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The cardinality of the real numbers">continuum, \(\mathfrak{c}\)</a>, has greater cardinality than \(\alpha_0\). This problem was also solved by Georg Cantor in the late nineteenth century. Instead of even consiering the full set of real numbers \(\mathbb{R}\), simply consider the set of infinite binary expansions of decimials in \( [0, 1] \). If we can show that the set \( [0, 1] \subset \mathbb{R} \) is larger than \(\mathbb{N}\), then obviously the result will follow for \(\mathbb{R}\).
+    </p>
+    <p> Before considering the case of infinite binary decimal expansions, think about \(n\) distinct binary decimals that terminate after \(n\) digits. If we line them all up, take the \(i^{th}\) bit from the \(i^{th}\) decimal and negate it (i.e. \(0\) becomes \(1\) and \(1\) becomes \(0\)), then we have created a completely new decimal! Whenever we negate a single bit from one of our decimals, no matter what our new number is it must be distinct from the decimal we just negated. Since we are negating information from each and every one of our decimals availible, the new decimal is distinct from all others. The idea for the infinite case is the exact same: consider the infinite collection of all infinite decimal expansions. If we take the \(n^{th}\) bit from our \(n^{th}\) decimal, negate it, and proceed as \(n \to \infty\), then the resulting decimal could not possibly be contained in the original collection we were looking at. Therefore, every attempted enumeration of the infinite binary decimal expansions will fail to cover all of \([0,1]\), and thus \(\mathbb{R}\) is uncountable.
+    </p>
+    <img src="../images/cantordiagonalization.png" style="width: 70% !important; height: auto; padding-left:25%;">
+    <p> I will not show the proof here, but it turns out that the power set (set of all subsets) of \(\mathbb{N}\) has a bijective correspondence with \(\mathbb{R}\). For a finite set \(X\) with \(n\) elements, the cardinality of the power set of \(X\), \(\mathcal{P}(X)\), is exactly \(2^n\); therefore, it is common to see the continuum denoted by \(\mathfrak{c} = 2^{\aleph_0}\). This brings us to one of the most famous unsolved math problems in the world today: the <a class="popLink" href="https://en.wikipedia.org/wiki/Continuum_hypothesis">continuum hypothesis</a>. Originally introduced in 1878 by our friend Georg Cantor, the continuum hypothesis states that there does not exist any set whose cardinality is strictly between \(\aleph_0\) and \(2^{\aleph_0} = \mathfrak{c}\). That's pretty cool, huh? Through some rudimentary set theory tricks and a few diagrams, we have proved that the philosophical idea of being 'infinitely more infinite' corresponds to the mathematical idea of power sets and exponentiation.
+    </p>
+    <br/>
+    <h4 id="item-3">What is a Topology?</h4>
+    <br/>
+    <p>The premiere of topological spaces (as they are defined today) became a large area of interest around the mid-ninteenth century, when mathematicians such as Gauss and Riemann built upon Euler's earlier studies on surfaces. This work would eventually spark a huge interest, leading to a vast amount of research on homology and cohomology groups in the mid-twentieth century under by mathematicians such as Heinz Hopf, Armand Borel, and Frank Adams.</p>
+    <p> The idea of a topological space was conspired to be an archetype of <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The real number system with structure that satisfies the axioms of regular Euclidean geometry ">Euclidean Space</a> such that there is just enough structure to support continuous functions; that is, a topological space was constructed to be the bare minimum and crux of continuity. So before I go any further, it seems appropriate to introduce an important theorem:
+    </p>
+    <br/>
     <p><h6><b>Theorem:</b><h6> A map \( f: \mathbb{R}^n \to \mathbb{R}^m \) is continuous if and only if \( f^{-1}(V) \) is open in \( \mathbb{R}^n \) for every open set \(V \subset \mathbb{R}^m\).</p>
     <div class="showbar">
       <button type="button" id="showOpenMappingProof" onclick="showbutton('openmappingproof', 'showOpenMappingProof', 'Proof')" class="btn btn-dark">Show Proof</button>
       <div id="openmappingproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
-        <p><h6><b>Proof:</b></h6> For the forward direction, assume \(f\) is continuous. Let \( V \subset \mathbb{R}^m \) be open. Then for every \( p \in V \) there exists some \( \epsilon_p > 0 \) such that \( B_{\epsilon_p}(p) \subset V \). If \( f^{-1}(V) = \emptyset \), then we are done because the empty set is trivially open; otherwise, fix \(x \in f^{-1}(V) \). Then there exists some \(\epsilon_{f(x)} > 0 \) such that \(B_{\epsilon_{f(x)}}(f(x)) \subset V\). However, by hypothesis this implies there exists some \( \delta_x > 0 \) such that \( y \in B_{\delta_x}(x) \) implies \( f(y) \in B_{\epsilon_{f(x)}}(f(x)) \). Since \( x \in f^{-1}(V) \) was arbitrary, this implies that \( f^{-1}(V) \) is open.
-        </p>
-        <p> For the reverse direction, assume that if \( V \subset \mathbb{R}^m\) is open then \( f^{-1}(V) \subset \mathbb{R}^n \) is open. Then the result follows from the fact that every open ball is open, and for every open set we can find some \( \delta > 0 \) such that the open ball of radius \( \delta \) is contained in that set.
-        </p>
+        <h6><b>Proof:</b></h6> For the forward direction, assume \(f\) is continuous. Let \( V \subset \mathbb{R}^m \) be open. Then for every \( p \in V \) there exists some \( \epsilon_p > 0 \) such that \( B_{\epsilon_p}(p) \subset V \). If \( f^{-1}(V) = \emptyset \), then we are done because the empty set is trivially open; otherwise, fix \(x \in f^{-1}(V) \). Then there exists some \(\epsilon_{f(x)} > 0 \) such that \(B_{\epsilon_{f(x)}}(f(x)) \subset V\). However, by hypothesis this implies there exists some \( \delta_x > 0 \) such that \( y \in B_{\delta_x}(x) \) implies \( f(y) \in B_{\epsilon_{f(x)}}(f(x)) \). Since \( x \in f^{-1}(V) \) was arbitrary, this implies that \( f^{-1}(V) \) is open.
+
+        <br/>For the reverse direction, assume that if \( V \subset \mathbb{R}^m\) is open then \( f^{-1}(V) \subset \mathbb{R}^n \) is open. Then the result follows from the fact that every open ball is open, and for every open set we can find some \( \delta > 0 \) such that the open ball of radius \( \delta \) is contained in that set.
         $$\tag*{$\blacksquare$}$$
       </div>
     </div>
-    <p>To give a brief aside for those of you who are not familiar with theoretical mathematics: there is not substantial reason for you to look at the proofs or become too worried when you do not understand the mechanics of a proof; however, proofs are the mortar and pestle of higher-level mathematics. The beauty of theoretical mathematics lies in assuming the least amount of structure and deducing staggering truths that are innate to the logical aether that we call reality. Now to address the proof above, I witheld an important property of open sets in Euclidean space: a set \( U \) is open if and only if for every point in that set, there exists a ball of positive radius centered at that point also contained in the set. For example, take the set \( (0, 1) \). You could pick a small number incredibly close to \(0\), say \( 10^{-1000} \); yet, I can always pick a radius even smaller, say \( \frac{1}{3}\cdot 10^{-1000} \), and the ball of such radius ceneterd at \( 10^{-1000} \) is still contained in \( (0, 1) \) (since it's boundary is \( \frac{2}{3}\cdot 10^{-1000} \) away from \(0\)). This is the idea of open sets in Euclidean space that the average reader is probably familiar with -- I can creep as close to the boundary as I want, but I will never be able to look off the edge.
+    <br/>
+    <p>To give a brief aside for those of you who are not familiar with theoretical mathematics: there is no substantial reason for you to look at the proofs or become too worried when you do not understand the mechanics of a proof; however, proofs are the mortar and pestle of higher-level mathematics. The beauty of theoretical mathematics lies in assuming the least amount of structure and deducing staggering truths, which ultimately are innate to the logical aether that you and I call reality. Sure, you'll likely admire the finished product by the end of the blog series - but you will not appreciate the work that was put into building it.
     </p>
-    <p>Now, remember earlier how I blabbered a bit on how a topology generalizes what an open set is in order to allow just enough structure for continuous maps? Well the theorem above basically tells us that open sets are all we really need to define what an open map is. Say we have two spaces \(X = \{a, b, c \} \) and \( Y = \{ d, e, f \} \), along with topologies assigned to each of them \( \tau_X = \{ \emptyset, \{ a \}, \{ b \}, \{ a, b \}, X \} \) and \( \tau_Y = \{ \emptyset, \{ e \}, Y \} \) (note that both these topologies satisfy the topological axioms). Then every mapping \(h: X \to Y \) is continuous except when \( h^{-1}(e) = \{c\} \), \( h^{-1}(e) = \{b, c\} \), or \( h^{-1}(e) = \{a, c \} \) (note that if no element in \(X\) maps to \(e\) then we are fine, since that would mean \(h^{-1}(e) = \emptyset\) which is also open).
+    <p> Now to address the proof above, I witheld an important property of open sets in Euclidean space: a set \( U \) is open if and only if for every point in that set, there exists a ball of positive radius centered at that point also contained in the set. For example, take the set \( (0, 1) \). You could pick a small number incredibly close to \(0\), say \( 10^{-1000} \); yet, I can always pick a radius even smaller, say \( \frac{1}{3}\cdot 10^{-1000} \), and the ball of such radius ceneterd at \( 10^{-1000} \) is still contained in \( (0, 1) \) (since it's boundary is \( \frac{2}{3}\cdot 10^{-1000} \) away from \(0\)). This is the idea of open sets in Euclidean space that the average reader is probably familiar with - I can creep as close to the boundary as I want, but I will never be able to look off the edge.
     </p>
-    <img src="../images/mappings.png" style="width: 1134; height: auto;">
+    <p>Now, remember earlier how I blabbered a bit on how a topology generalizes the definition of an open set, in order to allow just enough structure for continuous maps? Well the theorem above basically tells us that open sets are all we really need to define what an open map is. Say we have two spaces \(X = \{a, b, c \} \) and \( Y = \{ d, e, f \} \), along with topologies assigned to each of them \( \tau_X = \{ \emptyset, \{ a \}, \{ b \}, \{ a, b \}, X \} \) and \( \tau_Y = \{ \emptyset, \{ e \}, Y \} \) (note that both these topologies satisfy the topological axioms). Then every mapping \(h: X \to Y \) is continuous except when \( h^{-1}(e) = \{c\} \), \( h^{-1}(e) = \{b, c\} \), or \( h^{-1}(e) = \{a, c \} \) (note that if no element in \(X\) maps to \(e\) then we are fine, since that would mean \(h^{-1}(e) = \emptyset\) which is also open).
+    </p>
+    <img src="../images/mappings.png" style="width: 90%; height: auto;">
     <p>And here you were thinking that 'discontinuous' had to do with whether a function magically jumped from one value to another or there was some point in the line that was mysteriously removed (but to be fair if you find a small enough open set around one of the two values of the jump function, you'll see that you wind up with a closed set).
     </p>
-    <p>Alright so now that we understand that open sets are basically whatever you define them to be (as long as the topology satisfies the three axioms), where do closed sets come from out of all this? Simple: the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="All elements of the surrounding space which are strictly NOT contained in the specified set">compliment</a> of an open set is a closed set. Referring to the example above with \( X = \{a, b, c \} \) and \( \tau_X = \{ \emptyset, \{ a \}, \{ b \}, \{ a, b \}, X \} \), we just need to take the compliment of every open set:
-    $$ \{ X \backslash \emptyset, X \backslash \{ a \}, X \backslash \{ b \}, X \backslash \{a, b\} , X \backslash X\} = \{ X, \{ b, c \}, \{ a, c \}, \{ c \}, \emptyset \} $$
-    But hold on -- this would mean that that the entire set \(X\) and the empty set \( \emptyset \) are both open and closed, which doesn't make sense whatsoever? That would be correct; as far as making sense of it, a nice property of closed sets is that sequences which converge inside a closed set must also have their limit point in the set. So think about the real numbers \( \mathbb{R} \), which the everyday reader has been working with their whole life. If you have a sequence in \( \mathbb{R} \) and you know that sequence converges, then obviously the limit point is going to be in \( \mathbb{R} \) also; hence, \( \mathbb{R} \) must be closed. But \( \mathbb{R} \) also has the property that I touched on before where I can try to creep close to the edge, but I can never look over (i.e. I can always find an open set surrounding me) so \( \mathbb{R} \) must also be open.
+    <p>Alright so now that you hopefully understand that open sets are basically whatever you define them to be (as long as the topology satisfies the three axioms), where do closed sets fit into all this? Simple: the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="All elements of the surrounding space which are strictly NOT contained in the specified set">complement</a> of an open set is a closed set. Referring to the example above with \( X = \{a, b, c \} \) and \( \tau_X = \{ \emptyset, \{ a \}, \{ b \}, \{ a, b \}, X \} \), we just need to take the complement of every open set:
+    $$ \{ X - \emptyset, X - \{ a \}, X - \{ b \}, X - \{a, b\} , X - X\} = \{ X, \{ b, c \}, \{ a, c \}, \{ c \}, \emptyset \} $$
+    But hold on - this would mean that that the entire set \(X\) and the empty set \( \emptyset \) are both open and closed, which doesn't make sense whatsoever? That would be correct; as far as making sense of it, a nice property of closed sets is that sequences which converge inside a closed set must also have their limit point in the set. So think about the real numbers \( \mathbb{R} \), which the everyday reader has been working with their whole life. If you have a sequence in \( \mathbb{R} \) and you know that sequence converges, then obviously the limit point is going to be in \( \mathbb{R} \) also; hence, \( \mathbb{R} \) must be closed. But \( \mathbb{R} \) also has the property that I touched on before where I can try to creep close to the edge, but I can never look over (i.e. I can always find an open set surrounding me) so \( \mathbb{R} \) must also be open.
     </p>
     <br>
-    <h4 id="item-3">Connectedness</h4>
+    <h4 id="item-4">Connectedness</h4>
     <br>
-    <p> Now let me introduce the idea of a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A pair of nonempty open sets that are disjoint, but whose union covers the entire space">separation</a>: imagine we took the real number line \( \mathbb{R} \) and we cut it in half at some point \( x \) -- we could then represent what is left over as the union of two open sets, i.e. \( (-\infty, x) \cup (x, \infty) \). We went from a connected line to a disconnected line, and the ONLY thing that changed is that we could represent the entire space as the union of two nonempty open sets (think about how if we tried to represent all of \( \mathbb{R} \) with two open sets, the two would have to intersect somewhere). This is exactly the generalization of a space being connected or disconnected: a space is disconnected if there exists a separation, i.e. the space can be represented as the union of two nonempty open sets which do not intersect. A space is connected if it is not disconnected (big suprise there).
+    <p> Now let me introduce the idea of a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A pair of nonempty open sets that are disjoint, but whose union covers the entire space">separation</a>: imagine we took the real number line \( \mathbb{R} \) and cut it in half at some point \( x \) - what is left over could then be represented as the union of two open sets, i.e. \( (-\infty, x) \cup (x, \infty) \). We went from a connected line to a disconnected line, and the only thing that changed is that we could represent the entire space as the union of two nonempty open sets (think about how if we tried to represent all of \( \mathbb{R} \) with two open sets, the two would have to intersect somewhere). This is exactly the generalization of a space being connected or disconnected: a space is disconnected if there exists a separation, i.e. the space can be represented as the union of two nonempty open sets which do not intersect. A space is connected if it is not disconnected (big suprise there).
     </p>
     <p>Pulling the two previous paragraphs together brings us to an important theorem:</p>
+    <br/>
     <h6><b>Theorem:</b></h6>
-    <p>A topological space \(X\) is connected if and only if the only sets that are both open and closed are the empty set \(\emptyset\) and the entire space \( X \).</p>
+    A topological space \(X\) is connected if and only if the only sets that are both open and closed are the empty set \(\emptyset\) and the entire space \( X \).
     <div class="showbar">
       <button type="button" id="showConnectedProof" onclick="showbutton('connectedproof', 'showConnectedProof', 'Proof')" class="btn btn-dark">Show Proof</button>
       <div id="connectedproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
-        <p><h6><b>Proof:</b></h6> For the forward direction, assume \( X\) is connected and assume, to the contrary, that there exists some nonempty set \(S\) which is both closed and open. Since \(S\) is closed, it follows that its compliment \( X\backslash S \) is open. However, \(S\) and \( X\backslash S \) are disjoint, so they form a separation of \(X\) contradicting the assumption that \(X\) is connected; therefore, such \(S\) cannot exist.
-        </p>
-        <p>For the reverse direction, we proceed by contrapositive. Assume that \(X\) is disconnected. Then there exists some pair of nonempty open sets \(A\) and \(B\) such that \(X = A \cup B\) and \(A \cap B = \emptyset\). But then we would have that \(X\backslash A = B\) and \(X \backslash B = A\), so both sets are closed as well.
+        <h6><b>Proof:</b></h6> For the forward direction, assume \( X\) is connected and assume, to the contrary, that there exists some nonempty set \(S\) which is both closed and open. Since \(S\) is closed, it follows that its compliment \( X - S \) is open. However, \(S\) and \( X - S \) are disjoint, so they form a separation of \(X\) contradicting the assumption that \(X\) is connected; therefore, such \(S\) cannot exist.
+        
+        <br/>For the reverse direction, we proceed by contrapositive. Assume that \(X\) is disconnected. Then there exists some pair of nonempty open sets \(A\) and \(B\) such that \(X = A \cup B\) and \(A \cap B = \emptyset\). But then we would have that \(X - A = B\) and \(X  - B = A\), so both sets are closed as well.
         $$\tag*{$\blacksquare$}$$
       </div>
     </div>
+    <br/>
     <p> Personally, I think that's pretty cool; we started out with only three axioms for what a topological space is, and we built up enough to define what it means for any space to be connected.  I just want to introduce a few more theorems about connectedness and then we'll be good to move onto the next section:
     <p>
+    <br/>
     <h6><b>Theorem:</b></h6>
     The image of a connected space \(X\) under a continuous map \( f: X \to Y \) is connected.
     <div class="showbar">
       <button type="button" id="showConnectedUnderContProof" onclick="showbutton('connectedundercontproof', 'showConnectedUnderContProof', 'Proof')" class="btn btn-dark">Show Proof</button>
       <div id="connectedundercontproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
-        <p><h6><b>Proof:</b></h6> Suppose \( X \) is connected and \( f: X \to Y \) is continuous. Suppose, to the contrary, that \(A \cup B = f(X) \) is a separation of \(f(X)\). Then
+        <h6><b>Proof:</b></h6> Suppose \( X \) is connected and \( f: X \to Y \) is continuous. Suppose, to the contrary, that \(A \cup B = f(X) \) is a separation of \(f(X)\). Then
         $$ \begin{eqnarray} X &=& f^{-1}(A \cup B) = f^{-1}(A) \cup f^{-1}(B) \nonumber \\
          \emptyset &=& f^{-1}(\emptyset) = f^{-1}(A \cap B) = f^{-1}(A) \cap f^{-1}(B) \end{eqnarray}$$
          since \(f\) is continuous and \(A\) and \(B\) are open, we must have that \( f^{-1}(A) \) and \( f^{-1}(B) \) are open as well. Then we must have that \( f^{-1}(A) \) and \( f^{-1}(B) \) form a separation of \(X\), a contradiction.
         $$\tag*{$\blacksquare$}$$
       </div>
     </div>
+    <br/>
     <p>Almost ALL elements of this proof we have gone over, except a very subtle bit of elementary set theory that I snuck in there: the preimage of a union is the union of preimages, the preimage of an intersection is the intersection of preimages, and the image of a union is the union of an image (however, it is not true that the image of an intersection is the intersection of images). At this point, we surprisingly have enough information to prove the Intermediate Value Theorem for real valued functions (you could technically generalize the IVT a little more so that it maps into a totally ordered set endowed with the order topology, but the proof is literally the same).
     </p>
+    <br/>
     <h6><b>Intermediate Value Theorem:</b></h6>
     Let \(X\) be a connected topological space, let \(f: X \to \mathbb{R} \) be continuous. Choose \(a , b \in X\) such that \( f(a) < f(b) \) and pick some real number \(d\) with \( f(a) < d < f(b) \). Then there exists some point \(c \in X\) such that \(f(c) = d\).
     <div class="showbar">
       <button type="button" id="showIVTProof" onclick="showbutton('IVTproof', 'showIVTProof', 'Proof')" class="btn btn-dark">Show Proof</button>
       <div id="IVTproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
-        <p><h6><b>Proof:</b></h6> Let \(A = f(X) \cap (-\infty, d)\) and \(B = f(X) \cap (d, \infty)\). Clearly \(A\) and \(B\) are disjoint and (with respect to the subspace topology on \( f(X) \)) are both open. Now suppose, to the contrary, there does not exist such \(c \in X\) such that \(f(c) = d\). Then \(f(X)\) would equal \(A \cup B\) so that \(A\) and \(B\) form a separation of \( f(X) \). However, this would contradict the fact that continuous maps of connected spaces are connected; therefore, such \(c \in X\) must exist.
-        </p>
+        <h6><b>Proof:</b></h6> Let \(A = f(X) \cap (-\infty, d)\) and \(B = f(X) \cap (d, \infty)\). Clearly \(A\) and \(B\) are disjoint and (with respect to the subspace topology on \( f(X) \)) are both open. Now suppose, to the contrary, there does not exist such \(c \in X\) such that \(f(c) = d\). Then \(f(X)\) would equal \(A \cup B\) so that \(A\) and \(B\) form a separation of \( f(X) \). However, this would contradict the fact that continuous maps of connected spaces are connected; therefore, such \(c \in X\) must exist.
+        
         $$\tag*{$\blacksquare$}$$
       </div>
     </div>
+    <br/>
     <h6><b>Lemma:</b></h6>
     The union of connected sets with a point in common is connected.
     <div class="showbar">
       <button type="button" id="showConnectedUnionProof" onclick="showbutton('connectedunionproof', 'showConnectedUnionProof', 'Proof')" class="btn btn-dark">Show Proof</button>
       <div id="connectedunionproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
-        <p><h6><b>Proof:</b></h6> Let \(\{ X_\alpha \}\) be a collection of connected sets and let \( x \in X_\alpha \) for all \(\alpha\). Let \( Y = \bigcup_{\alpha} X_\alpha \), and supposed to the contrary that \(Y\) is disconnected. Then there exist disjoint nonempty open sets \(A\) and \(B\) such that \( Y = A \cup B \), and thus \(x\) must lie in one of the two sets, say \(A\). However, every \(X_\alpha\) contains \(x\), so it must be the case that every \(X_\alpha\) intersects \(A\) implying \(B\) is empty -- a contradiction.
-        </p>
+        <h6><b>Proof:</b></h6> Let \(\{ X_\alpha \}\) be a collection of connected sets and let \( x \in X_\alpha \) for all \(\alpha\). Let \( Y = \bigcup_{\alpha} X_\alpha \), and supposed to the contrary that \(Y\) is disconnected. Then there exist disjoint nonempty open sets \(A\) and \(B\) such that \( Y = A \cup B \), and thus \(x\) must lie in one of the two sets, say \(A\). However, every \(X_\alpha\) contains \(x\), so it must be the case that every \(X_\alpha\) intersects \(A\) implying \(B\) is empty - a contradiction.
         $$\tag*{$\blacksquare$}$$
       </div>
     </div>
+    <br/>
     <p> We now introduce a fundamental concept in the study of topology: a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A continuous function that introduces similarities in structure between two topological spaces">homeomorphism</a>. The definition of a homeomorphism is fairly straightforward: it is a continuous bijection with continuous inverse. To break it down, recall how a continuous function has the property that the inverse sends open sets to open sets; well, since the inverse is continuous also that means that the function sends open sets to open sets both ways. Moreover, since the function is a bijection, we know that we have a nice pairing between open sets. It is now time for us to introduce our last theorem on connectedness:
     </p>
+    <br/>
     <h6><b>Theorem:</b></h6>
     The product of connected sets is connected.
     <div class="showbar">
       <button type="button" id="showConnectedProductProof" onclick="showbutton('connectedproductproof', 'showConnectedProductProof', 'Proof')" class="btn btn-dark">Show Proof</button>
       <div id="connectedproductproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
-        <h6><b>Proof:</b></h6> <p>Let \( X\) and \(Y\) be connected spaces. Fix \(y \in Y\). Note that the space \(X \times \{ y \}\) is homeomorphic to \(X\), and thus connected as well. Similarly, for every \(x \in X\), the set \( \{x\} \times Y \) is connected. Then by the previous lemma, for every \(x \in X\), the set \( U_x = (\{ x \} \times Y) \cup (X \times \{ y\}) \) is connected since it has the common point \( (x, y) \). Then \( \bigcap_{x \in X} U_x = X \times \{ y \} \), and thus \( \bigcup_{x \in X}U_x = X \times Y \) is connected.
-        </p>
+        <h6><b>Proof:</b></h6> Let \( X\) and \(Y\) be connected spaces. Fix \(y \in Y\). Note that the space \(X \times \{ y \}\) is homeomorphic to \(X\), and thus connected as well. Similarly, for every \(x \in X\), the set \( \{x\} \times Y \) is connected. Then by the previous lemma, for every \(x \in X\), the set \( U_x = (\{ x \} \times Y) \cup (X \times \{ y\}) \) is connected since it has the common point \( (x, y) \). Then \( \bigcap_{x \in X} U_x = X \times \{ y \} \), and thus \( \bigcup_{x \in X}U_x = X \times Y \) is connected.
         $$\tag*{$\blacksquare$}$$
       </div>
     </div>
+    <br/>
     <p>And there you have it, basically all you've ever wanted to know about what makes a space connected and where that gets you. Later on (not in this post) I'll introduce the concept of path connectedness for the sake of the fundamental group and homology; though this is not a difficult idea per se, the realm of homology certainly requires a solid background in elementary topology.
     </p>
     <br/>
-    <h4 id="item-4">Compactness</h4>
+    <h4 id="item-5">Compactness</h4>
+    <br/>
     <p>
-    This is a somewhat hard concept to introduce, but it would be almost impossible for me to go forward in the study of topology without it. Consider a singleton element \(\{ a \}\) in \(\mathbb{R}\). Recall that a set is closed if its compliment is open, well the compliment of \(\{ a \}\) is simply the set \( (-\infty, a) \cup (a, \infty)  \). Since the union of open sets is open by our topological axioms, we see that a singleton is closed. Now, under the laws of basic set theory (specifically <a class="popLink" href="https://en.wikipedia.org/wiki/De_Morgan%27s_laws">De Morgan's Law</a>), the complement of a union is the intersection of complements and the complement of an intersection is the union of complements. Hence, the axioms for closed sets change a little for a topological space \(X\):
+    This is a somewhat hard concept to introduce, but it would be almost impossible for me to go forward in the study of topology without it. Consider a singleton element \(\{ a \}\) in \(\mathbb{R}\). Recall that a set is closed if its compliment is open, well the compliment of \(\{ a \}\) is simply the set \( (-\infty, a) \cup (a, \infty)  \). Since the union of open sets is open by our topological axioms, we see that a singleton is closed. Now, under the laws of basic set theory (specifically <a class="popLink" href="https://en.wikipedia.org/wiki/De_Morgan%27s_laws">De Morgan's Law</a>), the complement of a union is the intersection of complements and the complement of an intersection is the union of complements. Hence, the axioms for closed sets change a little for a topological space \(X\):</p>
     <ol>
     <li> The empty set \(\emptyset\) and the ambient space \( X \) are both closed</li>
     <li> The union of finitely many closed sets is closed </li>
     <li> The arbitrary intersection of closed sets is closed </li>
     </ol>
-    Again, if you were to look at most textbooks, (\(2\)) would say something more like the union of two closed sets is closed -- the result simply follows by induction. So what makes the closed sets \( [0, 1] \) and \( \{ 2^{-100}, 2^{-99}, \dots, 2^{0} \} \) so much different? The answer is compactness (If you answered connected you would also be correct). Back when mathematicians studied <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A topological space with the added structure of distance (where distance is generalized to 4 axioms). The basis of open sets become open balls of radius r &gt; 0">metric spaces</a> (which had further generalized things like Hilbert spaces and Banach spaces), they had thought that the unique property of the set \( [a, b] \) in \(\mathbb{R}\) was something that we now call <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Every infinite subset of X has a limit point also contained in X">Limit Point Compactness</a>. When we later introduce the conept of Hausdorff spaces, this continued to confuse mathematicians as to whether the nice properties came from Limit Point Compactness, <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The property that every infinite sequence has a convergent subsequence">Sequential Compactnesss</a>, or regular compactness. Eventually, mathematicians would stumble upon the most generalized form of compactness in a topological space that binds the two other types to countable compactness in a Hausdorff space and binds all three together in a metric space.
+    <p>
+    Again, if you were to look at most textbooks, (\(2\)) would say something more like the union of two closed sets is closed - the result simply follows by induction. So what makes the closed sets \( [0, 1] \) and \( \{ 2^{-100}, 2^{-99}, \dots, 2^{0} \} \) so much different? The answer is compactness (If you answered connected you would also be correct). Back when mathematicians studied <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A topological space with the added structure of distance (where distance is generalized to 4 axioms). The basis of open sets become open balls of radius r &gt; 0">metric spaces</a> (which had further generalized things like Hilbert spaces and Banach spaces), they had thought that the unique property of the set \( [a, b] \) in \(\mathbb{R}\) was something that we now call <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Every infinite subset of X has a limit point also contained in X">Limit Point Compactness</a>. When we later introduce the conept of Hausdorff spaces, this continued to confuse mathematicians as to whether the nice properties came from Limit Point Compactness, <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The property that every infinite sequence has a convergent subsequence">Sequential Compactnesss</a>, or regular compactness. Eventually, mathematicians would stumble upon the most generalized form of compactness in a topological space that binds the two other types to countable compactness in a Hausdorff space and binds all three together in a metric space.
     </p>
-    <p> 
-    <h5 id="item-3-1">Item 3-1</h5>
-    <p>...</p>
-    <h5 id="item-3-2">Item 3-2</h5>
-    <p>...</p>
+    <p> So now it's probably time for me to introduce an open cover. Let \(X\) be my ambient space. A collection \(\{ V_\alpha \}\) is simply called a cover if  \( \bigcup_{\alpha}V_\alpha = X \). This makes sense - we have a bunch of sets, and we say that the collection is a cover if it LITERALLY covers the space. We call such a cover an <em>open cover</em> if the collection is comprised of only open sets (shocker).
+    </p>
+    <p> Alright enough with the foreplay. Let \(X\) be a topological space. We call \(X\) <a class="popLink" href="https://en.wikipedia.org/wiki/Compact_space">Compact</a> if every open cover has a finite subcover.</p>
+    <p> The first time I saw this, my initial thought was 'what the hell does throwing a collection of open sets on top of my initial set have anything to do with the interval \([a, b]\)'. I didn't really get the answer I wanted until like the fifth time I saw the <a class="popLink" href="https://en.wikipedia.org/wiki/Heine%E2%80%93Borel_theorem">Heine-Borel Theorem</a>, which basically meanders along a heuristic path until you've finally dealt with enough contradictions to be convinced compactess means closed and bounded in \(\mathbb{R}\).
+    </p>
+    <p> A difficult thing for people to understand outside of mathematics or law is the use of existential quantifiers and universal quantifiers. When I say that a space is compact if every open cover has a finite cover, that does not mean I can just go and choose some random open cover for a set to show it's compact. In fact, to show a space is not compact, I simply have to find the existence of one open cover that does not have a finite cover. For that reason, it is orders of magnitudes easier to show a set is non-compact than it is to show that a set is compact.
+    </p>
+    <p>We now introduce a few important theorems:</p>
+    <br/>
+    <h6><b>Theorem:</b></h6>
+    Every closed subset of a compact space is compact.
+    <div class="showbar">
+      <button type="button" id="showCompactSubsetProof" onclick="showbutton('compactsubsetproof', 'showCompactSubsetProof', 'Proof')" class="btn btn-dark">Show Proof</button>
+      <div id="compactsubsetproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
+        <h6><b>Proof:</b></h6> Let \(X\) be a compact space and suppose \(F \subset X\) is closed. Choose some open cover \(\{V_\alpha\}\) for \(F\). Since \(F \) is closed, the set \(X  - F\) is open; thus, \( \bigcup_\alpha V_\alpha \cup X  - F \) forms an open cover for \(X\). Since \(X\) is compact, there exists some finite subcover, call it \( \mathfrak{U} \). Depending on whether our original cover also covers \(X  - F\), we may have that \(X  - F \in \mathfrak{U}\). In either case, we discard this set so our final open cover for \(F\) has the form \(\mathfrak{U} - \{ X  - F \}\).
+        $$\tag*{$\blacksquare$}$$
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <h6><b>Theorem:</b></h6>
+    The image of a compact space under a continuous map is compact.
+    <div class="showbar">
+      <button type="button" id="showCompactImageProof" onclick="showbutton('compactimageproof', 'showCompactImageProof', 'Proof')" class="btn btn-dark">Show Proof</button>
+      <div id="compactimageproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
+        <h6><b>Proof:</b></h6> Let \(X\) be a compact space and let \(f: X \to Y\) be continuous. Let \( \{V_\alpha\}_{\alpha \in \mathcal{A}} \) be an open cover for \(f(X) \subset Y\). Then
+        $$ \{ f^{-1}(V_\alpha) \mid \alpha \in \mathcal{A} \} $$
+        is an open cover for \(X\), since the preimage of an open set is open under a continuous map. However, \(X\) is compact, so there exists some finite subcover, say
+        $$ \{ f^{-1}(V_{\alpha_1}), f^{-1}(V_{\alpha_2}), \dots, f^{-1}(V_{\alpha_n}) \} $$
+        for some \(n \in \mathbb{N}\). Then
+        $$ \{ V_{\alpha_1}, V_{\alpha_2}, \dots, V_{\alpha_n}\} $$
+        must form a finite open cover for \(f(X)\). Therefore \(f(X)\) is compact.
+        $$\tag*{$\blacksquare$}$$
+      </div>
+    </div>
+    <br/>
+    <p> Most of the additional compactness theorems begin to go out of our scope; however, after we introduce Hausdorff spaces in the next section, we will see a breif compactness come into play. For those who wish to study analysis or partial differential equations, you will find that compactness begins to play a huge role in terms of <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Given a function f, the support of f is the set of points x for which f(x) is nonzero. A function has compact support if its support is compact">compact support</a>.
+    </p>
+    
+    <br/>
+    <h4 id="item-6">Hausdorff Spaces</h4>
+    <br/>
+    <p>If you remember from earlier, I discussed that an important property of open sets in Euclidean space was that I could pick any point in the open set and know that I can still find some ball of positive radius around the ball that is still contained in my open set. Now imagine that instead of looking at a point inside an open set, I'm looking at two distinct points, \(x\) and \(y\), on the real line. As long as \(x \neq y\), I can always find an open ball around each point such that the two open balls do not intersect. For example, supose I have the points \(x = 0\) and \(y = 10^{-1000}\). Then I can simply take my radius to be \(r = \frac{1}{3}\) so that the balls \(B_r(x)\) and \(B_r(y)\) are disjoint.
+    </p>
+    <img src="../images/hausdorff.png" style="width: 90%; height: auto;">
+    <p> This is the idea behind a set being Hausdorff. Before I go any further, I'm going to have to change up vocabulary a bit for you guys; as much as I love talking about balls, topologists generally refer to an open set containing a specified element a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Given a point p, a neighborhood p is an open set containing (but not necessarily centered) at p">neighborhood</a>. One reason we switch concepts is that, topologically at least, it does not make a difference whether a set is centered at a point or merely contains it. Alright, with that behind us it's time to formally define a Hausdorff space. We say that a space \(X\) is <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Given two distinct points, there exist disjoint neighborhoods for each neighborhood">Hausdorff</a> if given any two distinct points \(x \neq y\), there exist disjoint neighborhoods \(U, V \subset X\) such that \(x \in U\), \(y \in V\), and \(U \cap V = \emptyset\).
+    </p>
+    <p> We are now beginning to build up a bit of structure; a Hausdorff space is still a longshot from where we want to be, but it gives us just enough to work with to introduce two new theorems:
+    </p>
+    <br/>
+    <h6><b>Theorem:</b></h6>
+    A compact subspace of a Hausdorff space is closed.
+    <div class="showbar">
+      <button type="button" id="showCompactHausdorffProof" onclick="showbutton('compacthausdorffproof', 'showCompactHausdorffProof', 'Proof')" class="btn btn-dark">Show Proof</button>
+      <div id="compacthausdorffproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
+        <h6><b>Proof:</b></h6> Let \(X\) be Hausdorff and let \(S \subset X\) be compact. It suffices to show that \(X  - S\) is open. Fix \(p\) in \(X - S\). Since \(X\) is Hausdorff, for every \(y \in S\) the points \(p\) and \(y\) are distinct, so there exist some neighborhoods \(U_y\) and \(V_y\) with \(p \in U_y\) and \(y \in V_y\). Then \(\{V_y : y \in S\}\) is an open cover for \(y\), so there exists some finite subcover \( \{V_{y_1}, V_{y_2}, \dots, V_{y_n} \}\) for some \(n \in \mathbb{N}\). But then the set
+        $$ U = U_{y_1} \cap U_{y_2} \cap \dots \cap U_{y_n} $$
+        is disjoint from \(S\) and open because it is the finite intersection of open sets. Since \(y\) is arbitrary, this proves that the set \(X - S\) is open.
+        $$\tag*{$\blacksquare$}$$
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <h6><b>Theorem:</b></h6>
+    Let \(f: X \to Y\) be a continuous bijection. If \(X\) is compact and \(Y\) is Hausdorff
+    <div class="showbar">
+      <button type="button" id="showHausdorffBijectionProof" onclick="showbutton('hausdorffbijectionproof', 'showHausdorffBijectionProof', 'Proof')" class="btn btn-dark">Show Proof</button>
+      <div id="hausdorffbijectionproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
+        <h6><b>Proof:</b></h6> It remains to show that the inverse map \(f^{-1}: Y \to X\) is continuous. Note that the statement 'a function is continuous if and only if the preimage of a closed map is closed' is equivalent to our first theorem since preimages preserve intersections and complements. This, along with our previous theorems, will be a huge aid in showing that \(f^{-1}\) is continuous. Let \(A\) be closed in \(X\); since closed subsets of compact spaces are compact, \(A\) must be compact as well. Since the image of a compact set is compact under a continuous map, this tells us \(f(A)\) is compact in \(Y\). By the previous theorem, compact sets are closed in Hausdorff spaces so \f(A)\) must be closed. Therefore, \(f^{-1}\) is continuous and \(f\) is a homeomorphism.
+        $$\tag*{$\blacksquare$}$$
+      </div>
+    </div>
+    <br/>
+    <p>The Hausdorff property will prove to be a useful asset when it comes time to introduce manifolds next chapter. In fact, the notion of homeomorphisms will also allow us to define useful local properties of manifolds. With that said, all that's really left is the concept of a bases.
+    </p>
+    <br/>
+    <h4 id="item-7">Bases</h4>
+    <br/>
+    <p> When topologies were introduced earlier in this article, it became apparent that many open sets in a topology were merely unions of smaller open sets. Consider the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Every subset of the overall space is considered open">discrete topology</a> on the set \(X = \{ a, b, c, d \} \)
+    </p>
+    $$ \tau_D = \{\emptyset, \{a\}, \{b\}, \{c\}, \{d\}, \{a, b\}, \{a, c\}, \{a, d\}, \{b, c\}, \{b, d\}, \{c, d\}, \{a, b, c\}, \{a, b, d\}, \{a, c, d\}, \{b, c, d\}, X\}$$
+    there are only four elements (not including the empty set) that cannot be broken down any further: the singletons. Every open set in \(X\) can be formed by combining however many elements from \( \{a\}, \{b\}, \{c\}, \{d\}\) - this is the idea behind a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A collection of open sets which generates the topology on a space">basis</a>. Formally, a basis \(\mathcal{B}\) for a topology \(\tau\) over \(x\) is a collection of sets in \(\tau\) that satisfies:
+    </p>
+    <ol>
+    <li>\(\mathcal{B}\) covers \(X\)</li>
+    <li>If \(B_1 \cap B_2 \neq \emptyset\) for \(B_1, B_2 \in \mathcal{B}\) and \(x \in B_1 \cap B_2\), then there exists some \(B_3 \in \mathcal{B}\) with \(B_3 \subseteq B_1 \cap B_2\) and \(x \in B_3\)</li>
+    </ol>
+    <p> Property \(2\) may seem a bit obscure, but it essentially ensures that our basis caputres the smallest elements possible so that it can actually generate the topology as desired (i.e. you can represent big sets with small sets, but you can't represent small sets with big sets).
+    </p>
+    <p> Bases become powerful tools used to streamline proofs, which would otherwise be burdensome to tackle. It is much easier to prove a fact for a small family of basis elements and observe how the result holds under unions than it is to prove that fact for a huge family of open sets. For example, if I wanted to prove the statement:
+    </p>
+    <blockquote class="blockquote">
+    <p class="mb-0" style="text-align: center;"> <em>Every open set in \(\mathbb{R}\) is measurable</em></p>
+    </blockquote>
+    <p> I would simply prove the statement for an arbitrary open ball \(B_\epsilon(x)\).</p>
+    <p> Recall from earlier that a set is said to be countable if it is finite or has a bijective correspondence with \(\mathbb{N}\). When it comes to topological spaces, we no longer care about the underlying number of elements in our set but the number of open sets in our topology. Note, however, that many of our open sets are merely just unions of smaller open sets. Therefore, what we <em>REALLY</em> care about is the size of our basis. We call a topological space <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="There are countably many basis elements">second countable</a> if there exists a countable basis for the topology. For example, \(\mathbb{R}\) is second-countable if you consider the basis made up of open balls centered at rational points with rational radii.
+    </p>
+    <p> We have one final proof, and then I will wrap up this blog post with the definition of a manifold. To start off, given a topological space \(X\) and set \(S \subset X\), we say that a point \(p \in X\) is a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Every neighborhood intersects some set; generalization of limit of sequence">limit point</a> of \(S\) if every neighborhood containing \(p\) intersects \(S\). The <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Smallest closed set containing the original set">closure</a> of \(S\), denoted \(\overline{S}\), is defined to be the union of \(S\) along with its limit points. We say that \(S\) is <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Every neighborhood contains a point of a dense set">dense</a> in \(X\) if \(\overline{S} = X\). For example, the rational numbers \(\mathbb{Q}\) are dense in \(\mathbb{R}\) since between every two real numbers there exists a fraction (and thus every open ball must contain a rational number between its center and its boundary).
+    </p>
+    <br/>
+    <h6><b>Theorem:</b></h6>
+    If \(X\) is second-countable, then there exists a countable subset of \(X\) that is dense in \(X\).
+    <div class="showbar">
+      <button type="button" id="showCountableDenseProof" onclick="showbutton('countabledenseproof', 'showCountableDenseProof', 'Proof')" class="btn btn-dark">Show Proof</button>
+      <div id="countabledenseproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px;">
+        <h6><b>Proof:</b></h6> Assume \(X\) is second-countable, and let \(\{B_n\}\) denote the countable basis for \(X\). For each \(n \in \mathbb{N}\), choose some \(x_n \in B_n\). Then the set \(S = \{ x_n : n \in \mathbb{N} \}\) is dense due to the fact that for any point \(x \in X\) and neighborhood \(U\) of \(x\), there exists some basis element contained in \(U\) and intersecting \(S\).
+        $$\tag*{$\blacksquare$}$$
+      </div>
+    </div>
+    <br/>
+    <p>With that said and done, we finally have everything we need to define what a manifold is. A <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A mathematical structure that resembles Euclidean space to an extent">topological manifold</a> of dimension \(n\) (also called an \(n\)-manifold) is a topological space \(X\) such that:</p>
+    <ol>
+    <li> \(X\) is <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Every point has a neighborhood which is homeomorphic to Euclidean space of dimension n">Locally Euclidean</a></li>
+    <li>\(X\) is Hausdorff</li>
+    <li>\(X\) is second-countable</li>
+    </ol>
+    <p> Cool stuff - what are we gonna do with it? Well nothing yet. I've gone over a bunch of topics in this blog post, so I'm going to rest up a bit and wait until the next post in my series to talk about things like differential forms, bundles, Lie Groups, and everything else you couldn't care less about. Thanks for reading! &#x1F601 </p>
+    <div style="padding-left: 20%; overflow: hidden;">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/b9434BoGkNQ" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+    </div>
   </div>
 </div>
 
