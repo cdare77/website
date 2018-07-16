@@ -27,9 +27,18 @@ img.bg {
 
 /* Add a gray background color with some padding */
 body {
+    position: relative;
+    height: 100%;
     font-family: 'Quattrocento', Verdana, sans-serif;
     padding: 20px;
     background: #f1f1f1;
+}
+
+.anchor{
+  display: block;
+  height: 70px;
+  margin-top: -70px;
+  visibility: hidden;
 }
 
 .navbar-brand {
@@ -180,13 +189,17 @@ li .popLink:hover {
           transform: rotateX(15deg);
 }
 
-@media only screen and (max-width: 991px) {
-    #leftrow {
+@media only screen and (max-width: 767px) {
+    .content {
+        width: 100%;
+    }
+    #sidemenu {
         display: none;
     }
-    #content-nav {
-        display: none;
-    }
+/*    #sidemenu.affix {*/
+/*      position: fixed;*/
+/*      top: 40px;*/
+/*    }*/
 }
 
 .showbar {
@@ -253,3 +266,33 @@ li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
     list-style-type: decimal !important;
 }
 
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 35px;
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*#sidemenu.affix-top, #sidemenu.affix {*/
+/*  position: sticky;*/
+/*}*/
+/**/
+/*#sidemenu.affix-bottom {*/
+/*  position: sticky;*/
+/*}*/
+
+#sidemenu .nav-link.active,
+#sidemenu .nav-link:hover,
+#sidemenu .nav-link:focus{
+    color: #111;
+    border-bottom: 1px #000 dashed;
+}
