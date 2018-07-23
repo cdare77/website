@@ -106,11 +106,10 @@
       <h4 id="IntroductionToCiphers">Introduction to Ciphers</h4>
       <br>
       <p>In today's world, there is monumental effort to secure data that we wish to remain private.
-Information like our social-security number, credit card data, and passwords should all be hidden from the general public (and for good reason). Yet, we seldom ask ourselves ourselves how this data is <em>actually</em> hidden.
+Information like our social security number, credit card data, and passwords should all be hidden from the general public (and for good reason). Yet, we seldom ask ourselves ourselves how this data is <em>actually</em> hidden.
 If the title hasn't already given it away, the answer is <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Translating data or plaintext into a masked ciphertext through the use of a cipher">encryption</a>.
 </p>
-<p>
-If you're like most of the population, you probably have no idea what a block <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An algorithm used to mask data in a covert manner">cipher</a> is. This shouldn't be an issue though, as the tutorial is meant to be understood by anyone with a bit of coding experience.</p>
+<p> If you're in the vast majority of the population, you probably haven't run across block <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An algorithm used to mask data in a covert manner">ciphers</a>. This shouldn't be an issue though, as the tutorial is meant to be understood by anyone with a bit of coding experience.</p>
 <p> The first week that I started writing ciphers for NIST, my mentor came up to me and gave a helpful analogy: a block cipher is like an old-fashioned safe. The cipher itself is the safe, while our data is some valuable. The catch is that our key is still called a 'key', but it's really just a big number of our choosing used for calculations.</p>
       <img src="../images/ciphersafe.png" style="width: 95%; height: auto;">
       <h4 id="WhyAES">Why AES?</h4>
@@ -125,7 +124,7 @@ Therefore, the objective of a cipher (i.e. our safe) is to make it as hard as po
 
       <p> To give a little more detail, all computer information is stored in binary - thus, our key is just a fixed number of bits (128, 192, or 256 for AES). For every bit that we add, the number of possibilities for our key doubles so as a result our <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The abstract set / collection  of all possible keys">key space</a> doubles as well.
 In order to break a cipher, one must find some sort of algorithm which discovers the key with greater efficiency than a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Trying every key possible to match a plaintext (unencrypted) / ciphertext (encrypted) pair">brute-force</a> solution
-(though I have not gone into the details of AES yet, this is the rational behind adding extra rounds to larger key sizes). </p>
+(though I have not gone into the details of AES yet, this is the rationale behind adding extra rounds to larger key sizes). </p>
 
 <p>To my knowledge, there are currently no non-<a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Attacking the underlying hardware or operating system to bypass an algorithm">side-channel attacks</a> besides a biclique attack that only has theoretical improvement from \(2^{128} \) to \( 2^{126} \) (theoretical meaning this attack is still not practical for modern computers).
 Though there are other ciphers that are just as strong as AES (i.e. Serpent and Twofish), the attention given to AES over the past few decades has allowed for speedups and security updates to patch the commonly-known side-channel attacks.
@@ -147,9 +146,9 @@ AES is what cryptographers call a <a style="color: #00c624" data-toggle="tooltip
     <h5 id="KeySchedule">Key Schedule</h5>
     <br>
     <p> By this time, you're likely wondering how the key acutally fits into the cipher - is there some sort of lock hidden in the code where the key mysteriously fits in, maybe some hash function that checks authenticity? Nope. </p>
-    <p> As I briefly touched upon earlier, the key is basically a large number used for arithmetic operations in \(GF(2^8)\); but even that isn't entirely true, as the key itself is only used in the first round for <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The process of adding round keys before and after the encryption to expand the possible key space">key-whitening</a>. For later operations, the key is actually used to generate what are called <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Word-sized (4 byte) chunks that are generated from the original key in an algorithm called a Key Schedule">round keys</a> in a <a style="color: #00c624" data-toggle="tooltip" title data-original-title="An algorithm almost always independent of the cipher for generating unique round keys for each round">key schudule</a>; many ciphers utilize the concept of a key schedule, as it greatly improves upon the security of a key. For example, if a cryptanalyst were to gain access to one of our round keys through extensive attacks, the strength of our key schedule would determine whether that  is enough information to compute the original key (in the case of AES, it does not but allows the cryptanalyst to gain access to other round keys which collectively can accomplish the task).
+    <p> As I briefly touched upon earlier, the key is basically a large number used for arithmetic operations in \(GF(2^8)\); but even that isn't entirely true, as the key itself is only used in the first round for <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The process of adding round keys before and after the encryption to expand the possible key space">key-whitening</a>. For later operations, the key is actually used to generate what are called <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Word-sized (4 byte) chunks that are generated from the original key in an algorithm called a Key Schedule">round keys</a> in a <a style="color: #00c624" data-toggle="tooltip" title data-original-title="An algorithm almost always independent of the cipher for generating unique round keys for each round">key schudule</a>; many ciphers utilize the concept of a key schedule, as it greatly improves upon the security of a key. For example, if a cryptanalyst were to gain access to one of our round keys through extensive attacks, the strength of our key schedule would determine whether that  is enough information to compute the original key (in the case of AES, it is not but allows the cryptanalyst to gain access to other round keys which collectively can accomplish the task).
     </p>
-    <p> The AES key schedule is broken down into two subroutines, <code>SubWord()</code> and <code>RotWord()</code>, which are added in \(GF(2^8)\) to a round constant. The gist of the key-schedule is that the previous round's key is added to the current round's key so that, as we continue along the key schedule, we experience a similar <a class="popLink" href="https://en.wikipedia.org/wiki/Avalanche_effect">avalanche effect</a> to that of SHA. Implementing the subroutines is incredibly straightforward: <code>RotWord()</code> cyclically rotates the bytes of the current round key as if they were a wheel, and <code>SubWord()</code> simply breaks the round key up into individual bytes and sends them through the SBox (which is explained in next section). Here is the code for each:
+    <p> The AES key schedule is broken down into two subroutines, <code>SubWord()</code> and <code>RotWord()</code>, which are added in \(GF(2^8)\) to a round constant. The gist of the key-schedule is that the previous round key is added to the current round key so that, as we continue along the key schedule, we experience a similar <a class="popLink" href="https://en.wikipedia.org/wiki/Avalanche_effect">avalanche effect</a> to that of SHA. Implementing the subroutines is incredibly straightforward: <code>RotWord()</code> cyclically rotates the bytes of the current round key as if they were a wheel, and <code>SubWord()</code> simply breaks the round key up into individual bytes and sends them through the SBox (which is explained in next section). Here is the code for each:
     </p>
     <div class="showbar">
       <button type="button" id="showRotSubPyBut" onclick="showbutton('rotsubpycode', 'showRotSubPyBut', 'Python')" class="btn btn-dark">Show Python</button>
@@ -186,7 +185,7 @@ static void SubWord(unsigned char* word) {
     </div>
    <p>Since the size of data that we wish to encrypt is fixed at 16 bytes (hence the term "block" cipher - we only encrypt one 16-byte block at a time), we choose to represent this data as a 4x4 matrix of bytes which will refer to from now on as the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Our data / plaintext represented as a matrix of bytes for ease of linear transformations">state</a>:
    $$\begin{pmatrix} p_0 & p_4 & p_8 & p_{12} \\\\ p_1 & p_5 & p_9 & p_{13} \\\\ p_2 & p_6 & p_{10} & p_{14} \\\\ p_3 & p_7 & p_{11} & p_{15} \end{pmatrix}$$
-   I'm using the variable \(p_i \) for \( 0 \leq i \leq 15 \) here to denote splitting of plaintext into bytes. Our goal is to add a 4 round keys to the state each round (since a round key is only a word and the state is 4 words). In order to do this, we tend to think of the state as an array of 4 columns, and perform such operations column by column. </p>
+   I'm using the variable \(p_i \) for \( 0 \leq i \leq 15 \) here to denote splitting of plaintext into bytes. Our goal is to add 4 round keys to the state each round (since a round key is only a word and the state is 4 words). In order to do this, we tend to think of the state as an array of 4 columns, and perform such operations column by column. </p>
    <p>Now the first four round keys are simply the key itself; however, all subsequent round keys are added to the previous four round keys after they have passed through the <code>SubWord()</code> and <code>RotWord()</code> subroutines. Since our first four round keys are used for <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The process of adding round keys before and after the encryption to expand the possible key space">key-whitening</a>, we actually have one additional round key which is used for the last round. Thus, for AES-128, there need to be 4 round keys for each of 10 + 1 rounds; for AES-192, there need to be 4 keys for each of 12 + 1 rounds; and for AES-256, there need to be 4 keys for each of 14 + 1 rounds. I am confident you can do the math. Heres an example of the full key schedule:
   </p>
   <div class="showbar">
@@ -473,7 +472,7 @@ static unsigned char xtime(unsigned char x)
         </code>
       </div>
     </div>
-    <p> With Galois field multiplication for small numbers in our arsenal, the implementation of <code>MixColumns()</code> is now fairly straightforward; what we have is:
+    <p> With Galois field multiplication for small numbers in our arsenal, the implementation of <code>MixColumns()</code> is now fairly straightforward. What we have is:
     </p>
     <div class="showbar">
       <button type="button" id="showMixPyBut" onclick="showbutton('mixpycode', 'showMixPyBut', 'Python')" class="btn btn-dark">Show Python</button>
@@ -518,7 +517,7 @@ static void MixColumns() {
     </div>
     <br>
     <h5 id="AddRoundKey"><code>AddRoundKey()</code></h5>
-    <p> Again, it's just what it sounds like. If you didn't feel like reading over the <a class="popLink" href="#KeySchedule">Key Schedule</a> section but actually want to understand why this is vital to the cipher, then go kick rocks cus that's pretty important.
+    <p> Again, it's just what it sounds like. If you didn't feel like reading over the <a class="popLink" href="#KeySchedule">Key Schedule</a> section but actually want to understand why this is vital to the cipher, then go kick rocks cuz that's pretty important.
     </p>
     <p> Alright, so hopefully we understand that there are 4 times as many round keys as there are rounds (plus 4 used for key whitening). If this is still unclear to you, we reached this number because the state is 4 times the size of the round key - in reality if we were to mesh the round keys together four at a time, we have a full 128-bit round key for each round. If you read the <a class="popLink" href="#SubBytes">SubBytes</a> section, you should also be aware that addition in \(GF(2^8)\) is the same as bitwise exclusive-or <code>XOR</code>, so putting it all together we wind up with the following code:
     </p>
@@ -968,9 +967,9 @@ static void AddRoundKey(unsigned char round) {
 <br>
     <h4 id="AdditionalContentGF">Additional Content: \(GF(2^8)\)</h4>
 <br>
-<p>Oh it's you again..</p>
-<p>Alright, you've made it this far, so there's only a little bit left to understand: what is this \(GF(2^8)\) symbol that we keep on seeing? Well for starters, that is the Galois Field of order 256 - the number of values an unsigned byte (8 bits, hence the 8) can represent.
-But what is a field? For anyone pursuing pure mathematics, you can jump to the next paragraph. For everyone else, what I'm about to go over may be a bit of an abstract concept (trust me, when I was first studying abstract algebra my first though was 'who even uses this shit?' - apparently the government institute I would later join as a research fellow).</p>
+<p>Oh, it's you again.</p>
+<p>Alright, you've made it this far, so there's only a little bit left to understand: what is this \(GF(2^8)\) symbol that we keep on seeing? Well, for starters, that is the Galois Field of order 256 - the number of values an unsigned byte (8 bits, hence the 8) can represent.
+But what is a field? For anyone pursuing pure mathematics, you can jump to the next paragraph. For everyone else, what I'm about to go over may be a bit of an abstract concept (trust me, when I was first studying abstract algebra my first thought was, 'who even uses this shit?' - apparently the government institute I would later join as a research fellow).</p>
 <p>
 Imagine you have some set of objects and you want to know if you can do mathematics on those objects in a similar fashion to the way most people do mathematics on numbers. To find this out, you need to be a little more specific: what kind of mathematics do you want to do?</p>
     <ul>
@@ -999,7 +998,7 @@ Imagine you have some set of objects and you want to know if you can do mathemat
     +232 \\
   \_\_\_\_\_\_ \\
   \ \ \ 140 \]
- <p> At this point you may be telling yourself "that's just objectively wrong, 3 + 2 is 5 not 0"; well, you'd be right if this were the integers. However, as I mentioned earlier, the addition is like modular arithmetic with respect to our base prime (which is 5). Thus, we are actually evaluating the expression (3 + 2) mod 5, which does happen to be equal to 0. The same rational applies to each digit.
+ <p> At this point you may be telling yourself, "That's just objectively wrong: 3 + 2 is 5 not 0." Well, you'd be right if this were the integers. However, as I mentioned earlier, the addition is like modular arithmetic with respect to our base prime (which is 5). Thus, we are actually evaluating the expression (3 + 2) mod 5, which does happen to be equal to 0. The same rational applies to each digit.
  </p>
  <p> For the sake of completeness, I mentioned earlier that addition in \( GF(2^8)\) is equivalent to the exclusive-or (XOR) operation. This is pretty easy to show - recall that XOR works in the following way:
  </p>
@@ -1278,7 +1277,7 @@ static void InvMixColumns() {
 <p>Just kidding, there is no <code>InvAddRoundKey()</code>. If you read the \( GF(2^8) \) section above you should understand that addition and subtraction are one in the same, so you simply add the round key right back.
 </p>
 <br>
-<p> Alright, it's finally time to put the pieces together of our decryption. The forward encryption for AES is described by applying the following functions every round (except the last):
+<p> Alright, it's finally time to put the pieces of our decryption together. The forward encryption for AES is described by applying the following functions every round (except the last):
     <div class="showbar">
       <div style="text-align: left; padding-left: 15px;">
         <code>
