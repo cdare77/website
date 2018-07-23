@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PRINCE Cipher Rundown</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="keywords" content="PRINCE, PRINCE encryption, PRINCE cipher, cybersecurity">
+  <meta name="description" content="An in-depth rundown of the PRINCE cipher">
+  <meta name="author" content="Chris Dare">
+  <!-- Bootstrap 4.1 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <!-- actual stylesheet -->
+  <link href="prince.css" rel="stylesheet" type="text/css">
+  <!-- google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite" rel="stylesheet">
+  <!-- jquery -->
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+  <!-- MathJax -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+  <!-- Code Prettify -->
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst"></script>
+  <!-- My scripts -->
+  <script src="../footerscript.js"></script>
+  <script src="../tooltip.js"></script>
+  <script src="../showbutton.js"></script>
+</head>
+<body data-spy="scroll" data-target="#sidemenu" data-offset="250" style="position: relative;">
+
+<!-- Navigation bar -->
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="../homepage.html">Chris Dare</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="../homepage.html">Home<span class="sr-only">(current)</span></a>
+      </li>
+      <!-- Blog Dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="../blogpage.html" id="navbarDropdownBlogLink"  aria-haspopup="true" aria-expanded="false">Blog<span class="sr-only">(current)</span></a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownBlogLink">
+          <a class="dropdown-item" href="../blogposts/manifoldparti.html">Manifolds: Part I</a>
+          <a class="dropdown-item" href="../blogposts/manifoldpartii.html">Manifolds: Part II</a>
+        </div>
+      </li>
+      <!-- Code Dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="../codepage.html" id="navbarDropdownCodeLink" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
+          Code
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
+          <a class="dropdown-item" href="aes.html" style="font-family: 'Courier New', Courier;">AES</a>
+          <a class="dropdown-item active" href="#" style="font-family: 'Courier New', Courier;">PRINCE</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../mymusicpage.html">My Music</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="../photospage.html">Photos</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- webpage header -->
+
+<div class="jumbotron vertical-center header">
+  <h1 style="font-family:'Special Elite', cursive;">PRINCE Cipher</h1>
+</div>
+
+
+<div class="container">
+  <div class="row py-3">
+    <div class="col-md-3 col-sm-0" id="sidemenu">
+      <div class="menu sticky-top p-3 bg-light">
+    
+          <a href="#LowLatencyLightweightCiphers" class="nav-link pl-0">Low-Latency Lightweight Ciphers</a>
+          <a href="#WhyPRINCE" class="nav-link pl-0">Why PRINCE?</a>
+          <a href="#TheCipher" class="nav-link pl-0">The Cipher</a>
+            <ul class="nav flex-md-column ml-2 hidden-sm-down">
+              <li class="nav-item"><a href="#SubNibbles" class="nav-link"><code>SubNibbles()</code></a></li>
+              <li class="nav-item"><a href="#MPrimeLayer" class="nav-link"><code>MPrimeLayer()</code></a></li>
+              <li class="nav-item"><a href="#ShiftRows" class="nav-link"><code>ShiftRows()</code></a></li>
+              <li class="nav-item"><a href="#MLayer" class="nav-link"><code>MLayer()</code></a></li>
+              <li class="nav-item"><a href="#AddRoundConstant" class="nav-link"><code>AddRoundConstant()</code></a></li>
+              <li class="nav-item"><a href="#AddKey" class="nav-link"><code>AddKey()</code></a></li>
+            </ul>
+          <a href="#EncryptionCode" class="nav-link pl-0">Encryption Code</a>
+          <a href="#DecryptionCode" class="nav-link pl-0">Decryption Code</a>
+      </div>
+    </div> <!-- end col-3 -->
+
+
+    <!-- content -->
+    <div class="col-md-9 col-sm-12 content">
+        <h4 id="LowLatencyLightweightCiphers">Low-Latency Lightweight Ciphers</h4>
+        <br/>
+        <p> For the sake of brevity, I'm going to assume you read my <a class="popLink" href="aes.html"> previous post</a> which introduced the concept of encryption. This blog post will not rely as heavily on Galois field arithmetic, so there is no need for you to reiterate over that section.
+        </p>
+        <p> In almost all areas of computer science, there is something known as the <a style="color: #00c624" data-toggle="tooltip" title data-original-title="The principle that an algorithm can either focus on computation time or space required, but never both">space vs. time tradeoff</a> which governs the laws of efficiency - a prime example of this was in my AES article, where I provided code for Galois field multiplication as well as a look-up table. Anyone who encorporated the two methods (<code>xtimes()</code> and <code>gmult()</code>) into their code would have seen their program run a bit slower than a program which utilized the look-up tables. However, if you slowed time down to the nanosecond scale and observe the memory which their process mapped to, you would notice that their program uses less space.
+        </p>
+        <p>The decision of whether to use a space-efficient implementation or time-efficient implementation is really a matter of use-case. For example, the largest you will likely see an AES software implementation is only a little over a dozen kilobytes (kB). Thus, any software on your computer that claims to encrypt data is likely using a time-efficient algorithm since your computer has plenty of memory to spare. In terms of hardware, space efficiency also includes the physical area which an algorithm takes up on a chip (in terms of number of gates, etc).
+        </p>
+        <p> Yet, as the <a style="color: #00c624" data-toggle="tooltip" title data-original-title="The network of everyday devices, such as thermostats, refridgerators, and home-security, which now connect to your software devices and exchange data">Internet of Things (IoT)</a> becomes increasingly more relevant in our everyday lives (my dad, for example, has been going on a frenzy to get Nest products - he even bought the damn doorbell with a camera on it), it becomes apparent that not all electronic devices have memory to spare. For anyone with an E-ZPass, consider the small <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Radio-Frequency Identification">RFID</a> chip inside which makes all the transactions for you. Much like a credit card, you wouldn't want anyone accessing the your bank information whenever you make a transaction (that is, drive through an E-ZPass gate).
+        </p>
+        <p> Examples like the E-ZPass one above are what inspired the creation of <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Ciphers which have a minimal memory footprint and use as few resources as possible">lightweight ciphers</a>. However, for the E-ZPass example above in particular, a lightweight cipher doesn't do us much good if it can't encrypt our data in the time it takes to drive through a gate at 35 miles-per-hour (the speed limit signs are optional, right?). Thus, we turn our attention to the subcategory of low-<a style="color: #00c624" data-toggle="tooltip" title data-original-title="The delay between the beginning of a process and the end of a process">latency</a> lightweight ciphers.</p>
+        <p> But wait a minute - doesn't the whole idea of something being both low-latency and lightweight contradict our space vs. time tradeoff? Well, not exactly. You see, the space vs. time tradeoff is <em>relative</em> to a single algorithm - it merely tells us that, given a program, we can trade some of our speed for a smaller memory footprint or vice versa. Imagine that the space vs. time tradeoff is a teeter-totter (or seesaw, but if you call it a teeterboard get the hell off my website) and the height of one side represents space while the height of the other side represents time. The space vs. time tradeoff does not say anything about the height of the center of our teeter-totter or the teeter-totter's length - merely that the teeter-totter exists.
+        </p>
+        <figure style="padding-bottom: 30px; text-align: center;">
+            <img src="../images/teetertotter.png" style="width: 50%; border-radius: 5px 5px 5px 5px;"></img>
+            <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> </figcaption>
+        </figure>
+        <p> Extending our teeter-totter analogy to low-latency lightweight ciphers, the center of the  low-latency lightweight cipher's teeter-totter would be at a low height so that, when balanced, the time costs and space costs are not too high. However, push one side to the limits, and the cipher may no longer be considered low-latency or lightweight.
+        </p>
+        <br/>
+        <br/>
+        <h3 id="WhyPRINCE">Why PRINCE?</h3>
+        <br/>
+        <p> If it wasn't already evident, I didn't just introduce low-latency lightweight ciphers for the sake of introducing low-latency lightweight ciphers; as it so happens, these two properties are essentially PRINCE's claim-to-fame.
+        </p>
+        <p> For a little background, PRINCE was originally developed in 2012 by a group of researchers from Denmark, Germany, and Belgium (and some guy from France but who really cares about France when the world cup isn't on). The majority of the researchers were associated with the Technical University of Denmark, while the remaining were either at Ruhr University or with the semiconductor manufacturer NXP Semiconductors. The researchers' goal was to conceive some sort of block cipher which would be significantly smaller on hardware than AES-128 and PRESENT (which I have not discussed).</p>
+         <p> In terms of their goal, I would say the researchers did a pretty good job at developing a lightweight cipher. On hardware, even when AES-128 is <a style="color: #00c624" data-toggle="tooltip" title data-original-title="The circuit realizes the exact same code is repeated 10 times and reuses the same gates instead of extending the critical path">loop unrolled</a>, PRINCE takes up 14-15 times less area than  AES-128. In terms of software, I tested both encryptions on a PIC16F1947 microcontroller and got the following results:
+         </p>
+         <table id="resultstable">
+            <tr>
+              <th> Encryption </th>
+              <th> Run-Time Memory (bytes) </th>
+              <th> Key Schedule (clock cycles) </th>
+              <th> Encryption (clock cycles) </th>
+              <th> Decryption (clock cycles) </th>
+            </tr>
+            <tr>
+              <td> AES-128 </td>
+              <td> 268 </td>
+              <td> 14799 </td>
+              <td> 24216 </td>
+              <td> 27438 </td>
+            </tr>
+            <tr>
+              <td> PRINCE </td>
+              <td> 74 </td>
+              <td> 366 </td>
+              <td> 18214 </td>
+              <td>18722 </td>
+            </tr>
+        </table>
+        </br>
+        <p> Note that this data is not as significant since many of the aspects, such as run-time memory, are implementation-dependent; that is, two programmers could implement the exact same cipher and get slightly different results as far as run-time memory and clock-cycles.
+        </p>
+        <p> So where's the catch? We have a cipher that is no doubt more efficient than AES, why don't we just use this one all the time? Well, you probably don't remember from the previous post, but I made the analogy that AES is like putting your money in a national bank, whereas PRINCE is like hiding it in your mattress. The former takes more time and is an arduous process, but has excellent security measures. The latter, on the other hand, is quick and easy but prone to theft in some cases.
+        </p>
+        <p> The analogy between hiding money in a bank vs. in a mattress only goes so far though. There are numerous cryptanalytic attacks on PRINCE, but unless you have a graduate degree in applied mathematics or computer science you will have a tough time implementing them. The attack that I'm most familiar with is known as reflection cryptanalysis, which builds upon the fact that a linear <a style="color: #00c624" data-toggle="tooltip" title data-original-title="A function which is its own inverse">involution</a> \(f: GF(2^n) \to GF(2^n) \) must have \(2^{n/2}\) fixed points. From there, you simply use the \(\alpha\)-reflection property of PRINCE at the very middle round of the encryption to begin recovering the key 4 bits at a time. However, there are numerous <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Exposing the image of the domain space and the preimage of the codomain space for multiple round functions to reduce the key space">meet-in-the-middle (MITM) atttacks</a> which are significantly more efficient in recovering the key. Moreover, all these attacks are practical (that is, they do not surpass the \(2^{80}\) complexity threshold which makes an attack theoretical) so they can be effectively performed by modern computers. To a cryptanalyst, this effectively means the PRINCE cipher is broken.
+        </p>
+        <p> At this point, you may be asking yourself why I'm telling you about some cipher that's already been broken - well, there's two reasons:</p>
+        <ol>
+        <li> A primary principle of hacking is to never try to break the hardest part of an algorithm (i.e. the encryption itself). For that reason, attacks performed by organizations such as the NSA or foreign countries almost always go after design flaws in the underlying hardware (known as a <a class="popLink" href="https://en.wikipedia.org/wiki/Side-channel_attack"> side-channel attack</a>). This is the reason for the <a class="popLink" href="https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability)">meltdown attack's</a> notoriety. I may try to do a separate post on the meltdown attack if I'm feeling up to it, but in essence the meltdown attack exposes the pipeline (more accurately, the race condition in speculative execution) and cache structure originally laid out by MIPS in the 90's.
+        </li>
+        <br/>
+        <li> Security is use-case dependent. Obviously PRINCE was not deemed as an encryption standard by NIST, so trying to sell software to the government which utilizes the cipher wouldn't go well. However, small applications for the everyday use-case (such as encrypting car battery information or RFID tags) would benefit much more from PRINCE's minimal hardware footprint than from alternative ciphers. In addition, any attack on PRINCE itself still takes a fair amount of time, so incorporating a well-timed random key generator could counteract the cipher's security defecit. </li>
+        </ol>
+        <p> Hopefully those two reasons are enough to convince you the algorithm is worth looking at. Anyways - enough foreplay - it's time to get into the algorithm.
+        </p>
+        <br/>
+        <br/>
+        <h3 id="TheCipher">The Cipher</h3>
+        <br/>
+        <p> Much like AES from the previous post, the PRINCE cipher is a <a style="color: #00c624" data-toggle="tooltip" title data-original-title="A cipher who's algorithm is based off translating a fixed number of bits, then swapping the order of the bits">Substitution-Permutation Network</a> (SPN) that iterates over a fixed number of rounds. However, unlike AES, PRINCE only comes in one key size - 128 bits. Moreover, the amount of data which is encrypted is fairly small - only 64 bits (though this is typical of a lightweight cipher). The reason we are encrypting half the block size is actually because all of our operations only work on <a style="color: #00c624" data-toggle="tooltip" title data-original-title="4-bit chunk; also very fun to say, especially in a professional context">nibbles</a> - that is, we are no longer considering \( GF(2^8) \) but instead \(GF(2^4)\).
+        </p>
+        <p> Not considering the round functions, the encryption is fairly straightforward. Instead of treating our data as a matrix (like AES does), we simply look at it as a fixed one-dimensional array. At the beginning of the  cipher there is a key-whitening phase, followed by five normal rounds, a middle round (which, as I mentioned in the section above, is a linear inversion), five <em>inverse</em> rounds, and then another key-whitening phase. If you notice, this gives the encryption a nice symmetry to it (that also leads to reflective attacks but whatever it looks nice).
+        </p>
+        <figure style="padding-bottom: 30px;">
+            <img src="../images/princecipher.png" style="width: 100%; border-radius: 5px 5px 5px 5px;"></img>
+            <figcaption style="text-align: center; font-size: 55%; font-color: gray;"> J. Borghoff, A. Canteaut, T. G¨uneysu, E. B. Kavun, M. Kneˇzevi´c, L. R. Knudsen,
+G. Leander, V. Nikov, C. Paar, C. Rechberger, P. Rombouts, S. S. Thomsen,
+and T. Yal¸cın. <em>PRINCE - A Low-Latency Block Cipher for Pervasive Computing
+Applications</em>, ASIACRYPT 2012, LNCS, vol. 7658, pp. 208 – 225, Springer 2012.</figcaption>
+        </figure>
+        <p> Each round by itself is simply four functions: <code>SubNibbles()</code>, <code>MLayer()</code>, <code>AddRoundConstant()</code>, and <code>AddKey()</code>. However, since the middle round is much different from the other rounds, I'm also going to need to go over
+            <code>ShiftRows()</code> and <code>MPrimeLayer()</code>.
+        </p>
+        <p> Another distinction from AES is that PRINCE doesn't really have much of a key-schedule. Given a 128-bit key, \(k\), PRINCE splits the key into two 64-bit halves \( k_0 || k_1 \) and uses the two halves to create a third 64-bit chunk \(k_0'\). We construct \(k_0'\) using the simple operation:
+        </p>
+            $$ k_0' = (k_0 \ggg 1) \oplus (k_0 \gg 63) $$
+        
+        <div class="showbar">
+          <button type="button" id="showExtendKeyPyBut" onclick="showbutton('extendkeypycode', 'showExtendKeyPyBut', 'Python')" class="btn btn-dark">Show Python</button>
+          <div id="extendkeypycode" style="display: none; text-align: left;">
+          <pre class="prettyprint linenums">
+def ExtendKey(Key):
+    newKey = [0x00] * 24
+    
+    for i in range(8):
+        newKey[i] = Key[i]
+        newKey[i + 8] = (Key[i] >> 1) | (Key[(i + 1) % 8] >> 7)
+        newKey[i + 16] = Key[i + 8]
+        
+    newKey[15] ^= (Key[7] & 0x10)
+    
+    return newKey</pre>
+          </div>
+       </div>
+       
+      <div class="showbar">
+        <button type="button" id="showExtendKeyCBut" onclick="showbutton('extendkeyCcode', 'showExtendKeyCBut', 'C')" class="btn btn-dark">Show C</button>
+        <div id="extendkeyCcode" style="display: none; text-align: left;">
+          <pre class="prettyprint linenums">
+void ExtendKey(const unsigned char * Key, unsigned char * newKey) {
+    
+    unsigned char i;
+    for (i = 0; i < 8; i++) {
+        newKey[i] = Key[i];
+        newKey[i + 8] = (Key[i] >> 1) | (Key[(i + 1) % 8] >> 7);
+        newKey[i + 16] = Key[i + 8];
+    }
+    
+    newKey[15] ^= (Key[7] & 0x10);
+}</pre>
+            </div>
+       </div>
+       <br/>
+        <p> Now for each subroutine (except <code>MPrimeLayer()</code>) we will need to find an inverse so that the last five rounds of encryption are possible. With that said, let's take a detailed look at each of the cipher's subroutines. </p>
+        <br/>
+        <br/>
+        <h3 id="SubNibbles"><code>SubNibbles()</code></h3>
+        <br/>
+        <p> As explained in the previous article for AES, the purpose of a substitution layer is to eliminate any linearity so that our cipher cannot be represented as a system of linear equations of any size. The <code>SBox</code> for AES was a large, 256-byte array which mapped every possible byte value to a new, distinct byte value.
+        </p>
+        <p> We still desire the same effect of mapping all 256 possible byte values to a new distinct byte value; however, 256 bytes of data is a lot of unnecessary space if our goal is to make a lightweight cipher. Instead, what if we took every byte, cut it in half, and applied some sort of substitution box to each 4-bit chunk? In that case, we would only need an <code>SBox</code> of length \(2^4 = 16\)! Note that as long as our <code>SBox</code> is injective on 4-bits, it will be injective on the concatenated 8-bits as well. This is because you would reach a contradiction if two distinct tuples of nibbles mapped to the same byte, since that would imply the mapping is not injective on the nibbles themselves!
+        </p>
+        <p> The researchers had a few other security constraints when it came to choosing the <code>SBox</code>, so that ultimately there were only 8 possibilities to choose from out of about 20 trillion. The <code>SBox</code> that was chosen for PRINCE is the following:
+        </p>
+
+        <div class="showbar">
+          <button type="button" id="showSubBoxBut" onclick="showbutton('subbox', 'showSubBoxBut', 'SBox')" class="btn btn-dark">Show SBox</button>
+          <div id="subbox" style="display: none; text-align: left; padding-left: 15px;">
+            <code>
+            <br/>
+          0x0B, 0x0F, 0x03, 0x02, 0x0A, 0x0C, 0x09, 0x01, 0x06, 0x07, 0x08, 0x00, 0x0E, 0x05, 0x0D, 0x04 <br>
+            </code>
+          </div>
+        </div>
+
+        <p> The idea of applying our SBox nibble-by-nibble is fairly simple if you know a bit about byte arithmetic: </p>
+        
+        <div class="showbar">
+          <button type="button" id="showSubPyBut" onclick="showbutton('subpycode','showSubPyBut','Python')" class="btn btn-dark">Show Python</button>
+          <div id="subpycode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+def SubNibbles():
+    global State
+    State = [ (SBox[State[i] >> 4] << 4) | SBox[State[i] & 0x0F] for i in range(8) ]</pre>
+          </div>
+        </div>
+
+        <div class="showbar">
+          <button type="button" id="showSubCBut" onclick="showbutton('subCcode', 'showSubCBut', 'C')" class="btn btn-dark">Show C</button>
+          <div id="subCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+static void SubNibbles() {
+    unsigned char i;
+    for (i = 0; i < 8; i++)
+        State[i] = (SBox[State[i] >> 4] << 4) | SBox[State[i] & 0x0F];
+}</pre>
+          </div>
+        </div>
+        <br/>
+        <p>Luckily, finding an inverse <code>SBox</code> is much easier when there's 16 elements as opposed to 256. Thus, one can simply find which index maps to each element and sort the results by ascending order:
+        </p>
+        <div class="showbar">
+          <button type="button" id="showInvSubBoxBut" onclick="showbutton('invsubbox', 'showInvSubBoxBut', 'InvSBox')" class="btn btn-dark">Show InvSBox</button>
+          <div id="invsubbox" style="display: none; text-align: left; padding-left: 15px;">
+            <code>
+            <br/>
+            0x0B, 0x07, 0x03, 0x02, 0x0F, 0x0D, 0x08, 0x09, 0x0A, 0x06, 0x04, 0x00, 0x05, 0x0E, 0x0C, 0x01<br/>
+            </code>
+          </div>
+        </div>
+        <p> The code for <code>InvSubNibbles()</code> is basically the exact same as <code>SubNibbles()</code> - in fact, we could simply use the same function and add a second argument to specify which <code>SBox</code> we want. I will leave this choice up to the reader; however, I will use two functions for the sake of clarity with respect to the overall cipher.
+        </p>
+        <div class="showbar">
+          <button type="button" id="showInvSubPyBut" onclick="showbutton('invsubpycode','showInvSubPyBut','Python')" class="btn btn-dark">Show Python</button>
+          <div id="invsubpycode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+def InvSubNibbles():
+    global State
+    State = [ (InvSBox[State[i] >> 4] << 4) | InvSBox[State[i] & 0x0F] for i in range(8) ]</pre>
+          </div>
+        </div>
+
+        <div class="showbar">
+          <button type="button" id="showInvSubCBut" onclick="showbutton('invsubCcode', 'showInvSubCBut', 'C')" class="btn btn-dark">Show C</button>
+          <div id="invsubCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+static void InvSubNibbles() {
+    unsigned char i;
+    for (i = 0; i < 8; i++)
+        State[i] = (InvSBox[State[i] >> 4] << 4) | InvSBox[State[i] & 0x0F];
+}</pre>
+          </div>
+        </div>
+        <br/>
+        <br/>
+        <h3 id="MPrimeLayer"><code>MPrimeLayer()</code></h3>
+        <br/>
+        <p>The only other notably difficult subroutine involved in PRINCE is the linear layer. The linear layer, as the name suggests, simply applies a linear transform to our data. Since we are encrypting a 64-bit state, we simply represent this linear transform as a \(64 \times 64\) matrix. The developers of PRINCE designed the matrix such that the output of an <code>SBox</code> in one round influences at least 3 <code>SBoxes</code> in the next round. In addition, since the lightweight property of the cipher results from its reflectivity, we must ensure that the matrix is an inversion (its own inverse). The resulting matrix that was chosen has the following format:
+        </p>
+        $$ M_0 = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}, M_1 = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} M_2 = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}, M_3 = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix} $$
+        $$ \hat{M}_0 = \begin{pmatrix} M_0 & M_1 & M_2 & M_3 \\ M_1 & M_2 & M_3 & M_0 \\ M_2 & M_3 & M_0 & M_1 \\ M_3 & M_0 & M_1 & M_2 \end{pmatrix}, \hat{M}_1 = \begin{pmatrix} M_1 & M_2 & M_3 & M_0 \\ M_2 & M_3 & M_0 & M_1 \\ M_3 & M_0 & M_1 & M_2 \\ M_0 & M_1 & M_2 & M_3 \end{pmatrix} $$
+        $$ M' = \begin{pmatrix} \hat{M}_0 & 0 & 0 & 0 \\ 0 & \hat{M}_1 & 0 & 0 \\ 0 & 0 & \hat{M}_1 & 0 \\ 0 & 0 & 0 & \hat{M}_0 \end{pmatrix} $$
+        <p> Now this is where most developers begin to understand that this cipher was really meant for a hardware-level implementation and not a software-level implementation. In order to actually make the code attractive, one would have to waste clock cycles, program space, and potentially memory by creating additionaly variables and commenting everything - since this is a lightweight cipher, that is incredibly counterintuitive and I will not be doing so (software engineers please look away).
+        </p>
+        <div class="showbar">
+          <button type="button" id="showMPrimePyBut" onclick="showbutton('mprimepycode','showMPrimePyBut','Python')" class="btn btn-dark">Show Python</button>
+          <div id="mprimepycode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+def MPrimeLayer():
+    global State
+    
+    # M0
+    temp = State[0]
+    State[0] = (temp & 0xD7) ^ (State[1] & 0x7D) ^ (temp >> 4 & 0x0B) ^ (State[1] >> 4 & 0x0E) ^ (temp << 4 & 0xB0) ^ (State[1] << 4 & 0xE0)
+    State[1] = (temp & 0x7D) ^ (State[1] & 0xD7) ^ (temp >> 4 & 0x0E) ^ (State[1] >> 4 & 0x0B) ^ (temp << 4 & 0xE0) ^ (State[1] << 4 & 0xB0)
+    # M1
+    temp = State[2]
+    State[2] = (temp & 0xEB) ^ (State[3] & 0xBE) ^ (temp >> 4 & 0x0D) ^ (State[3] >> 4 & 0x07) ^ (temp << 4 & 0xD0) ^ (State[3] << 4 & 0x70)
+    State[3] = (temp & 0xBE) ^ (State[3] & 0xEB) ^ (temp >> 4 & 0x07) ^ (State[3] >> 4 & 0x0D) ^ (temp << 4 & 0x70) ^ (State[3] << 4 & 0xD0)
+    # M1
+    temp = State[4]
+    State[4] = (temp & 0xEB) ^ (State[5] & 0xBE) ^ (temp >> 4 & 0x0D) ^ (State[5] >> 4 & 0x07) ^ (temp << 4 & 0xD0) ^ (State[5] << 4 & 0x70)
+    State[5] = (temp & 0xBE) ^ (State[5] & 0xEB) ^ (temp >> 4 & 0x07) ^ (State[5] >> 4 & 0x0D) ^ (temp << 4 & 0x70) ^ (State[5] << 4 & 0xD0)
+    # M0
+    temp = State[6]
+    State[6] = (temp & 0xD7) ^ (State[7] & 0x7D) ^ (temp >> 4 & 0x0B) ^ (State[7] >> 4 & 0x0E) ^ (temp << 4 & 0xB0) ^ (State[7] << 4 & 0xE0)
+    State[7] = (temp & 0x7D) ^ (State[7] & 0xD7) ^ (temp >> 4 & 0x0E) ^ (State[7] >> 4 & 0x0B) ^ (temp << 4 & 0xE0) ^ (State[7] << 4 & 0xB0)</pre>
+
+          </div>
+        </div>
+        <div class="showbar">
+          <button type="button" id="showMPrimeCBut" onclick="showbutton('mprimeCcode','showMPrimeCBut','C')" class="btn btn-dark">Show C</button>
+          <div id="mprimeCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+static void MPrimeLayer() {
+
+    unsigned char temp;
+    
+    // M0
+    temp = State[0];
+    State[0] = (temp & 0xD7) ^ (State[1] & 0x7D) ^ (temp >> 4 & 0x0B) ^ (State[1] >> 4 & 0x0E) ^ (temp << 4 & 0xB0) ^ (State[1] << 4 & 0xE0);
+    State[1] = (temp & 0x7D) ^ (State[1] & 0xD7) ^ (temp >> 4 & 0x0E) ^ (State[1] >> 4 & 0x0B) ^ (temp << 4 & 0xE0) ^ (State[1] << 4 & 0xB0);
+    // M1
+    temp = State[2];
+    State[2] = (temp & 0xEB) ^ (State[3] & 0xBE) ^ (temp >> 4 & 0x0D) ^ (State[3] >> 4 & 0x07) ^ (temp << 4 & 0xD0) ^ (State[3] << 4 & 0x70);
+    State[3] = (temp & 0xBE) ^ (State[3] & 0xEB) ^ (temp >> 4 & 0x07) ^ (State[3] >> 4 & 0x0D) ^ (temp << 4 & 0x70) ^ (State[3] << 4 & 0xD0);
+    // M1
+    temp = State[4];
+    State[4] = (temp & 0xEB) ^ (State[5] & 0xBE) ^ (temp >> 4 & 0x0D) ^ (State[5] >> 4 & 0x07) ^ (temp << 4 & 0xD0) ^ (State[5] << 4 & 0x70);
+    State[5] = (temp & 0xBE) ^ (State[5] & 0xEB) ^ (temp >> 4 & 0x07) ^ (State[5] >> 4 & 0x0D) ^ (temp << 4 & 0x70) ^ (State[5] << 4 & 0xD0);
+    // M0
+    temp = State[6];
+    State[6] = (temp & 0xD7) ^ (State[7] & 0x7D) ^ (temp >> 4 & 0x0B) ^ (State[7] >> 4 & 0x0E) ^ (temp << 4 & 0xB0) ^ (State[7] << 4 & 0xE0);
+    State[7] = (temp & 0x7D) ^ (State[7] & 0xD7) ^ (temp >> 4 & 0x0E) ^ (State[7] >> 4 & 0x0B) ^ (temp << 4 & 0xE0) ^ (State[7] << 4 & 0xB0);
+}</pre>
+          </div>
+        </div>
+        <br/>
+        <br/>
+        <h3 id="ShiftRows"><code>ShiftRows()</code></h3>
+        <br/>
+        <p> Much like AES, there is a <code>ShiftRows()</code> function which partly gives us the whole "permutation" part of our substitution-permutation network. However, PRINCE's version works a bit differently since we no longer imagine the state as a \(4 \times 4\) matrix of bytes. As I've breifly mentioned, we instead visualize the state as a one-dimensional array of 16 nibbles (in all honesty I don't know why they called it <code>ShiftRows()</code> if there's no concept of rows to begin with). Thus, the permutation we are applying to our state is the following:
+        </p>
+        $$ \tau = \begin{pmatrix} 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15
+        \\ 0 & 5 & 10 & 15 & 4 & 9 & 14 & 3 & 8 & 13 & 2 & 7 & 12 & 1 & 6 & 11 \end{pmatrix} $$
+        <p> The <code>ShiftRows()</code> function doesn't actually get called by the cipher directly, but is used as a "helper function" for our <code>MLayer()</code> function - in fact, <code>ShiftRows()</code> is the only thing that distinguishes the <code>MPrimeLayer()</code> from <code>MLayer()</code>. With that said, here's the code for the <code>ShiftRows()</code> function:
+        </p>
+        <div class="showbar">
+          <button type="button" id="showShiftPyBut" onclick="showbutton('shiftpycode', 'showShiftPyBut', 'Python')" class="btn btn-dark">Show Python</button>
+          <div id="shiftpycode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+def ShiftRows():
+    global State
+    
+    temp = State[:]
+    perm = [0, 5, 2, 7, 4, 1, 6, 3]
+    
+    State = [ (temp[perm[i]] & 0x0F) | (State[perm[(i+2)%8]] & 0xF0) for i in range(8)]</pre>
+          </div>
+        </div>
+        
+        <div class="showbar">
+          <button type="button" id="showShiftCBut" onclick="showbutton('shiftCcode', 'showShiftCBut', 'C')" class="btn btn-dark">Show C</button>
+          <div id="shiftCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+static void ShiftRows() {
+    unsigned char temp[8];
+    
+    temp[0] = (State[0] & 0x0F) | (State[2] & 0xF0);
+    temp[1] = (State[5] & 0x0F) | (State[7] & 0xF0);
+    temp[2] = (State[2] & 0x0F) | (State[4] & 0xF0);
+    temp[3] = (State[7] & 0x0F) | (State[1] & 0xF0);
+    temp[4] = (State[4] & 0x0F) | (State[6] & 0xF0);
+    temp[5] = (State[1] & 0x0F) | (State[3] & 0xF0);
+    temp[6] = (State[6] & 0x0F) | (State[0] & 0xF0);
+    temp[7] = (State[3] & 0x0F) | (State[5] & 0xF0);
+    
+    unsigned char i;
+    for (i = 0; i < 8; i++)
+        State[i] = temp[i];
+} // End ShiftRow()</pre>
+          </div>
+        </div>
+        <br/>
+        <p> In order to construct an inverse to our <code>ShiftRows()</code>, we simply employ the inverse permutation:
+        </p>
+        $$ \tau^{-1} = \begin{pmatrix} 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15
+        \\ 0 & 13 & 10 & 7 & 4 & 1 & 14 & 11 & 8 & 5 & 2 & 15 & 12 & 9 & 6 & 3 \end{pmatrix} $$
+        <p> which gives rise to the following implementation for <code>InvShiftRows()</code>:</p>
+        <div class="showbar">
+          <button type="button" id="showInvShiftPyBut" onclick="showbutton('invshiftpycode', 'showInvShiftPyBut', 'Python')" class="btn btn-dark">Show Python</button>
+          <div id="invshiftpycode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+def InvShiftRows():
+    global State
+    
+    temp = State[:]
+    perm = [0, 5, 2, 7, 4, 1, 6, 3]
+    
+    State = [ (temp[perm[i]] & 0x0F) | (State[perm[(i+6)%8]] & 0xF0) for i in range(8)]</pre>
+          </div>
+        </div>
+        
+        
+        <div class="showbar">
+          <button type="button" id="showInvShiftCBut" onclick="showbutton('invshiftCcode', 'showInvShiftCBut', 'C')" class="btn btn-dark">Show C</button>
+          <div id="invshiftCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+static void InvShiftRows() {
+    unsigned char temp[8];
+    
+    temp[0] = (State[0] & 0x0F) | (State[6] & 0xF0);
+    temp[1] = (State[5] & 0x0F) | (State[3] & 0xF0);
+    temp[2] = (State[2] & 0x0F) | (State[0] & 0xF0);
+    temp[3] = (State[7] & 0x0F) | (State[5] & 0xF0);
+    temp[4] = (State[4] & 0x0F) | (State[2] & 0xF0);
+    temp[5] = (State[1] & 0x0F) | (State[7] & 0xF0);
+    temp[6] = (State[6] & 0x0F) | (State[4] & 0xF0);
+    temp[7] = (State[3] & 0x0F) | (State[1] & 0xF0);
+    
+    unsigned char i;
+    for (i = 0; i < 8; i++)
+        State[i] = temp[i];
+}</pre>
+          </div>
+        </div>
+        
+        <br/>
+        <br/>
+        <h3 id="MLayer"><code>MLayer()</code></h3>
+        <br/>
+        <p> Just as I mentioned like a paragraph ago or something, this function is nothing more than <code>ShiftRows()</code> applied after <code>MPrimeLayer()</code> ... so ... if you really want the code:
+        </p>
+        <div class="showbar">
+          <button type="button" id="showMLayerPyBut" onclick="showbutton('mlayerpycode', 'showMLayerPyBut', 'Python')" class="btn btn-dark">Show Python</button>
+          <div id="mlayerpycode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+def MLayer():
+    MPrimeLayer()
+    ShiftRows() </pre>
+          </div>
+        </div>
+        <div class="showbar">
+          <button type="button" id="showMLayerCBut" onclick="showbutton('mlayerCcode', 'showMLayerCBut', 'C')" class="btn btn-dark">Show C</button>
+          <div id="mlayerCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+static void MLayer() {
+    MPrimeLayer();
+    ShiftRows();
+}</pre>
+          </div>
+        </div>
+        <br/>
+        <p> A simple rule of algebra is that, for functions \(f : X \to Y \) and \(g : Y \to Z\), we have \( (g \circ f)^{-1} = f^{-1} \circ g^{-1} \) (note how this allows the codomains to align). Since <code>MPrimeLayer()</code> is its own inverse, we get \( M^{-1} = (SR \circ M')^{-1} = M' \circ SR^{-1} \) which gives us the following code:
+        </p>
+        <div class="showbar">
+          <button type="button" id="showInvMLayerPyBut" onclick="showbutton('invmlayerpycode', 'showInvMLayerPyBut', 'Python')" class="btn btn-dark">Show Python</button>
+          <div id="invmlayerpycode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+def InvMLayer():
+    InvShiftRows()
+    MPrimeLayer()</pre>
+          </div>
+        </div>
+        <div class="showbar">
+          <button type="button" id="showInvMLayerCBut" onclick="showbutton('invmlayerCcode', 'showInvMLayerCBut', 'C')" class="btn btn-dark">Show C</button>
+          <div id="invmlayerCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+static void InvMLayer() {
+    InvShiftRows();
+    MPrimeLayer();
+}</pre>
+          </div>
+        </div>
+        
+        
+        <br/>
+        <br/>
+        <h3 id="AddRoundConstant"><code>AddRoundConstant()</code></h3>
+        <br/>
+        <p> At this point it's worth mentioning at this point the <em>\( \alpha\)-reflection</em> property of PRINCE. As I've discussed, PRINCE has a very nice symmetry which we anticipate will allow us to go back and forth between the encryption and decryption easily. It so happens that if we introduce just the right constant, \(\alpha =\) <text style="font-family: Courier New, courier;">0xc0ac29b7c97c50dd</text>, we get:
+        </p>
+        $$ \text{Dec}(k_0 || k'_0 || k_1) = \text{Enc}(k'_0 || k_0 || k_1 \oplus \alpha) $$
+        <p> Since there are numerous rounds, we can't merely introduce the value \(\alpha\) all at once. In addition, we want to preserve the reflective nature of PRINCE so that our last five constants summed with our first five constants give us the identity (that is, \(RC_i \oplus RC_{11 - i} = \alpha \) for any \(0 \leq i \leq 11\) ). The nice property of XOR (which I mentioned in the previous article) is we can simply add some number to \(\alpha\) in order to find out which two numbers sum up to \(\alpha\). In other words, it really doesn't matter which numbers we choose for the first five round constants. Thus, the developers decided to start with the \(17^{th}\) decimal in the hex expansion for \(\pi\)
+        </p>
+        $$ \pi =  3.243F6A8885A308D3\color{red}{13198A2E037073 \\
+        44A4093822299F31D0082EFA9\\8EC4E6C89452821E638D01377\\BE5466CF34E90C6C}$$
+        <div class="showbar">
+          <button type="button" id="showRCBut" onclick="showbutton('RCcode', 'showRCBut', 'RC')" class="btn btn-dark">Show RC</button>
+          <div id="RCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint">
+    /*i=0*/    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    /*i=1*/    0x31, 0x91, 0xa8, 0xe2, 0x30, 0x07, 0x37, 0x44,
+    /*i=2*/    0x4a, 0x90, 0x83, 0x22, 0x92, 0xf9, 0x13, 0x0d,
+    /*i=3*/    0x80, 0xe2, 0xaf, 0x89, 0xce, 0xe4, 0xc6, 0x98,
+    /*i=4*/    0x54, 0x82, 0x12, 0x6e, 0x83, 0x0d, 0x31, 0x77,
+    /*i=5*/    0xeb, 0x45, 0x66, 0xfc, 0x43, 0x9e, 0xc0, 0xc6,
+    /*i=6*/    0xe7, 0x8f, 0xf4, 0x87, 0xdf, 0x59, 0xc5, 0x1b,
+    /*i=7*/    0x58, 0x48, 0x80, 0x15, 0x1f, 0xca, 0x34, 0xaa,
+    /*i=8*/    0x8c, 0x28, 0x3d, 0xf2, 0x52, 0x23, 0xc3, 0x45,
+    /*i=9*/    0x46, 0x5a, 0x11, 0x59, 0x0e, 0x3e, 0x16, 0xd0,
+    /*i=10*/   0x3d, 0x5b, 0x3a, 0x99, 0xac, 0xc0, 0x32, 0x99,
+    /*i=11*/   0x0c, 0xca, 0x92, 0x7b, 0x9c, 0xc7, 0x05, 0xdd</pre>
+          </div>
+        </div>
+        
+        <p> Adding the round constants to our state is exactly as you'd expect:</p>
+        <div class="showbar">
+          <button type="button" id="showAddRCPyBut" onclick="showbutton('addRCPycode', 'showAddRCPyBut', 'Python')" class="btn btn-dark">Show Python</button>
+          <div id="addRCPycode" style="display: none; text-align: left;">
+            <pre class="prettyprint">
+def AddRoundConstant(round):
+    global State
+    State = [ State[i] ^ RC[8 * round + i] for i in range(8)]</pre>
+          </div>
+        </div>
+        <div class="showbar">
+          <button type="button" id="showAddRCCBut" onclick="showbutton('addRCCcode', 'showAddRCCBut', 'C')" class="btn btn-dark">Show C</button>
+          <div id="addRCCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint">
+static void AddRoundConstant(unsigned char round) {
+    State[0] ^= RC[8 * round];
+    State[1] ^= RC[8 * round + 1];
+    State[2] ^= RC[8 * round + 2];
+    State[3] ^= RC[8 * round + 3];
+    State[4] ^= RC[8 * round + 4];
+    State[5] ^= RC[8 * round + 5];
+    State[6] ^= RC[8 * round + 6];
+    State[7] ^= RC[8 * round + 7];
+} // End addRoundConstant()</pre>
+          </div>
+        </div>
+        <br/>
+        <br/>
+        <h3 id="AddKey"><code>AddKey()</code></h3>
+        <p>Despite only having 192 bits of extended key, we only really use the last 64 bits for encryption / decryption rounds (that is, \(k_1\)). The first 128 bits is simply used for key whitening before and after the cipher.
+        </p>
+        <div class="showbar">
+          <button type="button" id="showAddKeyPyBut" onclick="showbutton('addkeypycode', 'showAddKeyPyBut', 'Python')" class="btn btn-dark">Show Python</button>
+          <div id="addkeypycode" style="display: none; text-align: left;">
+            <pre class="prettyprint">
+def AddKey(ExtendedKey):
+    global State
+    State = [ State[i] ^ ExtendedKey[i + 16] for i in range(8) ]</pre>
+          </div>
+        </div>
+        <div class="showbar">
+          <button type="button" id="showAddKeyCBut" onclick="showbutton('addkeyCcode', 'showAddKeyCBut', 'C')" class="btn btn-dark">Show C</button>
+          <div id="addkeyCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint">
+static void AddKey(unsigned char * ExtendedKey) {
+    State[0] ^= ExtendedKey[16];
+    State[1] ^= ExtendedKey[17];
+    State[2] ^= ExtendedKey[18];
+    State[3] ^= ExtendedKey[19];
+    State[4] ^= ExtendedKey[20];
+    State[5] ^= ExtendedKey[21];
+    State[6] ^= ExtendedKey[22];
+    State[7] ^= ExtendedKey[23];
+} // End addRoundKey()</pre>
+          </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <h3 id="EncryptionCode">Encryption Code</h3>
+        <br/>
+        <p> Now that we have all of our main components, it's time to put the pieces together. In order to utilize the full 128-bits of our key, we must first perform the key-whitening with \(k_0\) before anything else. Once that's complete, we proceed with five normal rounds, a middle round, and then five inverse rounds. We lastly perform key-whitening with \(k_0'\) and we are done!
+        </p>
+        <div class="showbar">
+          <button type="button" id="showEncPyBut" onclick="showbutton('encpycode', 'showEncPyBut', 'Python')" class="btn btn-dark">Show Python</button>
+          <div id="encpycode" style="display: none; text-align: left;">
+            <pre class="prettyprint">
+from __future__ import print_function
+
+###########################################
+#           PRIVATE VARIABLES             #
+###########################################
+
+# Substitution box used on individual nibbles
+SBox = [0x0B, 0x0F, 0x03, 0x02, 0x0A, 0x0C, 0x09, 0x01, 0x06, 0x07, 0x08, 0x00, 0x0E, 0x05, 0x0D, 0x04]
+# Inverse substitution box used on individual nibbles
+InvSBox = [0x0B, 0x07, 0x03, 0x02, 0x0F, 0x0D, 0x08, 0x09, 0x0A, 0x06, 0x04, 0x00, 0x05, 0x0E, 0x0C, 0x01]
+
+# Each of our 11 64-bit round constants broken up as a series of 8 bytes
+RC = [
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x31, 0x91, 0xa8, 0xe2, 0x30, 0x07, 0x37, 0x44,
+    0x4a, 0x90, 0x83, 0x22, 0x92, 0xf9, 0x13, 0x0d,
+    0x80, 0xe2, 0xaf, 0x89, 0xce, 0xe4, 0xc6, 0x98,
+    0x54, 0x82, 0x12, 0x6e, 0x83, 0x0d, 0x31, 0x77,
+    0xeb, 0x45, 0x66, 0xfc, 0x43, 0x9e, 0xc0, 0xc6,
+    0xe7, 0x8f, 0xf4, 0x87, 0xdf, 0x59, 0xc5, 0x1b,
+    0x58, 0x48, 0x80, 0x15, 0x1f, 0xca, 0x34, 0xaa,
+    0x8c, 0x28, 0x3d, 0xf2, 0x52, 0x23, 0xc3, 0x45,
+    0x46, 0x5a, 0x11, 0x59, 0x0e, 0x3e, 0x16, 0xd0,
+    0x3d, 0x5b, 0x3a, 0x99, 0xac, 0xc0, 0x32, 0x99,
+    0x0c, 0xca, 0x92, 0x7b, 0x9c, 0xc7, 0x05, 0xdd
+]
+
+###########################################
+#             TEST VECTORS                #
+###########################################
+
+# state in the form [10,32,54,76,98,ba,dc,fe] for nibble ordering in array
+_State = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+Key = [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+
+
+###########################################
+#            PRIMARY FUNCTIONS            #
+###########################################
+
+def cipher(ExtendedKey):
+    """ The complete PRINCE forward encryption on the 64-bit state performed through nibble calculations """
+    global _State
+
+    # key whitening with k_0
+    _State = [_State[i] ^ ExtendedKey[i] for i in range(8)]
+    # beginning of actual cipher
+    _AddKey(ExtendedKey)
+
+    # five forward rounds
+    for i in range(1, 6):
+        _SubNibbles()
+        _MLayer()
+        _AddRoundConstant(i)
+        _AddKey(ExtendedKey)
+    
+        print("Round " + str(i))
+        for i in range(8):
+            print(format(_State[i], '02x'), end=' ')
+        print()
+
+    # middle round
+    _SubNibbles()
+    _MPrimeLayer()
+    _InvSubNibbles()
+
+    # five inverse rounds
+    for i in range(6, 11):
+        _AddKey(ExtendedKey)
+        _AddRoundConstant(i)
+        _InvMLayer()
+        _InvSubNibbles()
+
+    _AddRoundConstant(11)
+    _AddKey(ExtendedKey)
+    # end of actual cipher
+
+    # key whitening with k'_0
+    _State = [_State[i] ^ ExtendedKey[i+8] for i in range(8)]
+
+
+
+def ExtendKey(Key):
+    """ PRINCE's version of a key schedule, which extends our 128-bit key to a 192-bit key """
+    newKey = [0x00] * 24
+    
+    for i in range(8):
+        # k_0 stays the same
+        newKey[i] = Key[i]
+        # k'_0 is a k_0 rotated right one bit and XORed with the last bit
+        newKey[i + 8] = (Key[i] >> 1) | (Key[(i + 1) % 8] >> 7)
+        # k_1 stays the same
+        newKey[i + 16] = Key[i + 8]
+    
+    newKey[15] ^= (Key[7] & 0x10)
+    
+    return newKey
+
+
+###########################################
+#             HELPER FUNCTIONS            #
+###########################################
+
+def _ShiftRows():
+    """ Helper method which distinguishes our two linear layers M from M' """
+    global _State
+    
+    temp = _State[:] # copy the state into a temporary holder
+    perm = [0, 5, 2, 7, 4, 1, 6, 3]
+    
+    _State = [ (temp[perm[i]] & 0x0F) | (_State[perm[(i+2)%8]] & 0xF0) for i in range(8)]
+
+
+def _InvShiftRows():
+    """ Inverse of our ShiftRows() function which allows us to distinguish M'^-1 from M^-1 """
+    global _State
+    
+    temp = _State[:] # copy the state into a temporary holder
+    perm = [0, 5, 2, 7, 4, 1, 6, 3]
+    
+    _State = [ (temp[perm[i]] & 0x0F) | (_State[perm[(i+6)%8]] & 0xF0) for i in range(8)]
+
+
+def _SubNibbles():
+    """ Send the state through a substitution layer nibble-by-nibble """
+    global _State
+    _State = [ (SBox[_State[i] >> 4] << 4) | SBox[_State[i] & 0x0F] for i in range(8) ]
+
+
+def _InvSubNibbles():
+    """ Inverse of our substitution layer which sends each substituted nibble back to the original nibble """
+    global _State
+    _State = [ (InvSBox[_State[i] >> 4] << 4) | InvSBox[_State[i] & 0x0F] for i in range(8) ]
+
+
+def _MPrimeLayer():
+    """ Our linear layer, designed to use as little space as possible and prevent wasted clock-cycles. Recall that this method is in fact its own inverse. """
+    global _State
+    
+    # M0
+    temp = _State[0] # we only need 1 storage variable here
+    _State[0] = (temp & 0xD7) ^ (_State[1] & 0x7D) ^ (temp >> 4 & 0x0B) ^ (_State[1] >> 4 & 0x0E) ^ (temp << 4 & 0xB0) ^ (_State[1] << 4 & 0xE0)
+    _State[1] = (temp & 0x7D) ^ (_State[1] & 0xD7) ^ (temp >> 4 & 0x0E) ^ (_State[1] >> 4 & 0x0B) ^ (temp << 4 & 0xE0) ^ (_State[1] << 4 & 0xB0)
+    # M1
+    temp = _State[2]
+    _State[2] = (temp & 0xEB) ^ (_State[3] & 0xBE) ^ (temp >> 4 & 0x0D) ^ (_State[3] >> 4 & 0x07) ^ (temp << 4 & 0xD0) ^ (_State[3] << 4 & 0x70)
+    _State[3] = (temp & 0xBE) ^ (_State[3] & 0xEB) ^ (temp >> 4 & 0x07) ^ (_State[3] >> 4 & 0x0D) ^ (temp << 4 & 0x70) ^ (_State[3] << 4 & 0xD0)
+    # M1
+    temp = _State[4]
+    _State[4] = (temp & 0xEB) ^ (_State[5] & 0xBE) ^ (temp >> 4 & 0x0D) ^ (_State[5] >> 4 & 0x07) ^ (temp << 4 & 0xD0) ^ (_State[5] << 4 & 0x70)
+    _State[5] = (temp & 0xBE) ^ (_State[5] & 0xEB) ^ (temp >> 4 & 0x07) ^ (_State[5] >> 4 & 0x0D) ^ (temp << 4 & 0x70) ^ (_State[5] << 4 & 0xD0)
+    # M0
+    temp = _State[6]
+    _State[6] = (temp & 0xD7) ^ (_State[7] & 0x7D) ^ (temp >> 4 & 0x0B) ^ (_State[7] >> 4 & 0x0E) ^ (temp << 4 & 0xB0) ^ (_State[7] << 4 & 0xE0)
+    _State[7] = (temp & 0x7D) ^ (_State[7] & 0xD7) ^ (temp >> 4 & 0x0E) ^ (_State[7] >> 4 & 0x0B) ^ (temp << 4 & 0xE0) ^ (_State[7] << 4 & 0xB0)
+
+def _MLayer():
+    """ The adjusted linear layer which is utilized each regular round """
+    _MPrimeLayer()
+    _ShiftRows()
+
+def _InvMLayer():
+    """ The inverse adjusted linear layer which is utilized each inverse regular round """
+    _InvShiftRows()
+    _MPrimeLayer()
+
+def _AddRoundConstant(round):
+    """ Function which simply applies a given round's constant to the state """
+    global _State
+    _State = [ _State[i] ^ RC[8 * round + i] for i in range(8)]
+
+def _AddKey(ExtendedKey):
+    """ Function which adds k_1 to the state """
+    global _State
+    _State = [ _State[i] ^ ExtendedKey[i + 16] for i in range(8) ]
+
+
+if __name__ == "__main__":
+    ExtendedKey = ExtendKey(Key) # Save the extended key
+    cipher(ExtendedKey)
+    print('0x', end='')
+    for i in range(8):
+        print(format(_State[i] >> 4 | (_State[i] << 4 & 0xF0), '02x'), end='')
+    print()</pre>
+          </div>
+        </div>
+        <div class="showbar">
+          <button type="button" id="showEncCBut" onclick="showbutton('encCcode', 'showEncCBut', 'C')" class="btn btn-dark">Show C</button>
+          <div id="encCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint">
+#include &lt;stdio.h&gt;
+
+/*************************************
+ *         PRIVATE VARIABLES         *
+ *************************************/
+
+static const unsigned char RC[96] = {
+    /*i=0*/    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    /*i=1*/    0x31, 0x91, 0xa8, 0xe2, 0x30, 0x07, 0x37, 0x44,
+    /*i=2*/    0x4a, 0x90, 0x83, 0x22, 0x92, 0xf9, 0x13, 0x0d,
+    /*i=3*/    0x80, 0xe2, 0xaf, 0x89, 0xce, 0xe4, 0xc6, 0x98,
+    /*i=4*/    0x54, 0x82, 0x12, 0x6e, 0x83, 0x0d, 0x31, 0x77,
+    /*i=5*/    0xeb, 0x45, 0x66, 0xfc, 0x43, 0x9e, 0xc0, 0xc6,
+    /*i=6*/    0xe7, 0x8f, 0xf4, 0x87, 0xdf, 0x59, 0xc5, 0x1b,
+    /*i=7*/    0x58, 0x48, 0x80, 0x15, 0x1f, 0xca, 0x34, 0xaa,
+    /*i=8*/    0x8c, 0x28, 0x3d, 0xf2, 0x52, 0x23, 0xc3, 0x45,
+    /*i=9*/    0x46, 0x5a, 0x11, 0x59, 0x0e, 0x3e, 0x16, 0xd0,
+    /*i=10*/   0x3d, 0x5b, 0x3a, 0x99, 0xac, 0xc0, 0x32, 0x99,
+    /*i=11*/   0x0c, 0xca, 0x92, 0x7b, 0x9c, 0xc7, 0x05, 0xdd
+};
+
+static const unsigned char SBox[16] = {
+    //0     1    2      3     4    5     6     7      8    9     A      B    C     D     E     F
+    0x0B, 0x0F, 0x03, 0x02, 0x0A, 0x0C, 0x09, 0x01, 0x06, 0x07, 0x08, 0x00, 0x0E, 0x05, 0x0D, 0x04
+};
+static const unsigned char InvSBox[16] = {
+    //0     1    2      3     4    5     6     7      8    9     A      B    C     D     E     F
+    0x0B, 0x07, 0x03, 0x02, 0x0F, 0x0D, 0x08, 0x09, 0x0A, 0x06, 0x04, 0x00, 0x05, 0x0E, 0x0C, 0x01
+};
+
+/*************************************
+ *       FUNCTION DECLARATIONS       *
+ *************************************/
+
+static void SubNibbles();
+static void InvSubNibbles();
+static void MPrimeLayer();
+static void ShiftRows();
+static void InvShiftRows();
+static void MLayer();
+static void InvMLayer();
+static void AddRoundConstant(unsigned char);
+static void AddKey(unsigned char *);
+
+/*************************************
+ *           TEST VECTORS            *
+ *************************************/
+
+// State in the form {10,32,54,76,98,ba,dc,fe} for nibble ordering in array
+static unsigned char State[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+static unsigned char Key[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+/*************************************
+ *         PRIMARY FUNCTIONS         *
+ *************************************/
+
+/**
+ * The complete PRINCE forward encryption on the 64-bit state performed through nibble calculations
+ */
+void cipher(unsigned char * ExtendedKey) {
+    
+    unsigned char i;
+    // key whitening with k_0
+    for (i = 0; i < 8; i++)
+        State[i] ^= ExtendedKey[i];
+    
+    // beginning of actual cipher
+    AddKey(ExtendedKey);
+    
+    // five forward rounds
+    for (i = 1; i <= 5; i++) {
+        SubNibbles();
+        MLayer();
+        AddRoundConstant(i);
+        AddKey(ExtendedKey);
+    } // End for-loop
+    
+    // middle round
+    SubNibbles();
+    MPrimeLayer();
+    InvSubNibbles();
+    
+    // five inverse rounds
+    for (i = 6; i <= 10; i++) {
+        AddKey(ExtendedKey);
+        AddRoundConstant(i);
+        InvMLayer();
+        InvSubNibbles();
+    } // End for-loop
+    
+    AddRoundConstant(11);
+    AddKey(ExtendedKey);
+    // end of actual cipher
+    
+    // key whitening with k'_0
+    for (i = 8; i < 16; i++)
+        State[i] ^= ExtendedKey[i];
+}
+
+/**
+ * PRINCE's version of a key schedule, which extends our 128-bit key to a 192-bit key
+ */
+void ExtendKey(const unsigned char * Key, unsigned char * newKey) {
+    
+    unsigned char i;
+    for (i = 0; i < 8; i++) {
+        // k_0 stays the same
+        newKey[i] = Key[i];
+        // k'_0 is k_0 rotated right one bit and XORed with the last bit
+        newKey[i + 8] = (Key[i] >> 1) | (Key[(i + 1) % 8] >> 7);
+        // k_1 stays the same
+        newKey[i + 16] = Key[i + 8];
+    }
+    
+    newKey[15] ^= (Key[7] & 0x10);
+}
+
+/**
+ * Main method
+ */
+int main() {
+    // save the extended key
+    unsigned char ExtendedKey[24];
+    ExtendKey(Key, ExtendedKey);
+    cipher(ExtendedKey);
+    
+    printf("0x");
+    unsigned char i;
+    for (i = 0; i < 8; i++)
+        printf("%x", State[i] >> 4 | (State[i] << 4 & 0xF0));
+    printf("\n");
+    
+    return 0;
+}
+
+
+/*************************************
+ *         HELPER FUNCTIONS          *
+ *************************************/
+
+/**
+ * Send the state through a substitution layer nibble-by-nibble
+ */
+static void SubNibbles() {
+    unsigned char i;
+    for (i = 0; i < 8; i++)
+        State[i] = (SBox[State[i] >> 4] << 4) | SBox[State[i] & 0x0F];
+}
+
+/**
+ * Inverse of our substitution layer which sends each substituted nibble back to the original nibble
+ */
+static void InvSubNibbles() {
+    unsigned char i;
+    for (i = 0; i < 8; i++)
+        State[i] = (InvSBox[State[i] >> 4] << 4) | InvSBox[State[i] & 0x0F];
+}
+
+
+/**
+ * Our linear layer, designed to use as little space as possible and prevent
+ * wasted clock-cycles. Recall that this method is in fact its own inverse.
+ */
+static void MPrimeLayer() {
+ 
+    unsigned char temp; // we need a minimum of one temporary variable
+    
+    // M0
+    temp = State[0];
+    State[0] = (temp & 0xD7) ^ (State[1] & 0x7D) ^ (temp >> 4 & 0x0B) ^ (State[1] >> 4 & 0x0E) ^ (temp << 4 & 0xB0) ^ (State[1] << 4 & 0xE0);
+    State[1] = (temp & 0x7D) ^ (State[1] & 0xD7) ^ (temp >> 4 & 0x0E) ^ (State[1] >> 4 & 0x0B) ^ (temp << 4 & 0xE0) ^ (State[1] << 4 & 0xB0);
+    // M1
+    temp = State[2];
+    State[2] = (temp & 0xEB) ^ (State[3] & 0xBE) ^ (temp >> 4 & 0x0D) ^ (State[3] >> 4 & 0x07) ^ (temp << 4 & 0xD0) ^ (State[3] << 4 & 0x70);
+    State[3] = (temp & 0xBE) ^ (State[3] & 0xEB) ^ (temp >> 4 & 0x07) ^ (State[3] >> 4 & 0x0D) ^ (temp << 4 & 0x70) ^ (State[3] << 4 & 0xD0);
+    // M1
+    temp = State[4];
+    State[4] = (temp & 0xEB) ^ (State[5] & 0xBE) ^ (temp >> 4 & 0x0D) ^ (State[5] >> 4 & 0x07) ^ (temp << 4 & 0xD0) ^ (State[5] << 4 & 0x70);
+    State[5] = (temp & 0xBE) ^ (State[5] & 0xEB) ^ (temp >> 4 & 0x07) ^ (State[5] >> 4 & 0x0D) ^ (temp << 4 & 0x70) ^ (State[5] << 4 & 0xD0);
+    // M0
+    temp = State[6];
+    State[6] = (temp & 0xD7) ^ (State[7] & 0x7D) ^ (temp >> 4 & 0x0B) ^ (State[7] >> 4 & 0x0E) ^ (temp << 4 & 0xB0) ^ (State[7] << 4 & 0xE0);
+    State[7] = (temp & 0x7D) ^ (State[7] & 0xD7) ^ (temp >> 4 & 0x0E) ^ (State[7] >> 4 & 0x0B) ^ (temp << 4 & 0xE0) ^ (State[7] << 4 & 0xB0);
+}
+
+/**
+ * Helper method which distinguishes our two linear layers M from M'
+ */
+static void ShiftRows() {
+    unsigned char temp[8];
+    
+    temp[0] = (State[0] & 0x0F) | (State[2] & 0xF0);
+    temp[1] = (State[5] & 0x0F) | (State[7] & 0xF0);
+    temp[2] = (State[2] & 0x0F) | (State[4] & 0xF0);
+    temp[3] = (State[7] & 0x0F) | (State[1] & 0xF0);
+    temp[4] = (State[4] & 0x0F) | (State[6] & 0xF0);
+    temp[5] = (State[1] & 0x0F) | (State[3] & 0xF0);
+    temp[6] = (State[6] & 0x0F) | (State[0] & 0xF0);
+    temp[7] = (State[3] & 0x0F) | (State[5] & 0xF0);
+    
+    unsigned char i;
+    for (i = 0; i < 8; i++)
+        State[i] = temp[i];
+}
+
+/**
+ * Inverse of our ShiftRows() function which allows us to distinguish M'^-1 from M^-1
+ */
+static void InvShiftRows() {
+    unsigned char temp[8];
+    
+    temp[0] = (State[0] & 0x0F) | (State[6] & 0xF0);
+    temp[1] = (State[5] & 0x0F) | (State[3] & 0xF0);
+    temp[2] = (State[2] & 0x0F) | (State[0] & 0xF0);
+    temp[3] = (State[7] & 0x0F) | (State[5] & 0xF0);
+    temp[4] = (State[4] & 0x0F) | (State[2] & 0xF0);
+    temp[5] = (State[1] & 0x0F) | (State[7] & 0xF0);
+    temp[6] = (State[6] & 0x0F) | (State[4] & 0xF0);
+    temp[7] = (State[3] & 0x0F) | (State[1] & 0xF0);
+    
+    unsigned char i;
+    for (i = 0; i < 8; i++)
+        State[i] = temp[i];
+}
+
+/**
+ * The adjusted linear layer which is utilized each regular round
+ */
+static void MLayer() {
+    MPrimeLayer();
+    ShiftRows();
+}
+
+/**
+ * The inverse adjusted linear layer which is utilized each inverse regular round
+ */
+static void InvMLayer() {
+    InvShiftRows();
+    MPrimeLayer();
+}
+
+/**
+ * Function which simply applies a given round's constant to the state
+ */
+static void AddRoundConstant(unsigned char round) {
+    State[0] ^= RC[8 * round];
+    State[1] ^= RC[8 * round + 1];
+    State[2] ^= RC[8 * round + 2];
+    State[3] ^= RC[8 * round + 3];
+    State[4] ^= RC[8 * round + 4];
+    State[5] ^= RC[8 * round + 5];
+    State[6] ^= RC[8 * round + 6];
+    State[7] ^= RC[8 * round + 7];
+}
+
+/**
+ * Function which adds k_1 to the state
+ */
+static void AddKey(unsigned char * ExtendedKey) {
+    State[0] ^= ExtendedKey[16];
+    State[1] ^= ExtendedKey[17];
+    State[2] ^= ExtendedKey[18];
+    State[3] ^= ExtendedKey[19];
+    State[4] ^= ExtendedKey[20];
+    State[5] ^= ExtendedKey[21];
+    State[6] ^= ExtendedKey[22];
+    State[7] ^= ExtendedKey[23];
+}</pre>
+          </div>
+        </div>
+        
+        <br/>
+        <br/>
+        <h3 id="DecryptionCode">Decryption Code</h3>
+        <p> Oh, one last thing. I mentioned it in the <code>AddRoundConstant()</code> section, but our cipher is minimally designed so that instead of having to write a whole new function to retrace our steps we merely swap around our extended key! This nice little feature is a direct result of PRINCE's \(\alpha\)-reflection property, which tells us
+        </p>
+        $$ \text{Dec}(k_0 || k'_0 || k_1) = \text{Enc}(k'_0 || k_0 || k_1 \oplus \alpha) $$
+        <p> Thus, we merely need to swap \(k_0\) with \(k'_0\), add \(\alpha\) to \(k_1\), and encrypt! Here's the code </p>
+        <div class="showbar">
+          <button type="button" id="showDecPyBut" onclick="showbutton('decpycode', 'showDecPyBut', 'Python')" class="btn btn-dark">Show Python</button>
+          <div id="decpycode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+def decipher(ExtendedKey):
+    NewExtendedKey = ExtendedKey[:]
+    for i in range(8):
+        NewExtendedKey[i] = ExtendedKey[i + 8]
+        NewExtendedKey[i + 8] = ExtendedKey[i]
+        NewExtendedKey[i + 16] ^= RC[i + 88]
+        
+    cipher(NewExtendedKey)</pre>
+          </div>
+        </div>
+        
+        <div class="showbar">
+          <button type="button" id="showDecCBut" onclick="showbutton('decCcode', 'showDecCBut', 'C')" class="btn btn-dark">Show C</button>
+          <div id="decCcode" style="display: none; text-align: left;">
+            <pre class="prettyprint linenums">
+void decipher(unsigned char * ExtendedKey) {
+    unsigned char NewExtendedKey[24];
+    unsigned char i;
+
+    for (i = 0; i < 8; i ++) {
+        NewExtendedKey[i] = ExtendedKey[i + 8];
+        NewExtendedKey[i + 8] = ExtendedKey[i];
+        NewExtendedKey[i + 16] = ExtendedKey[i + 16] ^ RC[i + 88];
+    }
+    cipher(NewExtendedKey);
+}</pre>
+          </div>
+        </div>
+        <br/>
+        <p> and there you have it! Hopefully everything was straightforward enough - I understand I may have not fully explained some things such as <a class="popLink" href="https://en.wikipedia.org/wiki/Clock_signal">clock-cycles</a> and bit-wise arithmetic (primarily masks and shifts), but these are pretty easy to pick up. As always, thanks for reading! &#x1F601
+        </p>
+        <br/>
+        <br/>
+        <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/b9434BoGkNQ" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+        
+    </div> <!-- col -->
+  </div> <!-- row -->
+</div> <!-- container -->
+
+
+<!-- webpage footer -->
+<div class="jumbotron vertical-center footer">
+  <h6>All webpages are self-coded using a combination of HTML5, CSS3, Bootstrap4, and JavaScript</h6>
+  <h6>No third-party software is used except to host the domain root directory</h6>
+</div>
+
+<!-- Bootstrap 4.1 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+

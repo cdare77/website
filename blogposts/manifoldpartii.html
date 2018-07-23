@@ -10,7 +10,7 @@
   <!-- Bootstrap 4.1 -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <!-- actual stylesheet -->
-  <link href="manifoldparti.css" rel="stylesheet" type="text/css">
+  <link href="manifoldpartii.css" rel="stylesheet" type="text/css">
   <!-- google fonts -->
   <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite|Roboto" rel="stylesheet">
   <!-- jquery -->
@@ -25,7 +25,7 @@
 
 <!-- Navigation bar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Chris Dare</a>
+  <a class="navbar-brand" href="../homepage.html">Chris Dare</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -50,7 +50,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
           <a class="dropdown-item" href="../code/aes.html" style="font-family: 'Courier New', Courier;">AES</a>
-          <a class="dropdown-item" href="#" style="font-family: 'Courier New', Courier;">Code2</a>
+          <a class="dropdown-item" href="../code/prince.html" style="font-family: 'Courier New', Courier;">PRINCE</a>
         </div>
       </li>
       <li class="nav-item">
@@ -67,7 +67,7 @@
 
 <div class="jumbotron vertical-center header">
   <h1 style="font-family:'Special Elite', cursive;">Manifolds</h1>
-  <h5 style="font-family:'Special Elite', cursive;">Part II: Tangent Bundles through Cohomology</h5>
+  <h5 style="font-family:'Special Elite', cursive;">Part II: The Tangent and Cotangent Bundles</h5>
 </div>
 
 <div class="container">
@@ -76,15 +76,15 @@
     <!-- Side navbar -->
     <div class="col-md-3 col-sm-0" id="sidemenu">
       <div class="menu sticky-top p-3 bg-light">
-        <a class="nav-link pl-0" href="#item-1">Introduction</a>
-        <a class="nav-link pl-0" href="#item-2">Functions and Tangent Vectors</a>
-        <a class="nav-link pl-0" href="#item-3">The Tangent Bundle and Vector Fields</a>
-        <a class="nav-link pl-0" href="#item-4">The Cotangent Bundle and \(k\)-Forms</a>
+        <a class="nav-link pl-0" href="#Introduction">Introduction</a>
+        <a class="nav-link pl-0" href="#FunctionsAndTangentVectors">Functions and Tangent Vectors</a>
+        <a class="nav-link pl-0" href="#TheTangentBundleAndVectorFields">The Tangent Bundle and Vector Fields</a>
+        <a class="nav-link pl-0" href="#TheCotangentBundleAndKForms">The Cotangent Bundle and \(k\)-Forms</a>
       </div>
     </div> <!-- end col-3-->
 
     <div class="col-md-9 col-sm-12 content">
-        <h3 id="item-1">Introduction</h3>
+        <h3 id="Introduction">Introduction</h3>
         <br/>
         <p> Picking up where I left off in <a class="popLink" href="manifoldparti.html">the previous post</a>, a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A mathematical structure that resembles Euclidean space to an extent">topological manifold</a> of dimension \(n\) (also called an \(n\)-manifold) is a topological space \(X\) such that:</p>
             <ol>
@@ -109,7 +109,7 @@
         <figure style="padding-bottom: 30px;">
             <img src="../images/composition.png" style="width: 100%; border-radius: 5px 5px 5px 5px;"></img>
             <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> Diagram of compatible functions</figcaption>
-        <figure>
+        </figure>
         <p>Remember how I mentioned earlier that we would have to augment our assumptions until we get the properties we want? Well, we're going to need to make a big assumption here. We need to assume that whatever manifold we're talking about has a smooth structure: any two charts that intersect have are \( C^\infty \)-compatible.</p>
         <p>More formally, we define an <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A collection of compatible charts">atlas</a> on our manifold \(M\) to be a collection \( \mathfrak{U} = \{ (U_\alpha, \phi_\alpha) \} \) such that any two \( U_{\alpha_1} \) and \( U_{\alpha_2} \) are \(C^\infty\)-compatible and \(\mathfrak{U}\) covers \(M\). We say that \(\mathfrak{U}\) is a <u>maximal atlas</u> if there does not exist another atlas with more charts. Despite its straightforward name, a maximal atlas is more often known as a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A structure which gives our topology differentiable properties">smooth structure</a>.
         </p>
@@ -118,7 +118,7 @@
         <br/>
         <br/>
         <br/>
-        <h3 id="item-2">Functions and Tangent Vectors</h3>
+        <h3 id="FunctionsAndTangentVectors">Functions and Tangent Vectors</h3>
         <br/>
         <p> Much like everything you've likely studied in math since geometry, functions are an <em>incredibly</em> important topic when it comes to manifolds.
         </p>
@@ -176,7 +176,7 @@
         </figure>
         <br/>
         <br/>
-        <h3 id="item-3">The Tangent Bundle and Vector Fields</h3>
+        <h3 id="TheTangentBundleAndVectorFields">The Tangent Bundle and Vector Fields</h3>
         <br/>
         <p> One consideration that will become familiar to the reader in the study of manifolds is 'what happens when we move from local coordinates to globabl coordinates?' In the context of our tangent space - what happens when we mush the tangent space of each point together into one big space? Well, this forms something known as the <a class="popLink" href="https://en.wikipedia.org/wiki/Tangent_bundle">tangent bundle</a>. The tangent bundle, denoted \(TM\), is formally defined as
         </p>
@@ -226,7 +226,7 @@
         </p>
         <br/>
         <br/>
-        <h3 id="item-4">The Cotangent Bundle and \(k\)-Forms</h3>
+        <h3 id="TheCotangentBundleAndKForms">The Cotangent Bundle and \(k\)-Forms</h3>
         <br/>
         <p>We've still got a bit of work to do if we want to make it to Riemannian manifolds by the third blog post. It may not be entirely clear why I'm introducing some of the topics I've mentioned so far, but I guarentee it'll work out in the end.
         </p>

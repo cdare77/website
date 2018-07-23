@@ -30,7 +30,7 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Chris Dare</a>
+  <a class="navbar-brand" href="../homepage.html">Chris Dare</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -55,7 +55,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
           <a class="dropdown-item active" href="#" style="font-family: 'Courier New', Courier;">AES</a>
-          <a class="dropdown-item" href="#" style="font-family: 'Courier New', Courier;">Code2</a>
+          <a class="dropdown-item" href="prince.html" style="font-family: 'Courier New', Courier;">PRINCE</a>
         </div>
       </li>
       <li class="nav-item">
@@ -81,20 +81,20 @@
     <div class="col-md-3 col-sm-0" id="sidemenu">
       <div class="menu sticky-top p-3 bg-light">
     
-          <a href="#item-1" class="nav-link pl-0">Introduction To Ciphers</a>
-          <a href="#item-2" class="nav-link pl-0">Why AES?</a>
-          <a href="#item-3" class="nav-link pl-0">Introduction To Ciphers</a>
+          <a href="#IntroductionToCiphers" class="nav-link pl-0">Introduction To Ciphers</a>
+          <a href="#WhyAES" class="nav-link pl-0">Why AES?</a>
+          <a href="#TheCipher" class="nav-link pl-0">The Cipher</a>
             <ul class="nav flex-md-column ml-2 hidden-sm-down">
-              <li class="nav-item"><a href="#item-3-1" class="nav-link">Key Schedule</a></li>
-              <li class="nav-item"><a href="#item-3-2" class="nav-link"><code>SubBytes()</code></a></li>
-              <li class="nav-item"><a href="#item-3-3" class="nav-link"><code>ShiftRows()</code></a></li>
-              <li class="nav-item"><a href="#item-3-4" class="nav-link"><code>MixColumns()</code></a></li>
-              <li class="nav-item"><a href="#item-3-5" class="nav-link"><code>AddRoundKey()</code></a></li>
+              <li class="nav-item"><a href="#KeySchedule" class="nav-link">Key Schedule</a></li>
+              <li class="nav-item"><a href="#SubBytes" class="nav-link"><code>SubBytes()</code></a></li>
+              <li class="nav-item"><a href="#ShiftRows" class="nav-link"><code>ShiftRows()</code></a></li>
+              <li class="nav-item"><a href="#MixColumns" class="nav-link"><code>MixColumns()</code></a></li>
+              <li class="nav-item"><a href="#AddRoundKey" class="nav-link"><code>AddRoundKey()</code></a></li>
             </ul>
           
-          <a href="#item-4" class="nav-link pl-0">Encryption Code</a>
-          <a href="#item-5" class="nav-link pl-0">Additional Content: \(GF(2^8)\)</a>
-          <a href="#item-6" class="nav-link pl-0">Additional Content: Decryption</a>
+          <a href="#EncryptionCode" class="nav-link pl-0">Encryption Code</a>
+          <a href="#AdditionalContentGF" class="nav-link pl-0">Additional Content: \(GF(2^8)\)</a>
+          <a href="#AdditionalContentDecryption" class="nav-link pl-0">Additional Content: Decryption</a>
         
       </div>
     </div> <!-- end col-3 -->
@@ -103,7 +103,7 @@
     <!-- content -->
     <div class="col-md-9 col-sm-12 content">
     
-      <h4 id="item-1">Introduction to Ciphers</h4>
+      <h4 id="IntroductionToCiphers">Introduction to Ciphers</h4>
       <br>
       <p>In today's world, there is monumental effort to secure data that we wish to remain private.
 Information like our social-security number, credit card data, and passwords should all be hidden from the general public (and for good reason). Yet, we seldom ask ourselves ourselves how this data is <em>actually</em> hidden.
@@ -113,12 +113,12 @@ If the title hasn't already given it away, the answer is <a style="color: #00c62
 If you're like most of the population, you probably have no idea what a block <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An algorithm used to mask data in a covert manner">cipher</a> is. This shouldn't be an issue though, as the tutorial is meant to be understood by anyone with a bit of coding experience.</p>
 <p> The first week that I started writing ciphers for NIST, my mentor came up to me and gave a helpful analogy: a block cipher is like an old-fashioned safe. The cipher itself is the safe, while our data is some valuable. The catch is that our key is still called a 'key', but it's really just a big number of our choosing used for calculations.</p>
       <img src="../images/ciphersafe.png" style="width: 95%; height: auto;">
-      <h4 id="item-2">Why AES?</h4>
+      <h4 id="WhyAES">Why AES?</h4>
       <br>
       <p>Great question. It would take greater minds than mine to answer that question fully. </p>
       <p>
 The simple answer is that it remains very resiliant under years of scrutiny, without sacrificing too much speed.
-This does not mean AES is necessarily efficient for a lightweight cipher (see <a href="#">PRINCE</a>), but would you rather keep your money in a national bank or in a safe under your bed?</p>
+This does not mean AES is necessarily efficient as a lightweight cipher (see <a class="popLink" href="prince.html">PRINCE</a>), but would you rather keep your money in a national bank or in a safe under your bed?</p>
       <p> For those interested in the security aspect, my previous analogy begins to break down when it comes to the motive of a hacker / thief.
  Just as a thief is interested in the money inside a safe, one would expect that the motive of a hacker is to steal passwords / sensitive information; however, it is truly the motive of a hacker to obtain our key (I'm interchanging hacker and cryptanalyst a bit loosely - in reality I think most hackers would be perfectly happy with a few hundred passwords).
 Therefore, the objective of a cipher (i.e. our safe) is to make it as hard as possible to retrieve the key. </p>
@@ -130,20 +130,21 @@ In order to break a cipher, one must find some sort of algorithm which discovers
 <p>To my knowledge, there are currently no non-<a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Attacking the underlying hardware or operating system to bypass an algorithm">side-channel attacks</a> besides a biclique attack that only has theoretical improvement from \(2^{128} \) to \( 2^{126} \) (theoretical meaning this attack is still not practical for modern computers).
 Though there are other ciphers that are just as strong as AES (i.e. Serpent and Twofish), the attention given to AES over the past few decades has allowed for speedups and security updates to patch the commonly-known side-channel attacks.
       </p>
-      <br>
-      <h4 id="item-3">The Cipher</h4>
+      <br/>
+      <br/>
+      <h4 id="TheCipher">The Cipher</h4>
       <br>
       <p>Now that you have all the background (which you probably didn't ask for in the first place), it's time to discuss the actual algorithm of AES. </p>
 <p>
 AES is what cryptographers call a <a style="color: #00c624" data-toggle="tooltip" title data-original-title="A cipher who's algorithm is based off translating a fixed number of bits, then swapping the order of the bits">Substitution-Permutation Network</a> (SPN): every round / iteration of the algorithm takes our chunk of data, breaks it into smaller chunks that are fed through a substitution box, and then swaps the bits around according to some sort of permutation.
  </p>
- <p> In order to truly understand what is going on in AES, the reader would first have to become fimiliar with the basics of polynomial rings and Galois fields (also referred to as finite fields) - I will leave <a class="popLink" href="#item-5">a section</a> at the end to cover these things for those who are interested.
+ <p> In order to truly understand what is going on in AES, the reader would first have to become fimiliar with the basics of polynomial rings and Galois fields (also referred to as finite fields) - I will leave <a class="popLink" href="#AdditionalContentGF">a section</a> at the end to cover these things for those who are interested.
  </p>
  <p> As I briefly mentioned in an aside earlier, the AES algorithm is somewhat dependent on key-length which is either 128 bits, 192 bits, or 256 bits; however, that the size of the data we wish to encrypt is fixed at 128 bytes. The reason I say 'somewhat' is because AES is essentially a collection of functions ( <code>SubBytes()</code>, <code>ShiftRows()</code>, <code>MixColumns</code>, and <code>AddRoundKey()</code> ) that are repeated; each iteration of these functions is referred to as a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A single repetition / iteration of an iterative algorithm">round</a>. Each of AES-128, AES-192, and AES-256 execute the same code - it's merely the number of rounds that differ for each variant. In particular AES-128 executes 10 rounds, AES-192 executes 12 rounds, and AES-256 executes 14 rounds. Increasing the number of rounds makes it so that the computation time of most <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The study of decoding encrypted text without the key">crypanalysis</a> takes just as long as a brute-force solution. </p>
  <p>With that said, here's a breakdown of the functions that are executed in each round of the algorithm.
 </p>
     <br>
-    <h5 id="item-3-1">Key Schedule</h5>
+    <h5 id="KeySchedule">Key Schedule</h5>
     <br>
     <p> By this time, you're likely wondering how the key acutally fits into the cipher - is there some sort of lock hidden in the code where the key mysteriously fits in, maybe some hash function that checks authenticity? Nope. </p>
     <p> As I briefly touched upon earlier, the key is basically a large number used for arithmetic operations in \(GF(2^8)\); but even that isn't entirely true, as the key itself is only used in the first round for <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The process of adding round keys before and after the encryption to expand the possible key space">key-whitening</a>. For later operations, the key is actually used to generate what are called <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Word-sized (4 byte) chunks that are generated from the original key in an algorithm called a Key Schedule">round keys</a> in a <a style="color: #00c624" data-toggle="tooltip" title data-original-title="An algorithm almost always independent of the cipher for generating unique round keys for each round">key schudule</a>; many ciphers utilize the concept of a key schedule, as it greatly improves upon the security of a key. For example, if a cryptanalyst were to gain access to one of our round keys through extensive attacks, the strength of our key schedule would determine whether that  is enough information to compute the original key (in the case of AES, it does not but allows the cryptanalyst to gain access to other round keys which collectively can accomplish the task).
@@ -272,7 +273,7 @@ static void KeySchedule(const unsigned char * key) {
     <br>
     
     
-    <h5 id="item-3-2"><code>SubBytes()</code></h5>
+    <h5 id="SubBytes"><code>SubBytes()</code></h5>
     <p>The first item on our list of round functions is that pesky "substitution" part of our whole substitution-permutation network. The reason our substitution layer is so important is that it provides a non-linear layer in \(GF(2^8)\), so that cryptanalsis cannot reduce the cipher to a linear system of equations (which would allow the cipher to be easily broken using GPUs and a sufficient knowledge of finite field arithmetic).</p>
     <p> Now let \( b \) be an arbitrary byte from our state above (i.e. \( b = p_i \) for some \( 0 \leq i \leq 15\) ) and let \( b_j \) denote the \( j^{th}\) bit for \( 0 \leq j \leq 7 \). The transformation which the Substitution layer is applying to \(b\) is
              $$ \tilde{b_i} = (b^{-1})_i \oplus (b^{-1})_{(i + 4)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 5)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 6)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 7)\mathrm{mod} 8} + c_i $$
@@ -329,7 +330,7 @@ static void SubBytes() {
       </div>
     </div>
     <br>
-    <h5 id="item-3-3"><code>ShiftRows()</code></h5>
+    <h5 id="ShiftRows"><code>ShiftRows()</code></h5>
     <p> Next on our agenda is the <code>ShiftRows()</code> method, which does just what the name suggests. Using zero-indexed origin (i.e. for \(0 \leq i \leq 3\)), we cyclically shift each row in the state to the left by \(i\) bytes:
     $$ \begin{pmatrix} p_0 & p_4 & p_8 & p_{12} \\\\ p_1 & p_5 & p_9 & p_{13} \\\\ p_2 & p_6 & p_{10} & p_{14} \\\\ p_3 & p_7 & p_{11} & p_{15} \end{pmatrix} \longmapsto_{ShiftRows()} \begin{pmatrix} p_0 & p_4 & p_8 & p_{12} \\\\ p_5 & p_9 & p_{13} & p_1 \\\\ p_{10} & p_{14} & p_2 & p_6 \\\\ p_{15} & p_{3} & p_{7} & p_{11} \end{pmatrix}  $$
     </p>
@@ -378,8 +379,8 @@ static void ShiftRows() {
       </div>
     </div>
     <br>
-    <h5 id="item-3-4"><code>MixColumns()</code></h5>
-    <p> Third on our list is the <code>MixColumns()</code> function, and this is where things start to get trickier. The reason things get tricky is because this function is an affine (linear) transform over \(GF(2^8)\), and is thus heavily dependent on polynomial multiplication. I briefly mentioned in the <code>SubBytes()</code> section that inversion (i.e. division) in a Galois field is computationally taxing in terms of clock cycles - the same applies to multiplication, except a few extra steps are taken out. The exact rational for <code>MixColumns()</code> is explained in the <a class="popLink" href="#item-6">additional content for decryption</a>. Overlooking the details, we have the transform:
+    <h5 id="MixColumns"><code>MixColumns()</code></h5>
+    <p> Third on our list is the <code>MixColumns()</code> function, and this is where things start to get trickier. The reason things get tricky is because this function is an affine (linear) transform over \(GF(2^8)\), and is thus heavily dependent on polynomial multiplication. I briefly mentioned in the <code>SubBytes()</code> section that inversion (i.e. division) in a Galois field is computationally taxing in terms of clock cycles - the same applies to multiplication, except a few extra steps are taken out. The exact rational for <code>MixColumns()</code> is explained in the <a class="popLink" href="#AdditionalContentDecryption">additional content for decryption</a>. Overlooking the details, we have the transform:
         
         $$ \begin{pmatrix} 02 & 03 & 01 & 01 \\\\ 01 & 02 & 03 & 01 \\\\ 01 & 01 & 02 & 03 \\\\ 03 & 01 & 01 & 02 \end{pmatrix} \begin{pmatrix} p_0 & p_4 & p_8 & p_{12} \\\\ p_1 & p_5 & p_9 & p_{13} \\\\ p_2 & p_6 & p_{10} & p_{14} \\\\ p_3 & p_7 & p_{11} & p_{15} \end{pmatrix} $$
         
@@ -516,10 +517,10 @@ static void MixColumns() {
       </div>
     </div>
     <br>
-    <h5 id="item-3-5"><code>AddRoundKey()</code></h5>
-    <p> Again, it's just what it sounds like. If you didn't feel like reading over the <a class="popLink" href="#item-3-1">Key Schedule</a> section but actually want to understand why this is vital to the cipher, then go kick rocks cus that's pretty important.
+    <h5 id="AddRoundKey"><code>AddRoundKey()</code></h5>
+    <p> Again, it's just what it sounds like. If you didn't feel like reading over the <a class="popLink" href="#KeySchedule">Key Schedule</a> section but actually want to understand why this is vital to the cipher, then go kick rocks cus that's pretty important.
     </p>
-    <p> Alright, so hopefully we understand that there are 4 times as many round keys as there are rounds (plus 4 used for key whitening). If this is still unclear to you, we reached this number because the state is 4 times the size of the round key - in reality if we were to mesh the round keys together four at a time, we have a full 128-bit round key for each round. If you read the <a class="popLink" href="#item-3-2">SubBytes</a> section, you should also be aware that addition in \(GF(2^8)\) is the same as bitwise exclusive-or <code>XOR</code>, so putting it all together we wind up with the following code:
+    <p> Alright, so hopefully we understand that there are 4 times as many round keys as there are rounds (plus 4 used for key whitening). If this is still unclear to you, we reached this number because the state is 4 times the size of the round key - in reality if we were to mesh the round keys together four at a time, we have a full 128-bit round key for each round. If you read the <a class="popLink" href="#SubBytes">SubBytes</a> section, you should also be aware that addition in \(GF(2^8)\) is the same as bitwise exclusive-or <code>XOR</code>, so putting it all together we wind up with the following code:
     </p>
     <div class="showbar">
       <button type="button" id="showAddRoPyBut" onclick="showbutton('addropycode', 'showAddRoPyBut', 'Python')" class="btn btn-dark">Show Python</button>
@@ -545,7 +546,7 @@ static void AddRoundKey(unsigned char round)
       </div>
     </div>
     <br>
-    <h4 id="item-4">Encryption Code</h4>
+    <h4 id="EncryptionCode">Encryption Code</h4>
     <br>
     <p> Now that we have the main components of AES down, we're ready to put it all together in a cogent, continuous block.
         For all variants of AES, we perform what is what is called <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The process of adding round keys before and after the encryption to expand the possible key space">key-whitening</a> on the state, such that the <code>AddRoundKey()</code> function applies our key to the initial data. Following that we perform exactly one less than the total number of rounds in the following format:
@@ -699,11 +700,11 @@ def printState():
             print(format(_state[j][i], '02x'), end=' ')
         print()
     print()
-
-printState()
-KeySchedule()
-AESCipher()
-printState()</pre>
+if __name__ == "__main__":
+    printState()
+    KeySchedule()
+    AESCipher()
+    printState()</pre>
       </div>
     </div>
 
@@ -965,7 +966,7 @@ static void AddRoundKey(unsigned char round) {
 <br>
 <br>
 <br>
-    <h4 id="item-5">Additional Content: \(GF(2^8)\)</h4>
+    <h4 id="AdditionalContentGF">Additional Content: \(GF(2^8)\)</h4>
 <br>
 <p>Oh it's you again..</p>
 <p>Alright, you've made it this far, so there's only a little bit left to understand: what is this \(GF(2^8)\) symbol that we keep on seeing? Well for starters, that is the Galois Field of order 256 - the number of values an unsigned byte (8 bits, hence the 8) can represent.
@@ -1042,13 +1043,13 @@ Imagine you have some set of objects and you want to know if you can do mathemat
     $$ (2x^3 + 2x^2 + x + 1) \text{mod} (x^2 + 2x + 2) = x$$
     which translates to 10. Thus, we find that in \( GF(3^3) \) with irreducible polynomial \(x^3 + x^2 + 2\), the equation \( 10 \otimes 4 = 3 \) holds (I translated from ternary back to base 10). Neat stuff, huh?</p>
     <p> As you can see, it is much more computationally intensive to do multiplication in \(GF(2^8)\) than it is to do regular multiplication over the integers \(\mathbb{Z}\).
- To see why the SBox from <a class="popLink" href="#item-3-2">SubBytes()</a> provides a level of non-linearity, recall that the SBox performs the calculation
+ To see why the SBox from <a class="popLink" href="#SubBytes">SubBytes()</a> provides a level of non-linearity, recall that the SBox performs the calculation
     $$ \tilde{b_i} = (b^{-1})_i \oplus (b^{-1})_{(i + 4)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 5)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 6)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 7)\mathrm{mod} 8} + c_i $$
     in \(GF(2^8)\). After experiencing for yourself how much more complex multiplication is in a finite field, it shouldn't be hard to see that Galois Field arithmetic prevents cryptanalysts from representing the cipher as a system of even thousands of linear equations.
 </p>
 
 <br>
-<h4 id="item-6">Additional Content: Decryption</h4>
+<h4 id="AdditionalContentDecryption">Additional Content: Decryption</h4>
 <br>
 <p> It's likely become evident to you at this point, but for the reader who hasn't put too much thought into it: how do you plan to get back your data now that it has gone through a complex encryption? Sure, you have the key, but I never once told you that the cipher above is its own inverse (because it isn't). Building upon earlier analogies, I have given you a way to put your valuables in a safe, but have not told you anything about how to get them out of the safe. I chose to put this section off until the end due to the fact that many of the inverse operations in AES' <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The process of converting encrypted ciphertext back into its original plaintext">decryption</a> require knowledge of \( GF(2^8) \) from the previous section.
 </p>

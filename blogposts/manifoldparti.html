@@ -27,7 +27,7 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Chris Dare</a>
+  <a class="navbar-brand" href="../homepage.html">Chris Dare</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -52,7 +52,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
           <a class="dropdown-item" href="../code/aes.html" style="font-family: 'Courier New', Courier;">AES</a>
-          <a class="dropdown-item" href="#" style="font-family: 'Courier New', Courier;">Code2</a>
+          <a class="dropdown-item" href="../code/prince.html" style="font-family: 'Courier New', Courier;">PRINCE</a>
         </div>
       </li>
       <li class="nav-item">
@@ -79,24 +79,24 @@
 
     <div class="col-md-3 col-sm-0" id="sidemenu">
       <div class="menu sticky-top p-3 bg-light">
-        <a class="nav-link pl-0" href="#item-1">Introduction</a>
-        <a class="nav-link pl-0" href="#item-2">The Problem with Infinity</a>
-        <a class="nav-link pl-0" href="#item-3">What is a Topology?</a>
-        <a class="nav-link pl-0" href="#item-4">Connectedness</a>
-        <a class="nav-link pl-0" href="#item-5">Compactness</a>
-        <a class="nav-link pl-0" href="#item-6">Hausdorff Spaces</a>
-        <a class="nav-link pl-0" href="#item-7">Bases</a>
+        <a class="nav-link pl-0" href="#Introduction">Introduction</a>
+        <a class="nav-link pl-0" href="#TheProblemWithInfinity">The Problem with Infinity</a>
+        <a class="nav-link pl-0" href="#WhatIsATopology">What is a Topology?</a>
+        <a class="nav-link pl-0" href="#Connectedness">Connectedness</a>
+        <a class="nav-link pl-0" href="#Compactness">Compactness</a>
+        <a class="nav-link pl-0" href="#HausdorffSpaces">Hausdorff Spaces</a>
+        <a class="nav-link pl-0" href="#Bases">Bases</a>
       </div>
     </div> <!-- end col-3-->
 
   <div class="col-md-9 col-sm-12 content">
-    <h4 id="item-1">Introduction</h4>
+    <h4 id="Introduction">Introduction</h4>
     <br/>
     <p> Whenever someone uses the term 'theoretical mathematics', the first thing that pops into many people's minds is either a blackboard riddled with dozens of equations or the idea of some higher-dimensional amorphous shape that somehow defies the laws of nature which we know and understand. The first choice could not be more true, but the second would be a bit stereotypical for mathematicians since it only describes manifolds.
     </p>
     <figure style="padding-bottom: 30px;">
         <img src="../images/mychalkboard.jpg" style="width: 100%; border-radius: 5px 5px 5px 5px;"></img>
-        <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> The chalkboard I got for Christmas last year. A real beaut.</figcaption>
+        <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> The chalkboard I got for Christmas last year.<br/> A real beaut.</figcaption>
     <figure>
     <br/>
     <br/>
@@ -117,7 +117,7 @@
     <p> For those of you who are truly aquainted with the subject: feel free to speak up and correct me where I'm wrong. For those of you who have no experience in the subject: everyone who ever told you there's no such thing as a stupid question was probably born before search engines became relevant (didn't expect that twist - seriously though, Google first then ask, I'm a 21 year-old college student not a professor).
     </p>
     <br/>
-    <h4 id="item-2">The Problem with Infinity</h4>
+    <h4 id="TheProblemWithInfinity">The Problem with Infinity</h4>
     <br/>
     <p> Most of the content I plan to talk about later in this article will probably not be familiar to the average reader; however, in order to correctly introduce such topics, I must first delve deeper into a concept that many people think they know well: <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The idea that a proper subset has the same cardinality as the original set">infinity</a>. The reason I say concept and not number is because that's exactly what it is; infinite is an adjective which describes asymptotic behavior for functions and recursive cardinality for sets.</p>
     <p> An unfortunate coincidince is that many high school teachers or freshman calculus professors introduce infinity as if it were a number through notations like \( \lim_{x \to \infty} \sqrt{x} = \infty \). The equals sign in the equation often leads people to believe that infinity can be treated numberically, and thus interchanged with other numbers in many equations - this is not the case for \(\mathbb{R}\). A more accurate notation that I prefer is \(\sqrt{x} \to \infty\) as \(x \to \infty\).
@@ -153,7 +153,7 @@
     <p> I will not show the proof here, but it turns out that the power set (set of all subsets) of \(\mathbb{N}\) has a bijective correspondence with \(\mathbb{R}\). For a finite set \(X\) with \(n\) elements, the cardinality of the power set of \(X\), \(\mathcal{P}(X)\), is exactly \(2^n\); therefore, it is common to see the continuum denoted by \(\mathfrak{c} = 2^{\aleph_0}\). This brings us to one of the most famous unsolved math problems in the world today: the <a class="popLink" href="https://en.wikipedia.org/wiki/Continuum_hypothesis">continuum hypothesis</a>. Originally introduced in 1878 by our friend Georg Cantor, the continuum hypothesis states that there does not exist any set whose cardinality is strictly between \(\aleph_0\) and \(2^{\aleph_0} = \mathfrak{c}\). That's pretty cool, huh? Through some rudimentary set theory tricks and a few diagrams, we have proved that the philosophical idea of being 'infinitely more infinite' corresponds to the mathematical idea of power sets and exponentiation.
     </p>
     <br/>
-    <h4 id="item-3">What is a Topology?</h4>
+    <h4 id="WhatIsATopology">What is a Topology?</h4>
     <br/>
     <p>The premiere of topological spaces (as they are defined today) became a large area of interest around the mid-ninteenth century, when mathematicians such as Gauss and Riemann built upon Euler's earlier studies on surfaces. This work would eventually spark a huge interest, leading to a vast amount of research on homology and cohomology groups in the mid-twentieth century under by mathematicians such as Heinz Hopf, Armand Borel, and Frank Adams.</p>
     <p> The idea of a topological space was conspired to be an archetype of <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The real number system with structure that satisfies the axioms of regular Euclidean geometry ">Euclidean Space</a> such that there is just enough structure to support continuous functions; that is, a topological space was constructed to be the bare minimum and crux of continuity. So before I go any further, it seems appropriate to introduce an important theorem:
@@ -205,7 +205,7 @@
     But hold on - this would mean that that the entire set \(X\) and the empty set \( \emptyset \) are both open and closed, which doesn't make sense whatsoever? That would be correct. To make sense of it, a nice property of closed sets is that sequences which converge inside a closed set must also have their limit point contained in that set. Consider the real numbers \( \mathbb{R} \), which the everyday reader has been working with their whole life. If you have a sequence in \( \mathbb{R} \) and you know that sequence converges, then obviously the limit point is going to be in \( \mathbb{R} \) also; hence, \( \mathbb{R} \) must be closed. However, \( \mathbb{R} \) also has the property that I mentioned before where I can try to creep close to the edge, but can never look over (i.e. I can always find an open set surrounding me). Therefore, \( \mathbb{R} \) must also be open.
     </p>
     <br>
-    <h4 id="item-4">Connectedness</h4>
+    <h4 id="Connectedness">Connectedness</h4>
     <br>
     <p> Now let me introduce the idea of a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A pair of nonempty open sets that are disjoint, but whose union covers the entire space">separation</a>: imagine we took the real number line \( \mathbb{R} \) and cut it in half at some point \( x \) - what is left over could then be represented as the union of two open sets, i.e. \( (-\infty, x) \cup (x, \infty) \). We went from a connected line to a disconnected line, and the only thing that changed is that we could represent the entire space as the union of two nonempty open sets. This is exactly the generalization of a space being connected or disconnected: a space is disconnected if there exists a separation, i.e. the space can be represented as the union of two nonempty open sets which do not intersect. A space is connected if it is not disconnected (big suprise there).
     </p>
@@ -281,7 +281,7 @@
     <p>And there you have it, basically all you've ever wanted to know about what makes a space connected and where that gets you. Later on (not in this post) I'll introduce the concept of path connectedness for the sake of the fundamental group and homology; though this is not a difficult idea per se, the realm of homology certainly requires a solid background in elementary topology.
     </p>
     <br/>
-    <h4 id="item-5">Compactness</h4>
+    <h4 id="Compactness">Compactness</h4>
     <br/>
     <p>
     This is a somewhat hard concept to introduce, but it would be almost impossible for me to go forward in the study of topology without it. Consider a singleton element \(\{ a \}\) in \(\mathbb{R}\). Recall that a set is closed if its compliment is open, well the compliment of \(\{ a \}\) is simply the set \( (-\infty, a) \cup (a, \infty)  \). Since the union of open sets is open by our topological axioms, we see that a singleton is closed. Now, under the laws of basic set theory (specifically <a class="popLink" href="https://en.wikipedia.org/wiki/De_Morgan%27s_laws">De Morgan's Law</a>), the complement of a union is the intersection of complements and the complement of an intersection is the union of complements. Hence, the axioms for closed sets change a little for a topological space \(X\):</p>
@@ -292,7 +292,7 @@
     </ol>
     <p>
     Again, if you were to look at most textbooks, (\(2\)) would say something more like the union of two closed sets is closed - the result simply follows by induction.</p>
-    <p> So what makes the closed sets \( [0, 1] \) and \( \{ 2^{-100}, 2^{-99}, \dots, 2^{0} \} \) so much different? The answer is compactness (If you answered connected you would also be correct). Back when mathematicians studied <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A topological space with the added structure of distance (where distance is generalized to 4 axioms). The basis of open sets become open balls of radius r &gt; 0">metric spaces</a> (which had further generalized things like Hilbert spaces and Banach spaces), they had thought that the unique property of the set \( [a, b] \) in \(\mathbb{R}\) was something that we now call <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Every infinite subset of X has a limit point also contained in X">Limit Point Compactness</a>. However, the concept of Hausdorff spaces (which I will <a class="popLink" href="#item-6">introduce later<a>) begain confuse mathematicians as to whether the nice properties came from Limit Point Compactness, <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The property that every infinite sequence has a convergent subsequence">Sequential Compactnesss</a>, or regular compactness. Eventually, mathematicians would stumble upon the most generalized form of compactness in a topological space that binds the two other types to countable compactness in a Hausdorff space and binds all three together in a metric space.
+    <p> So what makes the closed sets \( [0, 1] \) and \( \{ 2^{-100}, 2^{-99}, \dots, 2^{0} \} \) so much different? The answer is compactness (If you answered connected you would also be correct). Back when mathematicians studied <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A topological space with the added structure of distance (where distance is generalized to 4 axioms). The basis of open sets become open balls of radius r &gt; 0">metric spaces</a> (which had further generalized things like Hilbert spaces and Banach spaces), they had thought that the unique property of the set \( [a, b] \) in \(\mathbb{R}\) was something that we now call <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Every infinite subset of X has a limit point also contained in X">Limit Point Compactness</a>. However, the concept of Hausdorff spaces (which I will <a class="popLink" href="#HausdorffSpaces">introduce later<a>) begain confuse mathematicians as to whether the nice properties came from Limit Point Compactness, <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The property that every infinite sequence has a convergent subsequence">Sequential Compactnesss</a>, or regular compactness. Eventually, mathematicians would stumble upon the most generalized form of compactness in a topological space that binds the two other types to countable compactness in a Hausdorff space and binds all three together in a metric space.
     </p>
     <p> The first thing I need to define is the concept of an open cover. Let \(X\) be my ambient space. A collection \(\{ V_\alpha \}\) is simply called a <u>cover</u> if  \( \bigcup_{\alpha}V_\alpha = X \). This makes sense - we have a bunch of sets, and we say that the collection is a cover if it LITERALLY covers the space. We call such a cover an <em>open cover</em> if the collection is comprised of only open sets (shocker).
     </p>
@@ -334,7 +334,7 @@
     </p>
     
     <br/>
-    <h4 id="item-6">Hausdorff Spaces</h4>
+    <h4 id="HausdorffSpaces">Hausdorff Spaces</h4>
     <br/>
     <p>If you remember from earlier, I discussed that an important property of open sets in Euclidean space was that I could pick any point in the open set and know that I can still find some ball of positive radius around the ball that is still contained in my open set. Now imagine that instead of looking at a point inside an open set, I'm looking at two distinct points, \(x\) and \(y\), on the real line. As long as \(x \neq y\), I can always find an open ball around each point such that the two open balls do not intersect. </p>
     <p>For example, supose I have the points \(x = 0\) and \(y = 10^{-1000}\). Then I can simply take my radius to be \(r = \frac{1}{3} \cdot 10^{-1000}\) so that the balls \(B_r(x)\) and \(B_r(y)\) are disjoint.
@@ -373,7 +373,7 @@
     <p>The Hausdorff property will prove to be a useful asset when it comes time to introduce manifolds next chapter. In fact, the notion of homeomorphisms will also allow us to define useful local properties of manifolds. With that said, all that's really left is the concept of a basis.
     </p>
     <br/>
-    <h4 id="item-7">Bases</h4>
+    <h4 id="Bases">Bases</h4>
     <br/>
     <p> When topologies were introduced earlier in this article, it became apparent that many open sets in a topology were merely unions of smaller open sets. Consider the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Every subset of the overall space is considered open">discrete topology</a> on the set \(X = \{ a, b, c, d \} \)
     </p>

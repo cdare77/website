@@ -21,7 +21,7 @@
 
 <!-- Navigation bar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Chris Dare</a>
+  <a class="navbar-brand" href="homepage.html">Chris Dare</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -47,7 +47,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
           <a class="dropdown-item" href="code/aes.html" style="font-family: 'Courier New', Courier;">AES</a>
-          <a class="dropdown-item" href="#" style="font-family: 'Courier New', Courier;">Code2</a>
+          <a class="dropdown-item" href="code/prince.html" style="font-family: 'Courier New', Courier;">PRINCE</a>
         </div>
       </li>
       <li class="nav-item">
@@ -74,20 +74,26 @@
 <div class="row">
   <!-- Blog elements -->
   <div class="leftcolumn">
+    <a href="code/prince.html">
     <div class="card post">
-      <h2>TITLE HEADING</h2>
-      <h5>Title description, Dec 7, 2017</h5>
-      <div class="fakeimg" style="height:200px;">Image</div>
-      <p>Some text..</p>
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+      <h2>PRINCE</h2>
+      <h5>Jul 23, 2018</h5>
+      <img src="images/princecipher.png" alt="AES" style="width: 90%; height: auto; margin-left: 3%; border-radius: 10px 10px 10px 10px;">
+      <br/>
+      <p>In this blog-post, I build off the previous ideas introduced in the AES article in order to describe low-latency lightweight ciphers.</p>
+      <p> Unlike the previous blog-post, however, there is much less background mathematics required in order to understand what is going on (however, I do use the symbol for Galois fields once or twice). </p>
     </div>
+    </a>
+    
+    
     <a href="code/aes.html">
     <div class="card post">
       <h2>Advanced Encryption Standard (AES)</h2>
       <h5>Jun 26, 2018</h5>
       <img src="images/aes.png" alt="AES" style="width: 90%; height: auto; margin-left: 3%; border-radius: 10px 10px 10px 10px;">
-      <p>In-depth explanation of NIST's current endorsed cipher.</p>
-      <p>This blog post is dedicated to the background and development of DES's successor, AES. Before diving into the cipher, cryptography basics (actually just private-key encryptions) will be introduced so that the average reader can understand what is going on.</p>
+      <br/>
+      <p>In this blog-post I give an in-depth explanation of DES's successor and NIST's current endorsed cipher.</p>
+      <p>Before diving into the cipher, I'll try my best to introduce cryptography basics so that the average reader can understand what is going on. However, I also go over Galois field arithmetic in the additional content for anyone interested in <em> why </em> AES works.</p>
     </div>
     </a>
   </div>
@@ -100,10 +106,10 @@
       <p style="font-size: 70%; margin-top: 15px;">Hey what's up guys, my name's Chris and I'm a student at Virginia Tech working on my masters in mathematics and bachelors in computer science. I do research in discrete Morse theory and enjoy reading up on theoretical physics. I have a whippet named Ryder and a much cooler boxer named <span lang="grc" title="Ancient Greek language text">Κυνίσκα</span>. Over the past few years, I've become a huge enthusiast of Hellenistic and Roman culture, as well as their respective languages. Thanks for visiting!</p>
     </div>
     <div class="card">
-      <h3>Popular Post</h3>
-      <div class="fakeimg">Image</div><br>
-      <div class="fakeimg">Image</div><br>
-      <div class="fakeimg">Image</div>
+      <h3><em>Popular Posts</em></h3>
+      <a href="code/aes.html" style="text-decoration: none; color: black;"><div class="wobble rect-fill-yellow">AES</div></a><br>
+      <a href="blogposts/manifoldpartii.html" style="text-decoration: none; color: black;"><div class="wobble rect-fill-green">Manifolds: Part II</div></a><br>
+      <a href="code/prince.html" style="text-decoration: none; color: black;"><div class="wobble rect-fill-blue">PRINCE</div></a>
     </div>
     <div class="card">
       <h3>Follow Me</h3>
