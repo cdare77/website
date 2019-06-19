@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Photos</title>
+  <title>My Photos</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="keywords" content="Photos, Chris Dare media">
-  <meta name="description" content="Photos of me">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="keywords" content="Photos, Chris Dare media, Chris Dare Photos">
+  <meta name="description" content="Pictures of me doing stuff">
   <meta name="author" content="Chris Dare">
+  <!-- icon -->
+  <link rel="icon" href="favicon.ico">
   <!-- Bootstrap 4.1 -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <!-- actual stylesheet -->
@@ -16,53 +18,28 @@
   <!-- jquery -->
   <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
   <script src="footerscript.js"></script>
+  <script src="navbarTemplate.js"></script>
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "CollectionPage",
+  "name" : "My Photos Page",
+  "keywords": [
+      "Chris Dare", 
+      "Christopher Dare",
+      "Christopher Dare Photos",
+      "Chris Dare Photos"
+  ],
+  "url" : "https://www.christopherdare.com/photospage.html"
+}
+</script>
 </head>
 <body>
 
-<!-- Navigation bar -->
+<img src="images/GreeceBay.jpg" class="bg">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="homepage.html">Chris Dare</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="homepage.html">Home</a>
-      </li>
-      <!-- Blog Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="blogpage.html" id="navbarDropdownBlogLink"  aria-haspopup="true" aria-expanded="false">Blog</a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownBlogLink">
-          <a class="dropdown-item" href="blogposts/manifoldparti.html">Manifolds: Part I</a>
-          <a class="dropdown-item" href="blogposts/manifoldpartii.html">Manifolds: Part II</a>
-        </div>
-      </li>
-      <!-- Code Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="codepage.html" id="navbarDropdownCodeLink" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
-          Code
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
-          <a class="dropdown-item" href="code/aes.html" style="font-family: 'Courier New', Courier;">AES</a>
-          <a class="dropdown-item" href="code/prince.html" style="font-family: 'Courier New', Courier;">PRINCE</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="mymusicpage.html">My Music</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Photos<span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-  </div>
-</nav>
 
 <!-- webpage header -->
-
-<img src="images/nature.jpg" class="bg">
 
 <div class="jumbotron vertical-center header">
   <h1 style="font-family:'Chewy', cursive;">Photos</h1>
@@ -71,7 +48,7 @@
   <br/>
 </div>
 
-<div class"container-fluid">
+<div class="container-fluid">
   <div class="row">
     
     <!-- Photos carousel -->
@@ -80,28 +57,28 @@
       <!-- Carousel items -->
       <div class="carousel inner">
         <div class="carousel-item active">
-          <img class="d-block w-100" src="images/waterfall.jpeg" alt="First slide">
+          <img class="d-block w-100" src="images/waterfall.jpg" alt="First slide" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="images/wrastlin.jpeg" alt="Second slide">
+          <img class="d-block w-100" src="images/wrastlin.jpeg" alt="Second slide" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="images/doggo.jpeg" alt="Third slide">
+          <img class="d-block w-100" src="images/doggo.jpeg" alt="Third slide" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="images/mustache.jpeg" alt="Fourth slide">
+          <img class="d-block w-100" src="images/springgameparents.jpg" alt="Fourth slide" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="images/vtrun.jpeg" alt="Fifth slide">
+          <img class="d-block w-100" src="images/vtrun.jpeg" alt="Fifth slide" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="images/niskashirt.jpeg" alt="Sixth slide">
+          <img class="d-block w-100" src="images/niskashirt.jpeg" alt="Sixth slide" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="images/clemsongame.jpeg" alt="Seventh slide">
+          <img class="d-block w-100" src="images/clemsongame.jpeg" alt="Seventh slide" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="images/tite.jpeg" alt="Eighth slide">
+          <img class="d-block w-100" src="images/kappaformals.jpg" alt="Eighth slide" style="border-radius: 55px;">
         </div>
       </div>
 
@@ -123,10 +100,6 @@
       <!-- Carousel items -->
       <div class="carousel inner">
         <div class="carousel-item active">
-          <video width="325" height="575" src="videos/donkeys.mov" autoplay loop muted>
-          </video>
-        </div> 
-        <div class="carousel-item">
           <video width="325" height="575" src="videos/bristolflag.mp4" autoplay loop muted>
           </video>
         </div>
@@ -139,7 +112,7 @@
           </video>
         </div> 
         <div class="carousel-item">
-          <video width="325" height="575" src="videos/greecebuoy.mov" autoplay loop muted>
+          <video width="325" height="575" src="videos/greecebuoy.mp4" autoplay loop muted>
           </video>
         </div>
         <div class="carousel-item">
@@ -148,10 +121,6 @@
         </div>
         <div class="carousel-item">
           <video width="325" height="575" src="videos/vtrun.mp4" autoplay loop muted>
-          </video>
-        </div>
-        <div class="carousel-item">
-          <video width="325" height="575" src="videos/market.mov" autoplay loop muted>
           </video>
         </div>
         <div class="carousel-item">
@@ -183,46 +152,46 @@
       <!-- Carousel items -->
       <div class="carousel inner">
         <div class="carousel-item active">
-          <img class="d-block w-100" src="images/graduation.jpg" alt="Graduation 2017">
+          <img class="d-block w-100" src="images/graduation.jpg" alt="Graduation 2017" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100"  src="images/wmzq.jpg" alt="WMZQ 2018">
+          <img class="d-block w-100"  src="images/whiskeytasting.jpg" alt="Whiskey Tasting" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100"  src="images/bristolboys.jpg" alt="VT vs. Tenessee">
+          <img class="d-block w-100"  src="images/bristolboys.jpg" alt="VT vs. Tenessee" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <video width="100%" height="auto" style="object-fit: cover;" src="videos/greeceisland.mov" autoplay loop muted>
+          <video width="100%" height="auto" style="object-fit: cover;" src="videos/greeceisland.mp4" autoplay loop muted>
           </video>
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100"  src="images/parasailing.jpg" alt="Parasailing St. Croix">
+          <img class="d-block w-100"  src="images/parasailing.jpg" alt="Parasailing St. Croix" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100"  src="images/boys.jpg" alt="OBX 2017">
+          <img class="d-block w-100"  src="images/boys.jpg" alt="OBX 2017" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <video width="100%" height="auto" style="object-fit: cover;" src="videos/interview.mov" autoplay loop muted>
+          <video width="100%" height="auto" style="object-fit: cover;" src="videos/interview.mp4" autoplay loop muted>
           </video> 
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100"  src="images/proudfam.jpg" alt="ProudFam Phi Delt">
+          <img class="d-block w-100"  src="images/shaggydog.jpg" alt="Shaggy Dog" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100"  src="images/shooting.jpg" alt="Bull run park">
+          <img class="d-block w-100"  src="images/shooting.jpg" alt="Bull run park " style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <video width="100%" height="auto" style="object-fit: cover;" src="videos/greecesunset.mov" autoplay loop muted>
+          <video width="100%" height="auto" style="object-fit: cover;" src="videos/greecesunset.mp4" autoplay loop muted>
           </video>
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100"  src="images/mountain.jpg" alt="McAfees Knob">
+          <img class="d-block w-100"  src="images/mountain.jpg" alt="McAfees Knob" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100"  src="images/cutepose.jpg" alt="StCroix">
+          <img class="d-block w-100"  src="images/cutepose.jpg" alt="StCroix" style="border-radius: 55px;">
         </div>
         <div class="carousel-item">
-          <video width="100%" height="auto" style="object-fit: cover;" src="videos/greecechapel.mov" autoplay loop muted>
+          <video width="100%" height="auto" style="object-fit: cover;" src="videos/greecechapel.mp4" autoplay loop muted>
           </video>
         </div>
       </div>
@@ -246,14 +215,31 @@
   <div class="row py-3 px-3">
     <div class="card col-md-5 col-sm-12">
       <h2>About Me</h2>
-      <img src="images/aboutme.png" alt="About Me Headshot" style="width: 75%; height: auto; margin-left: 10%; border-radius: 10px 10px 10px 10px;">
-      <p>Hey what's up guys, my name's Chris and I'm a student at Virginia Tech working on my masters in mathematics and bachelors in computer science. I do research in discrete Morse theory and enjoy reading up on theoretical physics. I have a whippet named Ryder and a much cooler boxer named <span lang="grc" title="Ancient Greek language text">Κυνίσκα</span>. Over the past few years, I've become a huge enthusiast of Hellenistic and Roman culture, as well as their respective languages. Thanks for visiting!</p>
+      <img src="images/aboutme.jpg" alt="About Me Headshot" style="width: 75%; height: auto; margin-left: 10%; border-radius: 10px 10px 10px 10px;">
+      <p> Hey what's up guys, my name's Chris and I'm a student at Virginia Tech. I just recieved my masters in mathematics and plan on finishing my bachelors in computer science by winter 2019. I do research in discrete Morse theory and enjoy reading up on theoretical physics. I have a whippet named Ryder and a much cooler boxer named <span lang="grc" title="Ancient Greek language text">Κυνίσκα</span>. Over the past few years, I've become a huge enthusiast of Hellenistic and Roman culture, as well as their respective languages. Thanks for visiting!</p>
     </div>
     <div class="card col-md-3 col-sm-12">
       <h3><em>Popular Posts</em></h3>
-      <a href="code/aes.html" style="text-decoration: none; color: black;"><div class="wobble rect-fill-yellow">AES</div></a><br>
-      <a href="blogposts/manifoldpartii.html" style="text-decoration: none; color: black;"><div class="wobble rect-fill-green">Manifolds: Part II</div></a><br>
-      <a href="code/prince.html" style="text-decoration: none; color: black;"><div class="wobble rect-fill-blue">PRINCE</div></a>
+      <a href="code/aes.html" style="text-decoration: none; color: black;">
+          <div ontouchstart="" class="wobble rect-fill-yellow">
+              <text style="font-family: Courier New, courier;">code &gt;</text>
+              AES
+          </div>
+      </a>
+      <br/>
+      <a href="blogposts/manifoldpartii.html" style="text-decoration: none; color: black;">
+          <div ontouchstart="" class="wobble rect-fill-green">
+              <text style="font-family: Courier New, courier;">blog &gt;</text>
+              Manifolds: Part II
+          </div>
+      </a>
+      <br/>
+      <a href="blogposts/maxwellseq.html" style="text-decoration: none; color: black;">
+          <div ontouchstart="" class="wobble rect-fill-blue" id="thirdPost">
+              <text style="font-family: Courier New, courier;">blog &gt;</text>
+              Maxwell's Equations
+          </div>
+      </a>
     </div>
     <div class="card col-md-4 col-sm-12">
       <h3>Follow Me</h3>

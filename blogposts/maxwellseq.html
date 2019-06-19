@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Manifolds Application: Maxwell's Equations</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="keywords" content="Manifold, Vector Field, Maxwell's Equations">
+  <meta name="description" content="A discussion of how smooth manifolds and differential forms tie into Maxwell's equations">
+  <meta name="author" content="Chris Dare">
+  <!-- Social media -->
+  <meta property="og:image" content="http://www.christopherdare.com/images/minkowskicone.jpg">
+  <meta property="og:image:type" content="image/jpg">
+  <meta property="og:image:width" content="1752">
+  <meta property="og:image:height" content="721">
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://www.christopherdare.com/blogposts/maxwellseq.html"/>
+  <meta property="og:title" content="Chris Dare's blog: Maxwell's Equations" />
+  <meta property="og:description" content="A discussion of how smooth manifolds and differential forms tie into Maxwell's equations." />
+  <!-- icon -->
+  <link rel="icon" href="../favicon.ico">
+  <!-- Bootstrap 4.1 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <!-- actual stylesheet -->
+  <link href="blogpost.css" rel="stylesheet" type="text/css">
+  <!-- google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite|Roboto" rel="stylesheet">
+  <!-- jquery -->
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+  <!-- MathJax -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+  <script src="../footerscript.js"></script>
+  <script src="../tooltip.js"></script>
+  <script src="../showbutton.js"></script>
+  <script src="../navbarTemplate.js"></script>
+</head>
+<body data-spy="scroll" data-target="#sidemenu" data-offset="100" style="height: 100%;">
+
+<!-- webpage header -->
+
+<div class="jumbotron vertical-center header">
+  <h1 style="font-family:'Special Elite', cursive;">Manifolds Application</h1>
+  <h5 style="font-family:'Special Elite', cursive;">Maxwell's Equations</h5>
+</div>
+
+<div class="container">
+  <div class="row py-3">
+  
+    <!-- Side navbar -->
+    <div class="col-md-3 col-sm-0" id="sidemenu">
+      <div class="menu sticky-top p-3 bg-light">
+        <a class="nav-link pl-0" href="#item-1">Some Bad Notation</a>
+        <a class="nav-link pl-0" href="#item-2">A Pinch of Spacetime for Good Measure</a>
+        <a class="nav-link pl-0" href="#item-3">Hodge's Star</a>
+        <a class="nav-link pl-0" href="#item-4">Maxwell's Equations</a>
+      </div>
+    </div> <!-- end col-3-->
+
+    <div class="col-md-9 col-sm-12 content">
+        <h3 id="item-1">Some Bad Notation</h3>
+        <br/>
+        <p>Following the chronological order of progression, this post assumes you have read (and hopefully understood) <a class="popLink" href="manifoldpartiii.html">my previous post</a>. In fact, you only <em>really</em> need knowledge of Stokes' Theorem in order to have a full understanding of what's going on — but a little cohomology never hurt anyone.
+        </p>
+        <p> To get started, we're going to break the rules of good mathematical notation a little bit by blurring the lines between what we defined as vector fields and what we defined as differential forms. If you remember, we actually defined a differential form to be the dual to a vector field, so transitioning from one to another (that is, establishing an isomorphism) only makes sense given the right conditions. I will attempt to outline this isomorphism in the next few paragraphs.
+        </p>
+        <p> On an \(n\)-dimensional manifold \(M\), if our coordinates are locally given by the chart \( (U, x_1, \dots, x_n) \) then our \(k\)-forms are determined by a choice of \(k\) basis elements:
+        </p>
+        $$
+        dx_{i_1}, dx_{i_2}, \dots, dx_{i_k}
+        $$
+        <p>
+        Since there are exactly \( {n \choose k} \) ways to pick \(k\) indices \(i_1, i_2, \dots, i_k\) out of a total of \(n\) indices, we must have that our basis of \(k\)-forms has exactly \( {n \choose k} \) elements and thus
+        </p>
+        $$
+        \dim \Omega^k(M) = {n \choose k}
+        $$
+        <p>To make this idea a little more concrete, lets look at the trivial \(3\)-dimensional example of \(\mathbb{R}^3\): our \(1\)-forms are spanned by the basis elements \(dx, dy, dz\) so there are precisely \({3 \choose 1} = 3\) degrees of freedom. In other words, a \(1\)-form is a linear combination
+        </p>
+        $$
+        \omega = a\,dx + b\,dy + c\,dz
+        $$
+        <p>where \(a, b,\) and \(c\) are allowed to vary (hence the three dimensions). Similarly, our \(2\)-forms are spanned by the basis elements \(dy \wedge dz, dx \wedge dz, dx \wedge dy\), so that every \(2\)-form is a linear combination</p>
+        $$
+        \omega = a\, dy \wedge dz + b\, dz \wedge dx + c\, dx \wedge dy
+        $$
+        <p> As you may have guessed, this also has \({3 \choose 2} = 3\) degrees of freedom. Therefore, we may associate vector fields over \(\mathbb{R}^3\) to either \(1\)-forms or \(2\)-forms:</p>
+        $$ \begin{align}
+        f(x, y, z)\,\frac{\partial}{\partial x} + g(x, y, z)\,\frac{\partial}{\partial y} + h(x, y, z)\,\frac{\partial}{\partial z} &\longleftrightarrow f(x, y, z)\,dx + g(x, y, z)\,dy + h(x, y, z)\,dz
+        \\&\longleftrightarrow f(x, y, z)\,dy \wedge dz + g(x, y, z) dz \wedge dx + h(x, y, z)dx \wedge dy
+        \end{align}
+        $$
+        <p>
+        Lastly, we have that a \(3\)-form should have \( {3 \choose 3} = 1\) degree of freedom. Thus, we are able to make the trivial association between \(3\)-forms and \(0\)-forms (i.e. smooth functions):
+        </p>
+        $$
+        f \longleftrightarrow f\, dx \wedge dy \wedge dz
+        $$
+        <p>
+        <font color="red" size="+1"><i>An Important Caveat:</i></font> in general, we cannot associate differential \(1\)-forms to differential \(2\)-forms or vector fields to either. This only works on \(\mathbb{R}^3\) because </p>
+        <ol type="a">
+            <li>\( {3 \choose 1} = {3 \choose 2} = \dim \mathbb{R}^3\)</li>
+            <li> \(\mathbb{R}^n\) is not just locally Euclidean, but globally Euclidean (duh) thus allowing smooth functions to look like top-dimensional forms</li>
+        </ol>
+        </p>
+        <p> Now suppose we have a smooth function \(f : U \to \mathbb{R}\). We defined the differential of \(f\) (or the exterior derivative of the 0-form \(f\) ) to be the \(1\)-form</p>
+        $$
+        df = \frac{\partial f}{\partial x}\,dx + \frac{\partial f}{\partial y}\,dy + \frac{\partial f}{\partial z}\,dz
+        $$
+        <p>From the rationale above, we are able to associate \(1\)-forms over \(\mathbb{R}^3\) to vector fields. Thus, we get the following correpsondence:</p>
+        $$
+        df \longleftrightarrow \begin{pmatrix}
+        \frac{\partial f}{\partial x} \\ \frac{\partial f}{\partial y} \\ \frac{\partial f}{\partial z}
+        \end{pmatrix} = \textrm{grad}\,f
+        $$
+        <p> Therefore, we are able to see that the exterior derivative is a generalization of the gradient operator for 0-forms! However, as we will come to see, the exterior derivative behaves like numerous vector-calculus operators depending on the degree of a differential form in \(\mathbb{R}^3\).</p>
+        <p>We next turn our attention to \(1\)-forms. Suppose we have the following \(1\)-form:</p>
+        $$
+        \omega = f(x, y, z)\,dx + g(x, y, z)\,dy + h(x, y, z)\,dz
+        $$
+        <p> Then, by definition, the exterior derivative of \(\omega\) is the following:</p>
+        $$
+        \begin{align}
+        d\omega &= \frac{\partial f}{\partial x}\,dx \wedge dx + \frac{\partial f}{\partial y}\,dy \wedge dx + \frac{\partial f}{\partial z}\,dz \wedge dx \\&\hspace{2em}+ \frac{\partial g}{\partial x}\,dx \wedge dy + \frac{\partial g}{\partial y}\,dy \wedge dy + \frac{\partial g}{\partial z}\,dz \wedge dy
+        \\&\hspace{2em} + \frac{\partial h}{\partial x}\,dx \wedge dz + \frac{\partial h}{\partial y}\,dy \wedge dz + \frac{\partial h}{\partial z}\,dz \wedge dz
+        \\&= \left( \frac{\partial h}{\partial y} - \frac{\partial g}{\partial z} \right) \, dy \wedge dz - \left( \frac{\partial h}{\partial x} - \frac{\partial f}{\partial z} \right)\, dz \wedge dx + \left( \frac{\partial g}{\partial x} - \frac{\partial f}{\partial y} \right) \, dx \wedge dy
+        \\&\longleftrightarrow \begin{pmatrix} \frac{\partial h}{\partial y} - \frac{\partial g}{\partial z} \\ -\left( \frac{\partial h}{\partial x} - \frac{\partial f}{\partial z} \right) \\ \frac{\partial g}{\partial x} - \frac{\partial f}{\partial y} \end{pmatrix} = \textrm{curl}\,\begin{pmatrix} f \\ g \\ h \end{pmatrix}
+        \end{align}
+        $$
+        <p>If you followed that long string of equalities / correlations, hopefully you can see that the exterior derivative is also a generalization of the curl operator for \(1\)-forms! The last thing to check is how the exterior derivative affects \(2\)-forms on \(\mathbb{R}^3\). Those who have taken vector calculus may see where this is going, considering there is only one other "notable" vector operator. </p>
+        <p> As before, let \(\alpha\) denote the following \(2\)-form:</p>
+        $$
+        \alpha = f(x, y, z)\, dy \wedge dz + g(x, y, z)\, dz \wedge dx + h(x, y, z)\,dx \wedge dy
+        $$
+        <p> Computing the exterior derivative of \(\alpha\), we get</p>
+        $$
+        \begin{align}
+        d\alpha &= \frac{\partial f}{\partial x}\, dx \wedge dy \wedge dz + \frac{\partial f}{\partial y}\, dy \wedge dy \wedge dz + \frac{\partial f}{\partial z}\, dz \wedge dy \wedge dz
+        \\&\hspace{2em} + \frac{\partial g}{\partial x}\, dx \wedge dz \wedge dx + \frac{\partial g}{\partial y}\, dy \wedge dz \wedge dx + \frac{\partial g}{\partial z}\, dz \wedge dz \wedge dx
+        \\&\hspace{2em} + \frac{\partial h}{\partial x}\, dx \wedge dx \wedge dy + \frac{\partial h}{\partial y}\, dy \wedge dx \wedge dy + \frac{\partial h}{\partial z}\, dz \wedge dx \wedge dy
+        \\&= \left( \frac{\partial f}{\partial x} + \frac{\partial g}{\partial y} + \frac{\partial h}{\partial z}\right)\, dx \wedge dy \wedge dz
+        \\&\longleftrightarrow \frac{\partial f}{\partial x} + \frac{\partial g}{\partial y} + \frac{\partial h}{\partial z} = \textrm{div}\,\begin{pmatrix} f \\ g \\ h \end{pmatrix}
+        \end{align}
+        $$
+        <p>
+        I can't speak for everyone here, but I think that one operator is significantly more efficient than three operators. Hopefully this also gives everyone a bit of a practical use case of what the exterior derivative does and how it is useful in vector calculus / differential geometry! In fact, we can use what we've learned so far to prove the following two equalities from vector calculus:
+        </p>
+        <h6 id="VectorCalcEqualTheorem"><b>Theorem:</b></h6>Let \(U \subset \mathbb{R}^3\) be an open subset of \(\mathbb{R}^3\), \(f: U \to \mathbb{R}^3\) be a smooth function, and \(X : U \to TU\) be a smooth vector field over \(U\). Then
+        $$
+        \begin{align}
+        \textrm{curl}(\textrm{grad}\,f) &= \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}
+        \\ \textrm{div}(\textrm{curl} X) &= 0
+        \end{align}
+        $$
+        <div class="showbar">
+          <button type="button" id="showVectorCalcEqualProof" onclick="showbutton('vectorcalcequalproof', 'showVectorCalcEqualProof', 'Proof')" class="btn btn-dark">Show Proof</button>
+          <div id="vectorcalcequalproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px; padding-bottom:15px;">
+            <h6><b>Proof:</b></h6>
+                <p>Recall from <a class="popLink" href="manifoldpartiii.html#ZeroCommuteTheorem">a previous theorem</a> that our exterior derivative satisfies<p>
+                $$
+                d \circ d = 0
+                $$
+                Since \(\textrm{grad}\,f\) corresponds to the \(1\)-form \(df\), and given any \(1\)-form
+                $$
+                \omega = f\,dx + g\,dy + h\,dz
+                $$
+                we have that \(d\omega\) corresponds to the curl of the vector \( \begin{pmatrix} f \\ g \\ h \end{pmatrix}\). Therefore
+                $$
+                \textrm{curl}(\textrm{grad}\,f) \longleftrightarrow d(df) = (d \circ d)\,f
+                $$
+                Since \(d \circ d\) is the zero operator, this gives us the first equality.
+                <br/>
+                We approach the second equality in a similar fashion. Since \(X\) corresponds to some one form (call it \(\alpha_X\), we have that \(\textrm{curl}\,X\) gives us a two form corresponding to \(d\alpha_X\). By applying our \(\textrm{div}\) operator, we get
+                $$
+                \textrm{div}(\textrm{curl}\,X) \longleftrightarrow d(d\alpha_X) = (d \circ d)\alpha_X
+                $$
+                and the second equality follows from the fact that \(d \circ d\) is the zero operator.
+                $$\tag*{$\blacksquare$}$$
+          </div>
+        </div>
+        <br/>
+        <p> To summarize, we have showed that the following diagram commutes over open sets \(U \subset \mathbb{R}^3\): </p>
+        $$  \require{AMScd}
+            \begin{CD}
+            \Omega^0(U) @>{d}>> \Omega^1(U) @>{d}>> \Omega^2(U) @>{d}>> \Omega^3(U) \\
+            @V{\simeq}VV @V{\simeq}VV @V{\simeq}VV @V{\simeq}VV \\
+            C^\infty(U) @>{\textrm{grad}}>> \mathfrak{X}(U) @>{\textrm{curl}}>> \mathfrak{X}(U) @>{\textrm{div}}>> C^\infty(U)
+            \end{CD}
+        $$
+        <p> Contrary to the sections title, I should point out that by no means is what I've done considered bad notation. However, as I pointed out in a caveat earlier, the reader should not get accustomed to interchanging vector fields and differential forms; this method only worked because \(\mathbb{R}^3\) "works nicely" in a sense. If you (the reader) are interested in pursuing geometry in academia, you will quickly find that things get much harder when we are not able to assume properties like globally Euclidean, or even locally Euclidean! (though geometric generality typically ends at <a class="popLink" href="https://en.wikipedia.org/wiki/Ringed_space">locally ringed spaces</a>).
+        </p>
+        <br/>
+        <br/>
+        
+        
+        
+        
+        <h3 id="item-2">A Pinch of Spacetime for Good Measure</h3>
+        <br/>
+        <p>I don't want to entirely jump the gun and start talking about Riemannian manifolds, because I still have plenty of blog posts planned for non-Euclidean geometry; however, Minkowski spacetime was originally formulated to address Maxwell's equations, and Minkowski strictly used pseudo-Riemannian metrics. It probably sounds like I'm throwing a lot of mathematical jibberish around right now, but take my word for it when I say pseudo-Riemannian metrics <em>need</em> to be covered.
+        </p>
+        <p>One thing that surprised me in my undergrad was how late the concept of "distance" is introduced in mathematics — it wasn't really until my senior year at Virginia Tech that my \(1^{\textrm{st}}\)-semester real analysis professor introduced the concept of a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A space that comes equipped with a unique 'distance' function">metric space</a>.
+        </p>
+        <p>In technical terms, if we let \(V\) be a finite-dimensional vector space, we call a function \(g: V \times V \to \mathbb{R}\) a <em>metric</em> if it satisfies</p>
+        <ol>
+        <li>\(g(x, y) = 0\) if and only if \(x = y\) </li>
+        <li>\(g(x, y) = g(y,x)\) (i.e. symmetry)</li>
+        <li>\(g(x,z) \leq g(x,y) + g(y,z)\) (commonly known as the triangle inequality)</li>
+        </ol>
+        <p>for all \(x, y, z \in V\).</p>
+        <p> An even more important fact (which you may have noticed) is that \(g\) can also be considered as a \(2\)-form since it takes two vectors in \(V\) to the ground field \(\mathbb{R}\) — thus, if \(V = TM\)  then we have \(g \in \Omega^2(M)\). For example, if we were to look at the metric for Poincare's half-plane model, it would look something like</p>
+        $$
+        g_{(x,y,z)} = dx \otimes dx + \frac{1}{z^2}\,dy \otimes dy + \frac{1}{z^2}\,dz\otimes dz
+        $$
+        <p>
+        Like all dual spaces we have encountered, we are able to construct a dual to our basis on \(V\). Thus, if our vector space \(V\) has a basis \(v_1, \dots, v_n\), we may construct a basis \(v_1^*,\dots, v_n^*\) for \(V^*\) so that \(v_j^*(v_i) = 1\) if and only if \(i = j\) and \(0\) otherwise. As you may expect, this allows us to represent our metric as a formal linear combination:
+        </p>
+        $$
+        \begin{align}
+        g &= \sum_{i,j} g_{ij} v_i^* \otimes v_j^*
+        \\&= \sum_{i,j} \frac{1}{2} (g_{ij} + g_{ji}) v_i^* \otimes v_j^*
+        \\&= \frac{1}{2} \sum_{i,j} g_{ij} v_i^* \otimes v_j^* + \frac{1}{2} \sum_{i,j}g_{ij}v_j^* \otimes v_i^*
+        \\&= \sum_{i,j} g_{ij} v_i^*v_j^*
+        \end{align}
+        $$
+        <p>where \(\alpha\beta = \frac{1}{2}(\alpha \otimes \beta + \beta \otimes \alpha)\) is known as the <a class="popLink" href="https://en.wikipedia.org/wiki/Symmetric_tensor#Symmetric_product">symmetric product</a>.
+        </p>
+        <p>An important fact in geometry is that a manifold's metric is intrinsic to the manifold itself — that is, we are able to classify manifolds based on the metric they are equipped with. One of the ways mathematicians classify metrics is through the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The number of positive eigenvalues in the metric's matrix">signature</a> of a metric— this is actually a fairly simple concept. To find a metric's signature \(\epsilon = (\epsilon_1, \dots, \epsilon_n)\), we simply compute</p>
+        $$
+        \epsilon_i = g(v_i, v_i) = g_{ii}
+        $$
+        <p> where \(v_1, \dots, v_n\) is the basis of \(V\). For example, the standard Euclidean metric on \(\mathbb{R}^3\) is given by \(ds^2 = dx^2 + dy^2 + dz^2\), which gives the following metric matrix:</p>
+        $$
+        \begin{pmatrix}
+        1 & 0 & 0
+        \\ 0 & 1 & 0
+        \\ 0 & 0 & 1
+        \end{pmatrix}
+        $$
+        <p>so that \(\epsilon_x = \epsilon_y = \epsilon_z = 1\). Mathematicians and physiscists will often condense this notation to \((1, 1, 1)\) since large chalkboards aren't cheap.</p>
+        <p> Lastly, one often refers to the <a class="popLink" href="http://mathworld.wolfram.com/MetricTensorIndex.html">index</a> of a metric as the number of signatures \(\epsilon_i\) equal to \(-1\) — clearly the index of Euclidean space is 0 from our calculation above. We will return to the topic in later posts, but a manifold \(M\) of dimension at least two with a metric index of \(1\) is called a <a class="popLink" href="https://en.wikipedia.org/wiki/Pseudo-Riemannian_manifold#Lorentzian_manifold">Lorentzian Manifold</a>. More importantly (for this post at least), if the underlying manifold \(M\) equipped with the Lorentz metric is in fact \(\mathbb{R}^n\), then we refer to it as <a class="popLink" href="https://en.wikipedia.org/wiki/Minkowski_space#Mathematical_structure">Minkowski Spacetime</a> — we will denote this as \(\mathbb{R}^n_1\) from now on (though it is also often denoted \( \mathbb{R}^{(1,n-1)} \) or \( \mathbb{R}^{(n-1,1)} \)).
+        </p>
+        <p> In \(\mathbb{R}_1^4\) (the standard Minkowski spacetime), one typically orders the spactime coordinates \((t, x, y, z)\). Originally, Henri Poincare was contributed with associating the time coordinate in spacetime to be \(x_0 = ict\), where \(i = \sqrt{-1}\) and \(c\) denotes the speed of light. Since the standard Euclidean metric for \(\mathbb{R}^4\) is given by</p>
+        $$
+        ds^2 = dx_0^2 + dx^2 + dy^2 + dz^2
+        $$
+        <p>we use a simple change of variables for \(x_0\) in order to calculate the metric for \(\mathbb{R}^4_1\):</p>
+        $$
+        ds^2 = dx^2 + dy^2 + dz^2 -c^2dt^2
+        $$
+        <p>From the equation above, it is fairly straightforward to see that the index of Minkowski spacetime is \(1\) (as indicated by definition). Given a vector \(a \in \mathbb{R}^4_1\), if \(g(a, a) > 0\) we call \(a\) <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An interval whose spatial separation is greater than the distance light travels, so two events that occur cannot both be observed since it would require travelling faster than the speed of light">spacelike</a> since it satisfies \(dx^2 + dy^2 + dz^2 > c^2\,dt^2\). Similarly, if \(g(a, a) = 0\) then the object satisfies \(c^2\,dt^2 = dx^2 + dy^2 + dz^2\) so that the object travels through spacetime much like light would – hence the object is called <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An interval whose spatial separation is equal to the distance light travels, so that the only way to observe two distinct events on the interval is by travelling at the speed of light">lightlike</a>. Lastly, when \(g(a, a) < 0\) we say that it is <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An interval whose spatial separation is less than the distance light travels, so two events may be observed in chronological order">timelike</a> since \(dx^2 + dy^2 + dz^2 < c^2dt^2\). </p>
+        
+        <figure style="padding-bottom: 30px; text-align: center;">
+            <img src="../images/minkowskicone.jpg" style="width: 100%; border-radius: 5px 5px 5px 5px;"></img>
+            <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> <br/>A visualization of Minkowski spacetime \(\mathbb{R}^3_1\) in two spatial dimensions along with a timelike event</figcaption>
+        </figure>
+        
+        <br/>
+        <br/>
+        <h3 id="item-3">Hodge's Star</h3>
+        <br/>
+        <p> Those familiar with differential geometry know that it would be fruitless for my to try explaining Maxwell's equations from the differential geometry perspective without first introducing the <a class="popLink" href="https://en.wikipedia.org/wiki/Hodge_star_operator#Explanation">Hodge star</a>. Like everything else so far, the Hodge star operator is a pretty abstract and unintuitive object. However, the simplest way to motivate the Hodge star is through a plane's normal vector. Assuming the reader has taken a bit of linear algebra, we can recall that every oriented plane has a unique normal vector which helps define the plane iteslf.
+        </p>
+        <p> Without going into too much functional analysis regarding <a class="popLink" href="https://en.wikipedia.org/wiki/Riesz_representation_theorem">Riesz Representation Theorem</a>, we note that on an \(n\)-dimensional manifold \(M\), if we have some \(k\)-form \(\lambda \in \Omega^k(M)\) and \((n-k)\)-form \(\theta \in \Omega^{n-k}(M)\), then
+        </p>
+        $$
+        \lambda \wedge \theta \in \Omega^n(M)
+        $$
+        <p> Choosing a local chart \( (U, x_1, \dots, x_n)\), we note that since \(\dim \Omega^n(M) = {n \choose n} = 1\), there is only \(1\) degree of freedom in \(\lambda \wedge \theta\) so it must be a scalar multiple of \(dx_1 \wedge \dots dx_n\). Therefore, we may define a linear function \(f_\lambda \in \Omega^{n-k}(M)^*\) by:</p>
+        $$
+        \lambda \wedge \theta = f_\lambda(\theta) (dx_1 \wedge \dots \wedge dx_n)
+        $$
+        <p>(note that this is, in fact, the basic idea of the Riesz representation theorem). Ultimately, Hodge defined the Hodge star to satisfy</p>
+        $$
+        f_\lambda(\theta) = \langle \theta, *\theta\rangle
+        $$
+        <p>for some inner-product \(\langle \cdot, \cdot \rangle\) on \(\Omega^{n-k}(M)\). Now this is still a bit of an implicit definition; thankfully, we can define our Hodge star operator a bit more explicitly. Let \(\sigma = (i_1, i_2, \dots, i_n)\) be a permutation on \(\{1, 2, \dots, n\}\); we define the Hodge dual on our basis of \(k\)-forms as follows:
+        </p>
+        $$
+        *(dx_{i_1}\wedge dx_{i_2} \wedge \dots \wedge dx_{i_n}) = \textrm{sgn}(\sigma)\epsilon_{i_1i_2\dotsi_k}\,dx_{i_{k+1}}\wedge \dots \wedge dx_{i_{n}}
+        $$
+        <p>
+        where \(\epsilon_{i_1i_2\dotsi_n}\) denotes the <a class="popLink" href="https://en.wikipedia.org/wiki/Levi-Civita_symbol">Levi-Civita symbol</a>; in particular, this is defined to be 1 if \(\sigma\) is an <a class="popLink" href="https://en.wikipedia.org/wiki/Parity_of_a_permutation">even permutation</a> and -1 if \(\sigma\) is an odd permutation.
+        </p>
+        <p>For example, we have the following Hodge duals to the standard \(2\)-forms over \(\mathbb{R}^4\):</p>
+        $$
+        \begin{align}
+        *(dt\wedge dx) &= (1)\epsilon_t\epsilon_x \,dy \wedge dz = -dy\wedge dz
+        \\ *(dt \wedge dy)&= (-1)\epsilon_t\epsilon_y \,dx \wedge dz = dx \wedge dz
+        \\*(dt \wedge dz)&= (1)\epsilon_t\epsilon_z \,dx \wedge dy = -dx \wedge dy
+        \\*(dx \wedge dy) &= (1)\epsilon_x\epsilon_y \,dt \wedge dz = dt \wedge dz
+        \\*(dx \wedge dz) &= (-1)\epsilon_x \epsilon_z \,dt \wedge dy = -dt\wedge dy
+        \\*(dy \wedge dz) &= (1)\epsilon_y \epsilon_z \,dt \wedge dx = dt \wedge dx
+        \end{align}
+        $$
+        <p>where the \( (\pm1) \) indicates the sign of our permutation. On the other hand, when we consider Minkowski space \(\mathbb{R}^4_1\), we have that</p>
+        $$
+        \begin{align}
+        *(c\,dt\wedge dx) &= (1)\epsilon_t\epsilon_x \,dy \wedge dz = -dy\wedge dz
+        \\ *(c\,dt \wedge dy)&= (-1)\epsilon_t\epsilon_y \,dx \wedge dz = dx \wedge dz
+        \\*(c\,dt \wedge dz)&= (1)\epsilon_t\epsilon_z \,dx \wedge dy = -dx \wedge dy
+        \\*(dx \wedge dy) &= (1)c\epsilon_x\epsilon_y \,dt \wedge dz = c\,dt \wedge dz
+        \\*(dx \wedge dz) &= (-1)c\epsilon_x \epsilon_z \,dt \wedge dy = -c\,dt\wedge dy
+        \\*(dy \wedge dz) &= (1)c\epsilon_y \epsilon_z \,dt \wedge dx = c\,dt \wedge dx
+        \end{align}
+        $$
+        <p>For a general \(k\)-form, we extend the Hodge dual to be linear. </p>
+        <br/>
+        <br/>
+        <h3 id="item-4">Maxwell's Equations</h3>
+        <br/>
+        <p>Hopefully the reader is familiar with the fact that an electric charge exerts a force on other charges in space via an <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A vector field which represents the force experienced by an electric charge throughout space">electric field</a>. Since physics mathematically represents an electric field as a vector field over \(\mathbb{R}^3\), we will denote our electric field by</p>
+        $$
+        \mathbf{E} = E_1(x, y, z) \frac{\partial}{\partial x} + E_2(x, y, z)\frac{\partial}{\partial y} + E_3(x, y, z)\frac{\partial}{\partial z}
+        $$
+        <p>Similarly, the movement of an electrical charge produce what is known as a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A vector field produced by the movement and spin of an electron">magnetic field</a>. The magnetic field is also represented as a vector field over \(\mathbb{R}^3\) as follows:
+        </p>
+        $$
+        \mathbf{B} = B_1(x, y, z)\frac{\partial}{\partial x} + B_2(x, y, z)\frac{\partial}{\partial y} + B_3(x, y, z)\frac{\partial}{\partial z}
+        $$
+        <p>Recall from the previous section that we may associate \(1\)-forms and \(2\)-forms to vector fields when our manifold is \(\mathbb{R}^3\) — thus, we may represent our electric field \(\mathbf{E}\) instead as:</p>
+        $$
+        \mathbf{E} = E_1(x, y, z)\,dx + E_2(x, y, z)\,dy + E_3(x, y, z)\,dz
+        $$
+        <p> Now since our magnetic field measures a change in flux of our electric field, it makes more sense to represent our magnetic field as a differential form of 1 degree higher than our electric field; therefore, we represent our magnetic field \(\mathbf{B}\) as:</p>
+        $$
+        \mathbf{B} = B_1(x, y ,z)\,dy \wedge dz + B_2(x, y, z)\,dz \wedge dx + B_3(x, y, z)\,dx \wedge dy
+        $$
+        <p> Before we solve Maxwell's equations using differential forms, I will skip some assume some prerequisite knowledge in Faraday's Law of Induction. Specifically, Faraday's Law of Inductions says that if \(S \subset \mathbb{R}^2\) is a surface and \(\gamma = \partial S\) is the closed curve encompassing its boundary, then</p>
+        $$
+        \frac{d}{dt} \int_S \mathbf{B} = - \int_\gamma \mathbf{E}
+        $$
+        <p> Hopefully the reader recognizes that the equation above actually looks a lot like <a class="popLink" href="manifoldpartiii.html#StokesTheorem">Stokes' theorem (differential form version)</a> from my previous blog post. Interestingly enough, that's because Stokes' equation is used to put Faraday's law into integral form!</p>
+        <p> The reader may have noticed at this point that we have successfully considered our 3 spatial dimensions using \(\mathbb{R}^3\), yet failed to consider time as an aspect. Thus, we will now attempt to convert our equations to spacetime coordinates \( (t, x, y ,z) \in \mathbb{R}^4_1\). First, we fix some 2-dimensional (<a class="popLink" href="https://en.wikipedia.org/wiki/Simply_connected_space">simply connected</a>) surface \(S \subset \mathbb{R}^2\) and consider a time interval \([a, b]\). In spacetime coordinates, our surface \(S\) becomes the \(3\)-dimensional shape \(S \times [a, b]\).</p>
+        <figure style="padding-bottom: 30px; text-align: center;">
+            <img src="../images/spacetimecylinder.jpg" style="width: 35%; border-radius: 5px 5px 5px 5px;"></img>
+            <figcaption style="text-align: center; font-size: 85%; font-color: gray;">The 3-dimensional cylinder formed by extending \(S\) to \(S \times [a, b]\)</figcaption>
+        </figure>
+        <p>Now if we rewrite the integral form of Faraday's Law as</p>
+        $$
+        \frac{d}{dt}\int_S \mathbf{B} + \int_\gamma \mathbf{E} = 0
+        $$
+        <p>and integrate with respect to our time coordinate \(t\), we get the following:</p>
+        $$
+        \int_{S \times \{b\}} \mathbf{B} - \int_{S \times \{a\}} \mathbf{B} + \int_{\gamma \times [a, b]} \mathbf{E} \wedge dt = 0
+        $$
+        <p> Define the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The 2-form used to represent Maxwell's equations in differential-geometric notation">electromagnetic tensor</a> (also referred to as the Faraday form) \(\mathbf{F} = \mathbf{B} + \mathbf{E} \wedge dt\) and let \(C = S \times [a, b]\) denote our cylinder formed by lifting \(S\) to spacetime coordinates. Then we have that the boundary of \(C\) is given by</p>
+        $$\partial C = S \times \{b\} - S \times \{a\} + \gamma \times [a, b]$$
+        <p>Since we are varying time on \(\gamma \times [a, b]\) and \(\mathbf{B}\) only considers space coordinates, we have that \(\mathbf{B}\) vanishes on \(\gamma \times [a, b]\). Similarly, \(S \times \{b\}\) and \(S \times \{a\}\) hold the time coordinate constant, so the basis element \(dt\) vanishes on both sets and thus \(\mathbf{E} \wedge dt\) must vanish as well. Therefore, we rewrite the integral form of Faraday's Law as follows:</p>
+        $$
+        \int_{\partial C} \mathbf{F} = 0
+        $$
+        <p>By Stokes' equation, this tells us that \( \int_C d\mathbf{F} = 0\); however, our surface \(S\) and time interval \([a, b]\) were both arbitrary. But then \( \int_C dF = 0\) must hold for all spacetime cylinders \(C\), so it must be the case that \(d\mathbf{F} = 0\)!</p>
+        <p> By computing everything in one fell swoop, you should hopefully wind up with the following:</p>
+        $$
+        \begin{align}
+dF &= \left( \frac{\partial E_1}{\partial y}dy + \frac{\partial E_1}{\partial z}dz \right)\wedge dx \wedge dt + \left( \frac{\partial E_2}{\partial x} dx + \frac{\partial E_2}{\partial z}dz \right) \wedge dy \wedge dt
+\\&\hspace{2em} + \left( \frac{\partial E_3}{\partial x}dx + \frac{\partial E_3}{\partial y}dy \right) \wedge dz \wedge dt + \left( \frac{\partial B_1}{\partial x}dx + \frac{\partial B_1}{\partial t} dt \right) \wedge dy \wedge dz
+\\&\hspace{2em} - \left( \frac{\partial B_2}{\partial y}dy + \frac{\partial B_2}{\partial t}dt \right) \wedge dx \wedge dz + \left( \frac{\partial B_3}{\partial z}dz + \frac{\partial B_3}{\partial t}dt \right) \wedge dx \wedge dy
+\\&= \left( -\frac{\partial E_1}{\partial y} + \frac{\partial E_2}{\partial x} - \frac{\partial B_3}{\partial t} \right) dx \wedge dy \wedge dt + \left( -\frac{\partial E_1}{\partial z} + \frac{\partial E_3}{\partial x} - \frac{\partial B_2}{\partial t} \right) dx \wedge dz \wedge dt
+\\&\hspace{2em} + \left( - \frac{\partial E_2}{\partial z} + \frac{\partial  E_3}{\partial y} + \frac{\partial B_1}{\partial t} \right) dy \wedge dz \wedge dt + \left( \frac{\partial B_1}{\partial x} + \frac{\partial B_2}{\partial y} + \frac{\partial B_3}{\partial z}\right) dx \wedge dy \wedge dz
+\end{align}
+        $$
+        <p> Since we are in \(\mathbb{R}^4_1\), our space of \(3\)-forms has dimension \( {4 \choose 3} = 4\). However, our equation above spans all basis covectors; for ease of notation, we use the following symbols to denote our basis covectors:</p>
+        $$
+        \begin{align}
+dy \wedge dz \wedge dt &\mapsto e_1^*
+\\ dx \wedge dz \wedge dt &\mapsto -e_2^*
+\\ dx \wedge dy \wedge dt &\mapsto -e_3^*
+\\ dx \wedge dy \wedge dz &\mapsto e_4^*
+\end{align}
+        $$
+        <p>Since \(d\mathbf{F} = 0\), we wind up with the following:</p>
+        $$
+        \begin{align*}
+\left( - \frac{\partial E_2}{\partial z} + \frac{\partial  E_3}{\partial y} + \frac{\partial B_1}{\partial t} \right) e_1^* &+ \left( \frac{\partial E_1}{\partial z} - \frac{\partial E_3}{\partial x} + \frac{\partial B_2}{\partial t} \right) e_2^*
+\\&\hspace{2em}+ \left( \frac{\partial E_1}{\partial y}
+- \frac{\partial E_2}{\partial x} + \frac{\partial B_3}{\partial t} \right) e_3^* + \left( \frac{\partial B_1}{\partial x} + \frac{\partial B_2}{\partial y} + \frac{\partial B_3}{\partial z}\right) e_4^*
+\\&= \overrightarrow{\mathbf{0}}
+\end{align*}
+        $$
+        <p>If we look at the first three coordinates (i.e. coefficients of \(e_1^*, e_2^*, e_3^*\)), we must have that</p>
+        $$ \textrm{curl}\,(\mathbf{E}) + \frac{\partial \mathbf{B}}{\partial t} = \nabla \times \mathbf{E} + \frac{\partial \mathbf{B}}{\partial t} = 0 $$
+        <p>By looking at the fourth coorindate, it is easy to see that \(\mathrm{div}\,\mathbf{B} = 0\).</p>
+        <p> We next examine the equation \(d*\mathbf{F} = 0\). Using the Hodge dual of our standard 2-forms computed above, we can easily compute that the Hodge dual to the electromagnetic tensor to be</p>
+        $$
+        \begin{align}
+        *\mathbf{F} &= *(\mathbf{B} + \mathbf{E}\wedge dt)
+        \\&= B_1\, *(dy \wedge dz) + B_2\, *(dz \wedge dx) + B_3\, *(dx \wedge dy)
+        \\&\hspace{2em} + E_1\, *(dx \wedge dt) + E_2\, *(dy \wedge dt) + E_3\, *(dz \wedge dt)
+        \\&= -c\left( B_1 \,dx \wedge dt + \,B_2 dy \wedge dt + B_3 \,dz \wedge dt \right)
+        \\&\hspace{2em} + \frac{1}{c}\left(E_1 \, dy \wedge dz + E_2 \, dz \wedge dx + E_3 \, dx \wedge dy\right)
+        \end{align}
+        $$
+        <p> What you should notice in the last equality above is that we are swapping the placements of the \(E_i\)'s in our original equation for \(\mathbf{F}\) with \(-B_i\) and the placements of the \(B_i\)'s with \(E_i\). By linearity of the Hodge dual mentioned above, we get the following equation:
+        </p>
+        $$
+        *\mathbf{E} = -c\mathbf{B} \hspace{3em} *\mathbf{B} = \frac{1}{c}\mathbf{E}
+        $$
+        <p> Lastly, it remains to take the exterior derivative of our 2-form \(*\mathbf{F}\). It's just as ugly as the computation for \(d\mathbf{F}\), but I assure you it leads to another concise result:</p>
+        $$
+        \begin{align}
+        d*\mathbf{F} &=  \left(-c\frac{\partial B_1}{\partial y}dy - c\frac{\partial B_1}{\partial z}dz  \right)\,dx \wedge dt + \left( - c\frac{\partial B_2}{\partial x}dx - c\frac{\partial B_2}{\partial z}dz \right)\,dy \wedge dt
+        \\&\hspace{2em} + \left( - c\frac{\partial B_3}{\partial y}dy - c\frac{\partial B_3}{\partial x}dx \right)\,dz \wedge dt + \left( \frac{1}{c}\frac{\partial E_1}{\partial t} dt + \frac{1}{c}\frac{\partial E_1}{\partial x}dx \right)\,dy \wedge dz
+        \\&\hspace{2em} + \left( \frac{1}{c}\frac{\partial E_2}{\partial t}dt + \frac{1}{c}\frac{\partial E_2}{\partial y}dy \right)\,dz \wedge dx + \left( \frac{1}{c}\frac{\partial E_3}{\partial t}dt + \frac{1}{c}\frac{\partial E_3}{\partial z}dz \right)\,dx \wedge dy
+        \\&= \left( c\frac{\partial B_1}{\partial y} - c\frac{\partial B_2}{\partial x} + \frac{1}{c}\frac{\partial E_3}{\partial t} \right)\, dx \wedge dy \wedge dt + \left( c\frac{\partial B_1}{\partial z} - c\frac{\partial B_3}{\partial x} - \frac{1}{c}\frac{\partial E_2}{\partial t} \right)\, dx \wedge dz \wedge dt
+        \\&\hspace{2em}\left( c\frac{\partial B_2}{\partial z} - c\frac{\partial B_3}{\partial y} + \frac{1}{c}\frac{\partial E_1}{\partial t} \right)\,dy \wedge dz \wedge dt + \frac{1}{c}\left( \frac{\partial E_1}{\partial x} + \frac{\partial E_2}{\partial y} + \frac{\partial E_3}{\partial z} \right) \, dx \wedge dy \wedge dz
+        \end{align}
+        $$
+        <p> As before, we simplify the notation of our basis elements by using the following:</p>
+        $$
+        \begin{align}
+    dy \wedge dz \wedge dt &\mapsto -e_1^*
+\\ dx \wedge dz \wedge dt &\mapsto e_2^*
+\\ dx \wedge dy \wedge dt &\mapsto -e_3^*
+\\ dx \wedge dy \wedge dz &\mapsto e_4^*
+\end{align}
+        $$
+        <p>Which ultimately gives us:</p>
+        $$
+        \begin{align}
+        \left( c\frac{\partial B_3}{\partial y} - c\frac{\partial B_2}{\partial z} -  \frac{1}{c}\frac{\partial E_1}{\partial t} \right)\,e_1^* &+ \left( c\frac{\partial B_1}{\partial z} - c\frac{\partial B_3}{\partial x} - \frac{1}{c}\frac{\partial E_2}{\partial t} \right)\,e_2^*
+        \\&\hspace{2em}+\left(c\frac{\partial B_2}{\partial x} - c\frac{\partial B_1}{\partial y} -  \frac{1}{c}\frac{\partial E_3}{\partial t} \right)\,e_3^* + \frac{1}{c}\left( \frac{\partial E_1}{\partial x} + \frac{\partial E_2}{\partial y} + \frac{\partial E_3}{\partial z} \right) \,e_4^*
+        \\&= \overrightarrow{\mathbf{0}}
+        \end{align}
+        $$
+        <p>As before, the first three coordinates tell us that</p>
+        $$
+        \textrm{curl}(\mathbf{B}) - \frac{1}{c^2}\frac{\partial \mathbf{E}}{\partial t} = \nabla \times \mathbf{B} - \frac{1}{c^2}\frac{\partial \mathbf{E}}{\partial t} = 0
+        $$
+        <p>and the fourth coordinate tells us that \(\textrm{div}\mathbf{E} = 0\). Since Maxwell's original equations stated that</p>
+        $$
+        \begin{align}
+        \mathbf{\nabla} \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}, &\hspace{2em} \mathbf{\nabla} \times \mathbf{B} = \frac{1}{c^2}\frac{\partial \mathbf{E}}{\partial t},
+\\ \mathrm{div} \mathbf{E} = 0, &\hspace{2em} \mathrm{div} \mathbf{B} = 0
+        \end{align}
+        $$
+        <p>we have shown (through lots of physics and tedious computations) that this expression may be represented much more concisely and (in my opinion) efficiently using our knowledge of manifolds:</p>
+        $$
+        d\,\mathbf{F} = d*\mathbf{F} = 0
+        $$
+        <p>Well done everyone! &#x1F603</p>
+        <br/>
+        <br/>
+        
+        <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/b9434BoGkNQ" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div> <!-- end col-9 -->
+    
+  </div> <!-- end row -->
+</div> <!-- end container -->
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = 'https://christopherdare.com/blogposts/maxwellseq.html';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'maxwellseq'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://christopherdare.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+<!-- webpage footer -->
+<div class="jumbotron vertical-center footer">
+  <h6>All webpages are self-coded using a combination of HTML5, CSS3, Bootstrap4, and JavaScript</h6>
+  <h6>No third-party software is used except to host the domain root directory</h6>
+</div>
+
+<!-- Bootstrap 4.1 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>
+
+

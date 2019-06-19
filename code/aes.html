@@ -3,10 +3,12 @@
 <head>
   <title>AES Rundown</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="keywords" content="AES, Advanced Encryption Algorithm, cybersecurity">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="keywords" content="AES, Advanced Encryption Algorithm, cybersecurity, AES tutorial, encryption, encryption tutorial">
   <meta name="description" content="An in-depth rundown of the Rijndael cipher, more commonly known as AES">
   <meta name="author" content="Chris Dare">
+  <!-- icon -->
+  <link rel="icon" href="../favicon.ico">
   <!-- Bootstrap 4.1 -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <!-- actual stylesheet -->
@@ -14,7 +16,7 @@
   <!-- google fonts -->
   <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite" rel="stylesheet">
   <!-- jquery -->
-  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
   <!-- MathJax -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
   <!-- Code Prettify -->
@@ -23,50 +25,10 @@
   <script src="../footerscript.js"></script>
   <script src="../tooltip.js"></script>
   <script src="../showbutton.js"></script>
+  <script src="../navbarTemplate.js"></script>
 </head>
 <body data-spy="scroll" data-target="#sidemenu" data-offset="15" style="position: relative;">
 
-<!-- Navigation bar -->
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="../homepage.html">Chris Dare</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="../homepage.html">Home<span class="sr-only">(current)</span></a>
-      </li>
-      <!-- Blog Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="../blogpage.html" id="navbarDropdownBlogLink"  aria-haspopup="true" aria-expanded="false">Blog<span class="sr-only">(current)</span></a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownBlogLink">
-          <a class="dropdown-item" href="../blogposts/manifoldparti.html">Manifolds: Part I</a>
-          <a class="dropdown-item" href="../blogposts/manifoldpartii.html">Manifolds: Part II</a>
-        </div>
-      </li>
-      <!-- Code Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="../codepage.html" id="navbarDropdownCodeLink" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
-          Code
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
-          <a class="dropdown-item active" href="#" style="font-family: 'Courier New', Courier;">AES</a>
-          <a class="dropdown-item" href="prince.html" style="font-family: 'Courier New', Courier;">PRINCE</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../mymusicpage.html">My Music</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../photospage.html">Photos</a>
-      </li>
-    </ul>
-  </div>
-</nav>
 
 <!-- webpage header -->
 
@@ -106,7 +68,7 @@
       <h4 id="IntroductionToCiphers">Introduction to Ciphers</h4>
       <br>
       <p>In today's world, there is monumental effort to secure data that we wish to remain private.
-Information like our social security number, credit card data, and passwords should all be hidden from the general public (and for good reason). Yet, we seldom ask ourselves ourselves how this data is <em>actually</em> hidden.
+Information like our social security number, credit card data, and passwords should all be hidden from the general public (and for good reason). Yet, we seldom ask ourselves how this data is <em>actually</em> hidden.
 If the title hasn't already given it away, the answer is <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Translating data or plaintext into a masked ciphertext through the use of a cipher">encryption</a>.
 </p>
 <p> If you're in the vast majority of the population, you probably haven't run across block <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An algorithm used to mask data in a covert manner">ciphers</a>. This shouldn't be an issue though, as the tutorial is meant to be understood by anyone with a bit of coding experience.</p>
@@ -119,10 +81,10 @@ If the title hasn't already given it away, the answer is <a style="color: #00c62
 The simple answer is that it remains very resiliant under years of scrutiny, without sacrificing too much speed.
 This does not mean AES is necessarily efficient as a lightweight cipher (see <a class="popLink" href="prince.html">PRINCE</a>), but would you rather keep your money in a national bank or in a safe under your bed?</p>
       <p> For those interested in the security aspect, my previous analogy begins to break down when it comes to the motive of a hacker / thief.
- Just as a thief is interested in the money inside a safe, one would expect that the motive of a hacker is to steal passwords / sensitive information; however, it is truly the motive of a hacker to obtain our key (I'm interchanging hacker and cryptanalyst a bit loosely - in reality I think most hackers would be perfectly happy with a few hundred passwords).
+ Just as a thief is interested in the money inside a safe, one would expect that the motive of a hacker is to steal passwords / sensitive information; however, it is truly the motive of a hacker to obtain our key (I'm interchanging hacker and cryptanalyst a bit loosely — in reality I think most hackers would be perfectly happy with a few hundred passwords).
 Therefore, the objective of a cipher (i.e. our safe) is to make it as hard as possible to retrieve the key. </p>
 
-      <p> To give a little more detail, all computer information is stored in binary - thus, our key is just a fixed number of bits (128, 192, or 256 for AES). For every bit that we add, the number of possibilities for our key doubles so as a result our <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The abstract set / collection  of all possible keys">key space</a> doubles as well.
+      <p> To give a little more detail, all computer information is stored in binary — thus, our key is just a fixed number of bits (128, 192, or 256 for AES). For every bit that we add, the number of possibilities for our key doubles so as a result our <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The abstract set / collection  of all possible keys">key space</a> doubles as well.
 In order to break a cipher, one must find some sort of algorithm which discovers the key with greater efficiency than a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Trying every key possible to match a plaintext (unencrypted) / ciphertext (encrypted) pair">brute-force</a> solution
 (though I have not gone into the details of AES yet, this is the rationale behind adding extra rounds to larger key sizes). </p>
 
@@ -137,7 +99,7 @@ Though there are other ciphers that are just as strong as AES (i.e. Serpent and 
 <p>
 AES is what cryptographers call a <a style="color: #00c624" data-toggle="tooltip" title data-original-title="A cipher who's algorithm is based off translating a fixed number of bits, then swapping the order of the bits">Substitution-Permutation Network</a> (SPN): every round / iteration of the algorithm takes our chunk of data, breaks it into smaller chunks that are fed through a substitution box, and then swaps the bits around according to some sort of permutation.
  </p>
- <p> In order to truly understand what is going on in AES, the reader would first have to become fimiliar with the basics of polynomial rings and Galois fields (also referred to as finite fields) - I will leave <a class="popLink" href="#AdditionalContentGF">a section</a> at the end to cover these things for those who are interested.
+ <p> In order to truly understand what is going on in AES, the reader would first have to become fimiliar with the basics of polynomial rings and Galois fields (also referred to as finite fields) — I will leave <a class="popLink" href="#AdditionalContentGF">a section</a> at the end to cover these things for those who are interested.
  </p>
  <p> As I briefly mentioned in an aside earlier, the AES algorithm is somewhat dependent on key-length which is either 128 bits, 192 bits, or 256 bits; however, that the size of the data we wish to encrypt is fixed at 128 bytes. The reason I say 'somewhat' is because AES is essentially a collection of functions ( <code>SubBytes()</code>, <code>ShiftRows()</code>, <code>MixColumns</code>, and <code>AddRoundKey()</code> ) that are repeated; each iteration of these functions is referred to as a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A single repetition / iteration of an iterative algorithm">round</a>. Each of AES-128, AES-192, and AES-256 execute the same code - it's merely the number of rounds that differ for each variant. In particular AES-128 executes 10 rounds, AES-192 executes 12 rounds, and AES-256 executes 14 rounds. Increasing the number of rounds makes it so that the computation time of most <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The study of decoding encrypted text without the key">crypanalysis</a> takes just as long as a brute-force solution. </p>
  <p>With that said, here's a breakdown of the functions that are executed in each round of the algorithm.
@@ -145,7 +107,7 @@ AES is what cryptographers call a <a style="color: #00c624" data-toggle="tooltip
     <br>
     <h5 id="KeySchedule">Key Schedule</h5>
     <br>
-    <p> By this time, you're likely wondering how the key acutally fits into the cipher - is there some sort of lock hidden in the code where the key mysteriously fits in, maybe some hash function that checks authenticity? Nope. </p>
+    <p> By this time, you're likely wondering how the key acutally fits into the cipher — is there some sort of lock hidden in the code where the key mysteriously fits in, maybe some hash function that checks authenticity? Nope. </p>
     <p> As I briefly touched upon earlier, the key is basically a large number used for arithmetic operations in \(GF(2^8)\); but even that isn't entirely true, as the key itself is only used in the first round for <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The process of adding round keys before and after the encryption to expand the possible key space">key-whitening</a>. For later operations, the key is actually used to generate what are called <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Word-sized (4 byte) chunks that are generated from the original key in an algorithm called a Key Schedule">round keys</a> in a <a style="color: #00c624" data-toggle="tooltip" title data-original-title="An algorithm almost always independent of the cipher for generating unique round keys for each round">key schudule</a>; many ciphers utilize the concept of a key schedule, as it greatly improves upon the security of a key. For example, if a cryptanalyst were to gain access to one of our round keys through extensive attacks, the strength of our key schedule would determine whether that  is enough information to compute the original key (in the case of AES, it is not but allows the cryptanalyst to gain access to other round keys which collectively can accomplish the task).
     </p>
     <p> The AES key schedule is broken down into two subroutines, <code>SubWord()</code> and <code>RotWord()</code>, which are added in \(GF(2^8)\) to a round constant. The gist of the key-schedule is that the previous round key is added to the current round key so that, as we continue along the key schedule, we experience a similar <a class="popLink" href="https://en.wikipedia.org/wiki/Avalanche_effect">avalanche effect</a> to that of SHA. Implementing the subroutines is incredibly straightforward: <code>RotWord()</code> cyclically rotates the bytes of the current round key as if they were a wheel, and <code>SubWord()</code> simply breaks the round key up into individual bytes and sends them through the SBox (which is explained in next section). Here is the code for each:
@@ -183,7 +145,7 @@ static void SubWord(unsigned char* word) {
 }</pre>
       </div>
     </div>
-   <p>Since the size of data that we wish to encrypt is fixed at 16 bytes (hence the term "block" cipher - we only encrypt one 16-byte block at a time), we choose to represent this data as a 4x4 matrix of bytes which will refer to from now on as the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Our data / plaintext represented as a matrix of bytes for ease of linear transformations">state</a>:
+   <p>Since the size of data that we wish to encrypt is fixed at 16 bytes (hence the term "block" cipher — we only encrypt one 16-byte block at a time), we choose to represent this data as a 4x4 matrix of bytes which will refer to from now on as the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Our data / plaintext represented as a matrix of bytes for ease of linear transformations">state</a>:
    $$\begin{pmatrix} p_0 & p_4 & p_8 & p_{12} \\\\ p_1 & p_5 & p_9 & p_{13} \\\\ p_2 & p_6 & p_{10} & p_{14} \\\\ p_3 & p_7 & p_{11} & p_{15} \end{pmatrix}$$
    I'm using the variable \(p_i \) for \( 0 \leq i \leq 15 \) here to denote splitting of plaintext into bytes. Our goal is to add 4 round keys to the state each round (since a round key is only a word and the state is 4 words). In order to do this, we tend to think of the state as an array of 4 columns, and perform such operations column by column. </p>
    <p>Now the first four round keys are simply the key itself; however, all subsequent round keys are added to the previous four round keys after they have passed through the <code>SubWord()</code> and <code>RotWord()</code> subroutines. Since our first four round keys are used for <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The process of adding round keys before and after the encryption to expand the possible key space">key-whitening</a>, we actually have one additional round key which is used for the last round. Thus, for AES-128, there need to be 4 round keys for each of 10 + 1 rounds; for AES-192, there need to be 4 keys for each of 12 + 1 rounds; and for AES-256, there need to be 4 keys for each of 14 + 1 rounds. I am confident you can do the math. Heres an example of the full key schedule:
@@ -379,7 +341,7 @@ static void ShiftRows() {
     </div>
     <br>
     <h5 id="MixColumns"><code>MixColumns()</code></h5>
-    <p> Third on our list is the <code>MixColumns()</code> function, and this is where things start to get trickier. The reason things get tricky is because this function is an affine (linear) transform over \(GF(2^8)\), and is thus heavily dependent on polynomial multiplication. I briefly mentioned in the <code>SubBytes()</code> section that inversion (i.e. division) in a Galois field is computationally taxing in terms of clock cycles - the same applies to multiplication, except a few extra steps are taken out. The exact rational for <code>MixColumns()</code> is explained in the <a class="popLink" href="#AdditionalContentDecryption">additional content for decryption</a>. Overlooking the details, we have the transform:
+    <p> Third on our list is the <code>MixColumns()</code> function, and this is where things start to get trickier. The reason things get tricky is because this function is an affine (linear) transform over \(GF(2^8)\), and is thus heavily dependent on polynomial multiplication. I briefly mentioned in the <code>SubBytes()</code> section that inversion (i.e. division) in a Galois field is computationally taxing in terms of clock cycles — the same applies to multiplication, except a few extra steps are taken out. The exact rationale for <code>MixColumns()</code> is explained in the <a class="popLink" href="#AdditionalContentDecryption">additional content for decryption</a>. Overlooking the details, we have the transform:
         
         $$ \begin{pmatrix} 02 & 03 & 01 & 01 \\\\ 01 & 02 & 03 & 01 \\\\ 01 & 01 & 02 & 03 \\\\ 03 & 01 & 01 & 02 \end{pmatrix} \begin{pmatrix} p_0 & p_4 & p_8 & p_{12} \\\\ p_1 & p_5 & p_9 & p_{13} \\\\ p_2 & p_6 & p_{10} & p_{14} \\\\ p_3 & p_7 & p_{11} & p_{15} \end{pmatrix} $$
         
@@ -519,7 +481,7 @@ static void MixColumns() {
     <h5 id="AddRoundKey"><code>AddRoundKey()</code></h5>
     <p> Again, it's just what it sounds like. If you didn't feel like reading over the <a class="popLink" href="#KeySchedule">Key Schedule</a> section but actually want to understand why this is vital to the cipher, then go kick rocks cuz that's pretty important.
     </p>
-    <p> Alright, so hopefully we understand that there are 4 times as many round keys as there are rounds (plus 4 used for key whitening). If this is still unclear to you, we reached this number because the state is 4 times the size of the round key - in reality if we were to mesh the round keys together four at a time, we have a full 128-bit round key for each round. If you read the <a class="popLink" href="#SubBytes">SubBytes</a> section, you should also be aware that addition in \(GF(2^8)\) is the same as bitwise exclusive-or <code>XOR</code>, so putting it all together we wind up with the following code:
+    <p> Alright, so hopefully we understand that there are 4 times as many round keys as there are rounds (plus 4 used for key whitening). If this is still unclear to you, we reached this number because the state is 4 times the size of the round key — in reality if we were to mesh the round keys together four at a time, we have a full 128-bit round key for each round. If you read the <a class="popLink" href="#SubBytes">SubBytes</a> section, you should also be aware that addition in \(GF(2^8)\) is the same as bitwise exclusive-or <code>XOR</code>, so putting it all together we wind up with the following code:
     </p>
     <div class="showbar">
       <button type="button" id="showAddRoPyBut" onclick="showbutton('addropycode', 'showAddRoPyBut', 'Python')" class="btn btn-dark">Show Python</button>
@@ -562,12 +524,14 @@ static void AddRoundKey(unsigned char round)
         </code>
       </div>
     </div>
-    <p> Lastly, we perform one final round where we merely take out the <code>MixColumns()</code> function - and that's it! That's the AES block cipher. I hope you enjoyed reading this almost as much as I didn't enjoy writing the HTML. I will provide the additional content on Galois fields below and a much briefer section on decryption. However, if your goal was to understand the current most popular cipher, this is effectively the end. Thanks for reading! &#x1F601
+    <p> Lastly, we perform one final round where we merely take out the <code>MixColumns()</code> function — and that's it! That's the AES block cipher. I hope you enjoyed reading this almost as much as I didn't enjoy writing the HTML. I will provide the additional content on Galois fields below and a much briefer section on decryption. However, if your goal was to understand the current most popular cipher, this is effectively the end. Thanks for reading! &#x1F601
     </p>
     <div class="showbar">
       <button type="button" id="showFullPyBut" onclick="showbutton('fullpycode', 'showFullPyBut', 'Python')" class="btn btn-dark">Show Python</button>
       <div id="fullpycode" style="display: none; text-align: left;">
         <pre class="prettyprint linenums">
+from __future__ import print_function
+            
 # Precomputed substitution layer
 _SBox = [
 0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
@@ -589,7 +553,7 @@ _SBox = [
 ]
 
 __Nr = 10 # AES-128 in this example
-
+__Nk = 4
 # Test data provided from the FIPS AES documentation
 
 _Key = [ 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c]
@@ -615,22 +579,24 @@ def KeySchedule():
     Rcon = [0x8d, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36, 0x6c, 0xd8, 0xab, 0x4d, 0x9a]
 
     # The first round key is the key itself
-    for i in range(16):
+    for i in range(4 * __Nk):
         _RoundKey[i] = _Key[i]
 
-    for i in range(4, 4 * (__Nr + 1)):
+    for i in range(__Nk, 4 * (__Nr + 1)):
         tempWord = [_RoundKey[4 * (i - 1) + j] for j in range(4)]
 
         # since the state is 4x the size of a RoundKey, we only apply our
         # subroutines on necessary rounds
-        if (i % 4 == 0) :
+        if i % __Nk == 0:
            tempWord = RotWord(tempWord)
+        if i % 4 == 0:
            tempWord = SubWord(tempWord)
-           tempWord[0] ^= Rcon[i // 4]
+        if i % __Nk == 0:
+           tempWord[0] ^= Rcon[i // __Nk]
 
         # set current round key
         for j in range(4):
-            RoundKey[4*i + j] = RoundKey[4*(i-4) + j] ^ tempWord[j]
+            _RoundKey[4*i + j] = _RoundKey[4*(i-__Nk) + j] ^ tempWord[j]
 
 def SubBytes():
     """ Force all data in the state matrix through the substitution layer """
@@ -968,8 +934,8 @@ static void AddRoundKey(unsigned char round) {
     <h4 id="AdditionalContentGF">Additional Content: \(GF(2^8)\)</h4>
 <br>
 <p>Oh, it's you again.</p>
-<p>Alright, you've made it this far, so there's only a little bit left to understand: what is this \(GF(2^8)\) symbol that we keep on seeing? Well, for starters, that is the Galois Field of order 256 - the number of values an unsigned byte (8 bits, hence the 8) can represent.
-But what is a field? For anyone pursuing pure mathematics, you can jump to the next paragraph. For everyone else, what I'm about to go over may be a bit of an abstract concept (trust me, when I was first studying abstract algebra my first thought was, 'who even uses this shit?' - apparently the government institute I would later join as a research fellow).</p>
+<p>Alright, you've made it this far, so there's only a little bit left to understand: what is this \(GF(2^8)\) symbol that we keep on seeing? Well, for starters, that is the Galois Field of order 256 — the number of values an unsigned byte (8 bits, hence the 8) can represent.
+But what is a field? For anyone pursuing pure mathematics, you can jump to the next paragraph. For everyone else, what I'm about to go over may be a bit of an abstract concept (trust me, when I was first studying abstract algebra my first thought was, 'who even uses this shit?' — apparently the government institute I would later join as a research fellow).</p>
 <p>
 Imagine you have some set of objects and you want to know if you can do mathematics on those objects in a similar fashion to the way most people do mathematics on numbers. To find this out, you need to be a little more specific: what kind of mathematics do you want to do?</p>
     <ul>
@@ -979,28 +945,33 @@ Imagine you have some set of objects and you want to know if you can do mathemat
       <li>Integration? <a class="popLink" href="https://en.wikipedia.org/wiki/Measure_space">Measure Space</a></li>
       <li>Differentiation? A ( \( C^1\) at minimum, but ideally smooth) <a class="popLink" href="https://en.wikipedia.org/wiki/Manifold">Manifold</a></li>
       <li>Fourier Analysis? A <a class="popLink" href="https://en.wikipedia.org/wiki/Hilbert_space">Hilbert Space</a></li>
-      <li>Mechanics on a flat Lipschitz hypersurface over \(\mathbb{CP}^n\) for \(n \geq 3\)? <a class="popLink" href="https://arxiv.org/pdf/math/0604112.pdf">Nah, just kidding</a></li>
+      <li>BVPs on flat Lipschitz complex varieties of dimension \(n \geq 3\)? <a class="popLink" href="https://arxiv.org/pdf/math/0604112.pdf">Nah, just kidding</a></li>
     </ul>
- <p>Okay back on topic - a Galois Field, which is also known as a finite field, is basically what the second name suggests. It is a finite set of objects that supports addition, subtraction, multiplication, and division. According to <a class="popLink" href="https://math.stackexchange.com/questions/72856/order-of-finite-fields-is-pn">an important theorem</a>, any Galois field must be of order \(p^k\) for some prime \(p\) and some positive integer \(k\). Thus, the elements of our Galois field are essentially just numbers represented by some prime base. That said, all is well for our Rijndael field ( \(GF(2^8)\) ) since 2 is prime and 8 is positive.
+ <p>Okay back on topic — a Galois Field, which is also known as a finite field, is basically what the second name suggests. It is a finite set of objects that supports addition, subtraction, multiplication, and division. According to <a class="popLink" href="https://math.stackexchange.com/questions/72856/order-of-finite-fields-is-pn">an important theorem</a>, any Galois field must be of order \(p^k\) for some prime \(p\) and some positive integer \(k\). Thus, the elements of our Galois field are essentially just numbers represented by some prime base. That said, all is well for our Rijndael field ( \(GF(2^8)\) ) since 2 is prime and 8 is positive.
  </p>
  <p> I'm not actually going to explain Galois fields in the context of the Rijndael field \(GF(2^8) \) in this section, but abstractly for some prime \(p\) and positive integer \(k\).</p>
   <p>Suppose \(a \in GF(p^k) \). Then we can represent the element \(a\) base \(p\) as follows:
     $$ a = a_{k-1}p^{k-1} \oplus a_{k-2}p^{k-2} \oplus \dots \oplus a_{1}p \oplus a_0$$
-    with coefficients \(a_i \in \{0, 1, \dots, p-1 \} \) for \(0 \leq i \leq k-1  \) (where \( \oplus \) is the binary operation replacing addition in this field). Now lets take a second to see what's going on here - think about binary, specifically a byte in our Rijndael field. Well, our byte is some collection of 1's and 0's... but that makes sense, as our prime is 2 so our coefficients can only be \(a_i \in \{ 0, 1\}\)! What about ternary numbers in the Galois field \( GF(3^4) \)? In that scenario, our coefficients can only be 0, 1, or 2. Assuming our binary operation is just normal addition, how would we translate the element 2102 in \( GF(3^4) \)? Well, going back to the rational above, this is really
+    with coefficients \(a_i \in \{0, 1, \dots, p-1 \} \) for \(0 \leq i \leq k-1  \) (where \( \oplus \) is the binary operation replacing addition in this field). Now lets take a second to see what's going on here - think about binary, specifically a byte in our Rijndael field. Well, our byte is some collection of 1's and 0's... but that makes sense, as our prime is 2 so our coefficients can only be \(a_i \in \{ 0, 1\}\)! What about ternary numbers in the Galois field \( GF(3^4) \)? In that scenario, our coefficients can only be 0, 1, or 2. Assuming our binary operation is just normal addition, how would we translate the element 2102 in \( GF(3^4) \)? Well, going back to the rationale above, this is really
     $$ 2\cdot 3^{4-1} + 1 \cdot 3^{4-2} + 0 \cdot 3^{4-3} + 2\cdot3^{4-4} = 65 $$
     And there you have it, 2102 is the representation of 65 in \( GF(3^4) \).
 </p>
-<p> But why is this any better? Why can't we just represent 65 as 65 and be content with it? Well there are two main points as to why not: one answer is that computer architecture  is not historically represented that way. A bit is really an electrical charge in a capacitor, which is always at one of two states (i.e. 0 for low charge, 1 for high charge). The second (and better) answer is what I'm about to explain in the next paragraph: binary operations in the Galois Field are not the same as they are over the integers. By binary operations, I'm referring to multiplication and addition (but in their modified format).
-</p>
-<p> I'll begin with the easier of the two: addition in \(GF(p^k)\). When we add two coefficients, say \(a_i\) and \(b_i\), we're actually adding them in the <em>coefficient Group</em> of order \(p\). According to <a class="popLink" href="https://en.wikipedia.org/wiki/Lagrange%27s_theorem_(group_theory)">Lagrange's Theorem</a>, since this group is of prime order it must be cyclic (a straightforward proof). Thus, addition of coefficients is much like modular arithmetic.  For example, consider \(GF(5^3) \) with the two numbers \( 413 \) and \( 232 \):
+<p> But why is this any better? Why can't we just represent 65 as 65 (in decimal) and be content with it? Well there are two main points as to why not: </p>
+<ol>
+    <li>Computer architecture  is not historically represented that way. A bit is really an electrical charge in a capacitor, which is always at one of two states (i.e. 0 for low charge, 1 for high charge).
+    </li>
+    <li>The second (and better) answer is what I'm about to explain in the next paragraph: binary operations in the Galois Field are not the same as they are over the integers. By binary operations, I'm referring to multiplication and addition (but in their modified format).
+    </li>
+</ol>
+<p> I'll begin with the easier of the two binary operations operations: addition in \(GF(p^k)\). When we add two coefficients, say \(a_i\) and \(b_i\), we're actually adding them in the <em>coefficient Group</em> of order \(p\). According to <a class="popLink" href="https://en.wikipedia.org/wiki/Lagrange%27s_theorem_(group_theory)">Lagrange's Theorem</a>, since this group is of prime order it must be cyclic (a straightforward proof). Thus, addition of coefficients is much like modular arithmetic.  For example, consider \(GF(5^3) \) with the two numbers \( 413 \) and \( 232 \):
 </p>
 \[  \ \ \ 413 \\
     +232 \\
   \_\_\_\_\_\_ \\
   \ \ \ 140 \]
- <p> At this point you may be telling yourself, "That's just objectively wrong: 3 + 2 is 5 not 0." Well, you'd be right if this were the integers. However, as I mentioned earlier, the addition is like modular arithmetic with respect to our base prime (which is 5). Thus, we are actually evaluating the expression (3 + 2) mod 5, which does happen to be equal to 0. The same rational applies to each digit.
+ <p> At this point you may be telling yourself, "That's just objectively wrong: 3 + 2 is 5 not 0." Well, you'd be right if this were the integers. However, as I mentioned earlier, the addition is like modular arithmetic with respect to our base prime (which is 5). Thus, we are actually evaluating the expression (3 + 2) mod 5, which does happen to be equal to 0. The same rationale applies to each digit.
  </p>
- <p> For the sake of completeness, I mentioned earlier that addition in \( GF(2^8)\) is equivalent to the exclusive-or (XOR) operation. This is pretty easy to show - recall that XOR works in the following way:
+ <p> For the sake of completeness, I mentioned earlier that addition in \( GF(2^8)\) is equivalent to the exclusive-or (XOR) operation. This is pretty easy to show — recall that XOR works in the following way:
  </p>
  <table id="xortab">
    <tr>
@@ -1030,8 +1001,10 @@ Imagine you have some set of objects and you want to know if you can do mathemat
    </tr>
  </table>
  <br>
- <p> Well whenever our base prime is 2 (i.e. \(GF(2^k)\) ), we have essentially the same behavior due to the fact that all coefficients are either 1 (true) or 0 (false) and \( 1 \oplus 1 = (1 + 1) \text{mod} 2 = 0 \).</p>
- <p> An even more helpful fact that we build upon in the decryption stage is that addition and subtraction are the same exact operation in \( GF(2^k) \)! Consider the numbers 12 and 34 in \( GF(5^2) \) and suppose we want to find the answer to \( y = 12 \ominus 34 \). Then by associativity, we also have that the answer would satisfy \( y \oplus 34 = 12 \). The catch here is that numbers wrap back around when they become too large, so we can reverse engineer the solution to be 33 (since \( 3 \oplus 3 = (3 + 3) \text{mod} 5 = 1 \) and \( 3 \oplus 4 = (3 + 4) \text{mod} 5 = 2\) ).
+ <p> Well whenever our base prime is 2 (i.e. \(GF(2^k)\) ), we essentially have the same behavior since all coefficients are either 1 (true) or 0 (false) and \( 1 \oplus 1 = (1 + 1) \text{mod} 2 = 0 \).</p>
+ <p> An even more helpful fact (which we build upon in the decryption stage) is that addition and subtraction are the same exact operation in \( GF(2^k) \)! In any group-theoretical setting, subraction is simply addition applied to the inverse element. For example, given some integer \(n\), subtraction by a second integer \(m\) is actually the same as addition by \(-m\) (which is \(m\)'s inverse with respect to addition). For any group, we have the trivial identity \( g \ominus g = g \oplus g^{-1} = e \) where \(g\) is the identity (which is 0 for the integers under addition). However, if you notice from the table above, every digit is its own inverse! Therefore, we also have </p>
+ $$ g \ominus g = g \oplus g^{-1} = g \oplus g = e $$
+ <p>In the more general setting of \(GF(2^k)\), consider the numbers 12 and 34 in \( GF(5^2) \) and suppose we want to find the answer to \( y = 12 \ominus 34 \). Then by associativity, we also have that our answer must satisfy \( y \oplus 34 = 12 \). The catch here is that numbers wrap back around when they become too large, so we can reverse engineer the solution to be 33 (since \( 3 \oplus 3 = (3 + 3) \text{mod} 5 = 1 \) and \( 3 \oplus 4 = (3 + 4) \text{mod} 5 = 2\) ).
  </p>
  <p> Now comes the hard part: multiplication. Conceptually it's not much different, in that we choose a number called our <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A non-constant polynomial which cannot be factored">irreducible polynomial</a> (the irreducible polynomial in AES is \( x^8 + x^4 + x^3 + x + 1 \)), which we use for the same purpose of allowing the result to wrap back around when it becomes large.
      The difficulty here lies in the fact that our coefficients collectively affect each coefficient of the other term. When we perform regular multiplication, we are only really working with two coefficients; on the other hand, when we multiply two polynomials, each term of the first polynomial affects each term of the second polynomial (what most middle-schoolers learn as FOIL). Galois Field multiplications works the exact same as polynomial multiplication, and for that reason many people actually choose to represent information in polynomial format when it comes time for calculations.
@@ -1039,8 +1012,8 @@ Imagine you have some set of objects and you want to know if you can do mathemat
 <p> For example, let's consider multiplication in \( GF(3^3) \) with primitive polynomial \(1102 = x^3 + x^2 + 2 \). Take the numbers 201 and 11 - translating them into polynomials we get \( 2x^2 + 1 \) and \(x + 1\). By the distributive property (i.e. FOIL), we get
     $$ (2x^2 + 1)(x + 1) = 2x^3 + 2x^2 + x + 1 $$
     However, this answer is too large for \(GF(3^3)\) so we must take the answer modulo \(x^3 + x^2 + 2\) (using polynomial division) to get
-    $$ (2x^3 + 2x^2 + x + 1) \text{mod} (x^2 + 2x + 2) = x$$
-    which translates to 10. Thus, we find that in \( GF(3^3) \) with irreducible polynomial \(x^3 + x^2 + 2\), the equation \( 10 \otimes 4 = 3 \) holds (I translated from ternary back to base 10). Neat stuff, huh?</p>
+    $$ (2x^3 + 2x^2 + x + 1) \text{mod} (x^3 + x^2 + 2) = x$$
+    which translates to 3. Thus, we find that in \( GF(3^3) \) with irreducible polynomial \(x^3 + x^2 + 2\), the equation \( 19 \otimes 4 = 3 \) holds (I translated from ternary back to base 10). Neat stuff, huh?</p>
     <p> As you can see, it is much more computationally intensive to do multiplication in \(GF(2^8)\) than it is to do regular multiplication over the integers \(\mathbb{Z}\).
  To see why the SBox from <a class="popLink" href="#SubBytes">SubBytes()</a> provides a level of non-linearity, recall that the SBox performs the calculation
     $$ \tilde{b_i} = (b^{-1})_i \oplus (b^{-1})_{(i + 4)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 5)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 6)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 7)\mathrm{mod} 8} + c_i $$
@@ -1052,6 +1025,8 @@ Imagine you have some set of objects and you want to know if you can do mathemat
 <br>
 <p> It's likely become evident to you at this point, but for the reader who hasn't put too much thought into it: how do you plan to get back your data now that it has gone through a complex encryption? Sure, you have the key, but I never once told you that the cipher above is its own inverse (because it isn't). Building upon earlier analogies, I have given you a way to put your valuables in a safe, but have not told you anything about how to get them out of the safe. I chose to put this section off until the end due to the fact that many of the inverse operations in AES' <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The process of converting encrypted ciphertext back into its original plaintext">decryption</a> require knowledge of \( GF(2^8) \) from the previous section.
 </p>
+<br/>
+<br/>
 <h5><code>InvSubBytes()</code></h5>
 <p> Proceeding in the same order as encryption, the first routine that we wish to find an inverse for is <code>SubBytes()</code>. If you recall, the non-linearity of the SBox came from the transformation:
     $$ \tilde{b_i} = (b^{-1})_i \oplus (b^{-1})_{(i + 4)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 5)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 6)\mathrm{mod} 8} \oplus (b^{-1})_{(i + 7)\mathrm{mod} 8} + c_i $$
@@ -1084,6 +1059,8 @@ We could apply the same affine transformation, and take the inverse of the resul
   </div>
 </div>
 </p>
+<br/>
+<br/>
 <h5><code>InvShiftRows()</code></h5>
 <p> If this one isn't blatantly obvious, recall that our original <code>ShiftRows()</code> simply shifted the first row cyclically to the left by one, shifted the second row  cyclically to the left by two, etc. Well, just replace left by right and you're golden.
 </p>
@@ -1095,7 +1072,7 @@ def InvShiftRows():
     global state
     for i in range(1, 4):
         state[0][i], state[1][i], state[2][i], state[3][i] = \
-        state[i][i], state[i - 1][i], state[(i + 2) % 4][i], state[(i+1)%4][i]</pre>
+        state[(4-i)%4][i], state[(5- i) % 4][i], state[(6-i) % 4][i], state[(7-i)%4][i]</pre>
     </div>
 </div>
 <div class="showbar">
@@ -1128,6 +1105,8 @@ static void InvShiftRows() {
 }</pre>
     </div>
 </div>
+<br/>
+<br/>
 <h5><code>InvMixColumns()</code></h5>
 <p> After all that we've gone over, we're finally at what I consider to be the make-or-break point of understanding the AES cipher. That is, you either get why this works or you haven't a damn clue and you're just copying and pasting code at this point (no shame in it).</p>
 <p> Our original <code>MixColumns()</code> function was simply matrix multiplication, so it makes sense that the inverse function is simply the inverse of the matrix! Easy right? Not so much. The original matrix multiplication was in \(GF(2^8)\), so unfortunately I'm going to have to jump around a bit and leave the reader to some research on how <a class="popLink" href="https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm"> the Extended Euclidean Algorithm</a> fits in.
@@ -1271,8 +1250,8 @@ static void InvMixColumns() {
 }</pre>
   </div>
 </div>
-    
-    
+<br/>    
+<br/>    
 <h5><code>InvAddRoundKey()</code></h5>
 <p>Just kidding, there is no <code>InvAddRoundKey()</code>. If you read the \( GF(2^8) \) section above you should understand that addition and subtraction are one in the same, so you simply add the round key right back.
 </p>
@@ -1332,25 +1311,25 @@ def InvSubBytes():
 
 def InvShiftRows():
     """ Perform the reverse cyclic shift on each row dependent on the depth of the row"""
-    global state
+    global _state
     for i in range(1, 4):
-        state[0][i], state[1][i], state[2][i], state[3][i] = \
-        state[i][i], state[i - 1][i], state[(i + 2) % 4][i], state[(i+1)%4][i]
+        _state[0][i], _state[1][i], _state[2][i], _state[3][i] = \
+        _state[(4-i)%4][i], _state[(5- i)%4][i], _state[(6-i)%4][i], _state[(7-i)%4][i]
         
 def InvMixColumns():
     """ Inverse affine transform in the Rijndael field on the state """
-    global state
+    global _state
     for col in range(4):
         # temporary variables
-        a = state[col][0]
-        b = state[col][1]
-        c = state[col][2]
-        d = state[col][3]
+        a = _state[col][0]
+        b = _state[col][1]
+        c = _state[col][2]
+        d = _state[col][3]
         
-        state[col][0] = gmult(a, 0x0e) ^ gmult(b, 0x0b) ^ gmult(c, 0x0d) ^ gmult(d, 0x09)
-        state[col][1] = gmult(a, 0x09) ^ gmult(b, 0x0e) ^ gmult(c, 0x0b) ^ gmult(d, 0x0d)
-        state[col][2] = gmult(a, 0x0d) ^ gmult(b, 0x09) ^ gmult(c, 0x0e) ^ gmult(d, 0x0b)
-        state[col][3] = gmult(a, 0x0b) ^ gmult(b, 0x0d) ^ gmult(c, 0x09) ^ gmult(d, 0x0e)
+        _state[col][0] = gmult(a, 0x0e) ^ gmult(b, 0x0b) ^ gmult(c, 0x0d) ^ gmult(d, 0x09)
+        _state[col][1] = gmult(a, 0x09) ^ gmult(b, 0x0e) ^ gmult(c, 0x0b) ^ gmult(d, 0x0d)
+        _state[col][2] = gmult(a, 0x0d) ^ gmult(b, 0x09) ^ gmult(c, 0x0e) ^ gmult(d, 0x0b)
+        _state[col][3] = gmult(a, 0x0b) ^ gmult(b, 0x0d) ^ gmult(c, 0x09) ^ gmult(d, 0x0e)
 
 def AESInvCipher():
     """ The complete AES decryption performed through byte-array calculations """
@@ -1358,7 +1337,7 @@ def AESInvCipher():
     InvShiftRows()
     InvSubBytes()
     
-    for round in range(__Nr - 1, -1, -1):
+    for round in range(__Nr - 1, 0, -1):
         AddRoundKey(round)
         InvMixColumns()
         InvShiftRows()
@@ -1480,6 +1459,26 @@ static void InvMixColumns() {
   </div> <!-- row -->
 </div> <!-- container -->
 
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = 'https://christopherdare.com/code/aes.html';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'aes'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://christopherdare.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- webpage footer -->
 <div class="jumbotron vertical-center footer">

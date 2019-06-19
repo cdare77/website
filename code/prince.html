@@ -3,10 +3,12 @@
 <head>
   <title>PRINCE Cipher Rundown</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="keywords" content="PRINCE, PRINCE encryption, PRINCE cipher, cybersecurity">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="keywords" content="PRINCE, PRINCE encryption, PRINCE cipher, cybersecurity, encryption, encryption tutorial, lightweight cipher, low latency cipher">
   <meta name="description" content="An in-depth rundown of the PRINCE cipher">
   <meta name="author" content="Chris Dare">
+  <!-- icon -->
+  <link rel="icon" href="../favicon.ico">
   <!-- Bootstrap 4.1 -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <!-- actual stylesheet -->
@@ -14,7 +16,7 @@
   <!-- google fonts -->
   <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite" rel="stylesheet">
   <!-- jquery -->
-  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
   <!-- MathJax -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
   <!-- Code Prettify -->
@@ -23,50 +25,9 @@
   <script src="../footerscript.js"></script>
   <script src="../tooltip.js"></script>
   <script src="../showbutton.js"></script>
+  <script src="../navbarTemplate.js"></script>
 </head>
 <body data-spy="scroll" data-target="#sidemenu" data-offset="250" style="position: relative;">
-
-<!-- Navigation bar -->
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="../homepage.html">Chris Dare</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="../homepage.html">Home<span class="sr-only">(current)</span></a>
-      </li>
-      <!-- Blog Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="../blogpage.html" id="navbarDropdownBlogLink"  aria-haspopup="true" aria-expanded="false">Blog<span class="sr-only">(current)</span></a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownBlogLink">
-          <a class="dropdown-item" href="../blogposts/manifoldparti.html">Manifolds: Part I</a>
-          <a class="dropdown-item" href="../blogposts/manifoldpartii.html">Manifolds: Part II</a>
-        </div>
-      </li>
-      <!-- Code Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="../codepage.html" id="navbarDropdownCodeLink" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
-          Code
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
-          <a class="dropdown-item" href="aes.html" style="font-family: 'Courier New', Courier;">AES</a>
-          <a class="dropdown-item active" href="#" style="font-family: 'Courier New', Courier;">PRINCE</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../mymusicpage.html">My Music</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../photospage.html">Photos</a>
-      </li>
-    </ul>
-  </div>
-</nav>
 
 <!-- webpage header -->
 
@@ -101,19 +62,19 @@
     <div class="col-md-9 col-sm-12 content">
         <h4 id="LowLatencyLightweightCiphers">Low-Latency Lightweight Ciphers</h4>
         <br/>
-        <p> For the sake of brevity, I'm going to assume you read my <a class="popLink" href="aes.html"> previous post</a> which introduced the concept of encryption. This blog post will not rely as heavily on Galois field arithmetic, so there is no need for you to reiterate over that section.
+        <p> For the sake of brevity, I'm going to assume you've read my <a class="popLink" href="aes.html"> previous post</a> which introduced the concept of encryption. This blog post will not rely as heavily on Galois field arithmetic, so there is no need to reiterate that section.
         </p>
-        <p> In almost all areas of computer science, there is something known as the <a style="color: #00c624" data-toggle="tooltip" title data-original-title="The principle that an algorithm can either focus on computation time or space required, but never both">space vs. time tradeoff</a> which governs the laws of efficiency - a prime example of this was in my AES article, where I provided code for Galois field multiplication as well as a look-up table. Anyone who encorporated the two methods (<code>xtimes()</code> and <code>gmult()</code>) into their code would have seen their program run a bit slower than a program which utilized the look-up tables. However, if you slowed time down to the nanosecond scale and observe the memory which their process mapped to, you would notice that their program uses less space.
+        <p> In almost all areas of computer science, there is something known as the <a style="color: #00c624" data-toggle="tooltip" title data-original-title="The principle that an algorithm can either focus on computation time or space required, but never both">space vs. time tradeoff</a> which governs the laws of efficiency. A prime example of the space vs. time tradeoff was in my AES article, where I provided code for Galois field multiplication as well as a look-up table. Anyone who incorporated the Galois field multiplication (<code>xtimes()</code> and <code>gmult()</code>) into their code would have seen their program run a bit slower than a program which utilized the look-up tables. However, if you slowed time down to the nanosecond scale and observed the processes' memory addresses, you'd notice that the program with look-up tables uses considerably less space.
         </p>
-        <p>The decision of whether to use a space-efficient implementation or time-efficient implementation is really a matter of use-case. For example, the largest you will likely see an AES software implementation is only a little over a dozen kilobytes (kB). Thus, any software on your computer that claims to encrypt data is likely using a time-efficient algorithm since your computer has plenty of memory to spare. In terms of hardware, space efficiency also includes the physical area which an algorithm takes up on a chip (in terms of number of gates, etc).
+        <p>The decision of whether to use a space-efficient implementation or time-efficient implementation is really a matter of use-case. For example, the largest you will likely see an AES software implementation is a little over a dozen kilobytes (kB). Thus, any software on your computer that claims to encrypt data is likely using a time-efficient algorithm since your computer has plenty of memory to spare. In terms of hardware, space-efficiency also includes the physical area which an algorithm takes up on a computer chip (in terms of number of gates, etc).
         </p>
-        <p> Yet, as the <a style="color: #00c624" data-toggle="tooltip" title data-original-title="The network of everyday devices, such as thermostats, refridgerators, and home-security, which now connect to your software devices and exchange data">Internet of Things (IoT)</a> becomes increasingly more relevant in our everyday lives (my dad, for example, has been going on a frenzy to get Nest products - he even bought the damn doorbell with a camera on it), it becomes apparent that not all electronic devices have memory to spare. For anyone with an E-ZPass, consider the small <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Radio-Frequency Identification">RFID</a> chip inside which makes all the transactions for you. Much like a credit card, you wouldn't want anyone accessing the your bank information whenever you make a transaction (that is, drive through an E-ZPass gate).
+        <p> Yet, as the <a style="color: #00c624" data-toggle="tooltip" title data-original-title="The network of everyday devices, such as thermostats, refridgerators, and home-security, which now connect to your software devices and exchange data">Internet of Things (IoT)</a> becomes increasingly more relevant in our everyday lives (my dad, for example, has recently been going on a frenzy for Nest products), it becomes apparent that not all electronic devices have memory to spare. For anyone with an E-ZPass, consider the small <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Radio-Frequency Identification">RFID</a> chip inside which makes all the transactions for you. Much like a credit card, you wouldn't want anyone accessing the your bank information whenever you make a transaction (that is, drive through an E-ZPass gate).
         </p>
-        <p> Examples like the E-ZPass one above are what inspired the creation of <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Ciphers which have a minimal memory footprint and use as few resources as possible">lightweight ciphers</a>. However, for the E-ZPass example above in particular, a lightweight cipher doesn't do us much good if it can't encrypt our data in the time it takes to drive through a gate at 35 miles-per-hour (the speed limit signs are optional, right?). Thus, we turn our attention to the subcategory of low-<a style="color: #00c624" data-toggle="tooltip" title data-original-title="The delay between the beginning of a process and the end of a process">latency</a> lightweight ciphers.</p>
-        <p> But wait a minute - doesn't the whole idea of something being both low-latency and lightweight contradict our space vs. time tradeoff? Well, not exactly. You see, the space vs. time tradeoff is <em>relative</em> to a single algorithm - it merely tells us that, given a program, we can trade some of our speed for a smaller memory footprint or vice versa. Imagine that the space vs. time tradeoff is a teeter-totter (or seesaw, but if you call it a teeterboard get the hell off my website) and the height of one side represents space while the height of the other side represents time. The space vs. time tradeoff does not say anything about the height of the center of our teeter-totter or the teeter-totter's length - merely that the teeter-totter exists.
+        <p> Examples like the E-ZPass above are what inspired the creation of <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Ciphers which have a minimal memory footprint and use as few resources as possible">lightweight ciphers</a>. However, for the E-ZPass example in particular, a lightweight cipher doesn't do us much good if it can't encrypt our data in the time it takes to drive through a gate at 35 miles-per-hour (the speed limit signs are optional, right?). Thus, we turn our attention to the subcategory of low-<a style="color: #00c624" data-toggle="tooltip" title data-original-title="The delay between the beginning of a process and the end of a process">latency</a> lightweight ciphers.</p>
+        <p> But wait a minute — doesn't the whole idea of something being both low-latency and lightweight contradict our space vs. time tradeoff? Well, not exactly. You see, the space vs. time tradeoff is <em>relative</em> to a single algorithm — it merely tells us that, given a program, we can trade some of our speed for a smaller memory footprint or vice versa. Imagine that the space vs. time tradeoff is a teeter-totter (or seesaw, but if you call it a teeterboard get the hell off my website) and the height of one side represents space while the height of the other side represents time. The space vs. time tradeoff does not say anything about the height of the center of our teeter-totter or the teeter-totter's length — simply that the teeter-totter exists.
         </p>
         <figure style="padding-bottom: 30px; text-align: center;">
-            <img src="../images/teetertotter.png" style="width: 50%; border-radius: 5px 5px 5px 5px;"></img>
+            <img src="../images/teetertotter.jpg" style="width: 50%; border-radius: 5px 5px 5px 5px;">
             <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> </figcaption>
         </figure>
         <p> Extending our teeter-totter analogy to low-latency lightweight ciphers, the center of the  low-latency lightweight cipher's teeter-totter would be at a low height so that, when balanced, the time costs and space costs are not too high. However, push one side to the limits, and the cipher may no longer be considered low-latency or lightweight.
@@ -122,14 +83,14 @@
         <br/>
         <h3 id="WhyPRINCE">Why PRINCE?</h3>
         <br/>
-        <p> If it wasn't already evident, I didn't just introduce low-latency lightweight ciphers for the sake of introducing low-latency lightweight ciphers; as it so happens, these two properties are essentially PRINCE's claim-to-fame.
+        <p> Despite having a propensity for rambling on technical topics, I didn't just introduce low-latency lightweight ciphers for the sake of introducing low-latency lightweight ciphers. As it happens, these two properties are essentially PRINCE's claim-to-fame.
         </p>
-        <p> For a little background, PRINCE was originally developed in 2012 by a group of researchers from Denmark, Germany, and Belgium (and some guy from France but who really cares about France when the world cup isn't on). The majority of the researchers were associated with the Technical University of Denmark, while the remaining were either at Ruhr University or with the semiconductor manufacturer NXP Semiconductors. The researchers' goal was to conceive some sort of block cipher which would be significantly smaller on hardware than AES-128 and PRESENT (which I have not discussed).</p>
-         <p> In terms of their goal, I would say the researchers did a pretty good job at developing a lightweight cipher. On hardware, even when AES-128 is <a style="color: #00c624" data-toggle="tooltip" title data-original-title="The circuit realizes the exact same code is repeated 10 times and reuses the same gates instead of extending the critical path">loop unrolled</a>, PRINCE takes up 14-15 times less area than  AES-128. In terms of software, I tested both encryptions on a PIC16F1947 microcontroller and got the following results:
+        <p> For a little background, PRINCE was originally developed in 2012 by a group of researchers from Denmark, Germany, and Belgium. The majority of the researchers were associated with the Technical University of Denmark, while the remaining were either at Ruhr University or employed by NXP Semiconductors. The researchers' goal was to conceive some sort of block cipher which would be significantly smaller on hardware than AES-128 and PRESENT (a cipher which I have not discussed).</p>
+         <p> In terms of their goal, I would say the researchers did a pretty good job at developing a lightweight cipher. Even when AES-128 is <a style="color: #00c624" data-toggle="tooltip" title data-original-title="The circuit realizes the exact same code is repeated 10 times and reuses the same gates instead of extending the critical path">loop unrolled</a>, PRINCE takes up 14-15 times less area on hardware than AES-128. In terms of software, I tested both encryptions on a PIC16F1947 microcontroller and got the following results:
          </p>
          <table id="resultstable">
             <tr>
-              <th> Encryption </th>
+              <th> Cipher </th>
               <th> Run-Time Memory (bytes) </th>
               <th> Key Schedule (clock cycles) </th>
               <th> Encryption (clock cycles) </th>
@@ -151,28 +112,28 @@
             </tr>
         </table>
         </br>
-        <p> Note that this data is not as significant since many of the aspects, such as run-time memory, are implementation-dependent; that is, two programmers could implement the exact same cipher and get slightly different results as far as run-time memory and clock-cycles.
+        <p> Note that this data is not as significant since many of the aspects, such as run-time memory, are implementation-dependent. That is, two programmers could implement the exact same cipher and get slightly different results as far as run-time memory and clock-cycles.
         </p>
-        <p> So where's the catch? We have a cipher that is no doubt more efficient than AES, why don't we just use this one all the time? Well, you probably don't remember from the previous post, but I made the analogy that AES is like putting your money in a national bank, whereas PRINCE is like hiding it in your mattress. The former takes more time and is an arduous process, but has excellent security measures. The latter, on the other hand, is quick and easy but prone to theft in some cases.
+        <p> So where's the catch? We have a cipher that is no doubt more efficient than AES — why don't we just use this one all the time? If you remember from my "national bank versus mattress" analogy from the previous post, AES is like putting your money in a national bank, whereas PRINCE is like hiding it in your mattress. The former takes more time and is an arduous process, but has excellent security measures. The latter, on the other hand, is quick and easy but prone to theft in some cases.
         </p>
-        <p> The analogy between hiding money in a bank vs. in a mattress only goes so far though. There are numerous cryptanalytic attacks on PRINCE, but unless you have a graduate degree in applied mathematics or computer science you will have a tough time implementing them. The attack that I'm most familiar with is known as reflection cryptanalysis, which builds upon the fact that a linear <a style="color: #00c624" data-toggle="tooltip" title data-original-title="A function which is its own inverse">involution</a> \(f: GF(2^n) \to GF(2^n) \) must have \(2^{n/2}\) fixed points. From there, you simply use the \(\alpha\)-reflection property of PRINCE at the very middle round of the encryption to begin recovering the key 4 bits at a time. However, there are numerous <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Exposing the image of the domain space and the preimage of the codomain space for multiple round functions to reduce the key space">meet-in-the-middle (MITM) atttacks</a> which are significantly more efficient in recovering the key. Moreover, all these attacks are practical (that is, they do not surpass the \(2^{80}\) complexity threshold which makes an attack theoretical) so they can be effectively performed by modern computers. To a cryptanalyst, this effectively means the PRINCE cipher is broken.
+        <p> In reality, the analogy between hiding money in a bank vs. in a mattress only goes so far. There <em>ARE</em> numerous cryptanalytic attacks on PRINCE, but unless you have a doctorate in applied mathematics or computer science you will likely have a tough time implementing them. The attack that I'm most familiar with is known as reflection cryptanalysis, which builds upon the fact that a linear <a style="color: #00c624" data-toggle="tooltip" title data-original-title="A function which is its own inverse">involution</a> \(f: GF(2^n) \to GF(2^n) \) must have \(2^{n/2}\) fixed points. From there, you simply use the \(\alpha\)-reflection property of PRINCE at the very middle round of the encryption to begin recovering the key 4 bits at a time. However, there are numerous <a style="color: #00c624" data-toggle="tooltip" title data-original-title="Exposing the image of the domain space and the preimage of the codomain space for multiple round functions to reduce the key space">meet-in-the-middle (MITM) attacks</a> which are significantly more efficient in recovering the key. Moreover, all these attacks are practical (that is, they do not surpass the \(2^{80}\) complexity threshold which makes an attack theoretical), so they can be effectively performed by modern computers. To a cryptanalyst, this basically means the PRINCE cipher is broken.
         </p>
-        <p> At this point, you may be asking yourself why I'm telling you about some cipher that's already been broken - well, there's two reasons:</p>
+        <p> At this point, you may be asking yourself why I'm telling you about some cipher that's already been broken — well, there are two reasons:</p>
         <ol>
-        <li> A primary principle of hacking is to never try to break the hardest part of an algorithm (i.e. the encryption itself). For that reason, attacks performed by organizations such as the NSA or foreign countries almost always go after design flaws in the underlying hardware (known as a <a class="popLink" href="https://en.wikipedia.org/wiki/Side-channel_attack"> side-channel attack</a>). This is the reason for the <a class="popLink" href="https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability)">meltdown attack's</a> notoriety. I may try to do a separate post on the meltdown attack if I'm feeling up to it, but in essence the meltdown attack exposes the pipeline (more accurately, the race condition in speculative execution) and cache structure originally laid out by MIPS in the 90's.
+        <li> A primary principle of hacking is to never try to break the hardest part of an algorithm (i.e. the encryption itself). For that reason, attacks performed by organizations such as the NSA or by foreign countries almost always go after design flaws in the underlying hardware (this is known as a <a class="popLink" href="https://en.wikipedia.org/wiki/Side-channel_attack"> side-channel attack</a>). In fact, this is the reason for the <a class="popLink" href="https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability)">meltdown attack's</a> notoriety. I may try to do a separate post on the meltdown attack if I'm feeling up to it, but in essence the meltdown attack exposes the pipeline (more accurately, the race condition in speculative execution) and cache structure that MIPS originally laid out in the 90's.
         </li>
         <br/>
-        <li> Security is use-case dependent. Obviously PRINCE was not deemed as an encryption standard by NIST, so trying to sell software to the government which utilizes the cipher wouldn't go well. However, small applications for the everyday use-case (such as encrypting car battery information or RFID tags) would benefit much more from PRINCE's minimal hardware footprint than from alternative ciphers. In addition, any attack on PRINCE itself still takes a fair amount of time, so incorporating a well-timed random key generator could counteract the cipher's security defecit. </li>
+        <li> Security <em>can</em> be use-case dependent. PRINCE was never deemed as an encryption standard by NIST, so trying to sell software to the government which utilizes the cipher wouldn't go well. However, small applications for the everyday use-case (such as encrypting car battery information or RFID tags) would benefit much more from PRINCE's minimal hardware footprint than from alternative ciphers. In addition, any attack on PRINCE itself still takes a fair amount of time, so incorporating a well-timed random key generator and key-policy could counteract the cipher's security deficit. </li>
         </ol>
-        <p> Hopefully those two reasons are enough to convince you the algorithm is worth looking at. Anyways - enough foreplay - it's time to get into the algorithm.
+        <p> Hopefully those two reasons are enough to convince you the algorithm is worth looking at. With that said, it's time to discuss the algorithm.
         </p>
         <br/>
         <br/>
         <h3 id="TheCipher">The Cipher</h3>
         <br/>
-        <p> Much like AES from the previous post, the PRINCE cipher is a <a style="color: #00c624" data-toggle="tooltip" title data-original-title="A cipher who's algorithm is based off translating a fixed number of bits, then swapping the order of the bits">Substitution-Permutation Network</a> (SPN) that iterates over a fixed number of rounds. However, unlike AES, PRINCE only comes in one key size - 128 bits. Moreover, the amount of data which is encrypted is fairly small - only 64 bits (though this is typical of a lightweight cipher). The reason we are encrypting half the block size is actually because all of our operations only work on <a style="color: #00c624" data-toggle="tooltip" title data-original-title="4-bit chunk; also very fun to say, especially in a professional context">nibbles</a> - that is, we are no longer considering \( GF(2^8) \) but instead \(GF(2^4)\).
+        <p> Much like AES from the previous post, the PRINCE cipher is a <a style="color: #00c624" data-toggle="tooltip" title data-original-title="A cipher who's algorithm is based off translating a fixed number of bits, then swapping the order of the bits">Substitution-Permutation Network</a> (SPN) that iterates over a fixed number of rounds. However, unlike AES, PRINCE only comes in one key size: 128 bits. Moreover, the amount of data which is encrypted is fairly small — only 64 bits (though this is typical of a lightweight cipher). The reason we are encrypting half the block size is actually because all of our operations only work on <a style="color: #00c624" data-toggle="tooltip" title data-original-title="4-bit chunk; also very fun to say, especially in a professional context">nibbles</a> — that is, we no longer consider \( GF(2^8) \), but instead \(GF(2^4)\).
         </p>
-        <p> Not considering the round functions, the encryption is fairly straightforward. Instead of treating our data as a matrix (like AES does), we simply look at it as a fixed one-dimensional array. At the beginning of the  cipher there is a key-whitening phase, followed by five normal rounds, a middle round (which, as I mentioned in the section above, is a linear inversion), five <em>inverse</em> rounds, and then another key-whitening phase. If you notice, this gives the encryption a nice symmetry to it (that also leads to reflective attacks but whatever it looks nice).
+        <p> Not considering the round functions, the encryption is fairly straightforward. Instead of treating our data as a matrix (like AES does), we simply look at it as a fixed one-dimensional array. At the beginning of the  cipher there is a key-whitening phase, followed by five normal rounds, a middle round (which, as I mentioned in the section above, is a linear inversion), five <em>inverse</em> rounds, and then another key-whitening phase. If you notice, this gives the encryption a nice symmetry to it (that also leads to reflective attacks, but whatever - it looks nice).
         </p>
         <figure style="padding-bottom: 30px;">
             <img src="../images/princecipher.png" style="width: 100%; border-radius: 5px 5px 5px 5px;"></img>
@@ -181,7 +142,7 @@ G. Leander, V. Nikov, C. Paar, C. Rechberger, P. Rombouts, S. S. Thomsen,
 and T. Yal¸cın. <em>PRINCE - A Low-Latency Block Cipher for Pervasive Computing
 Applications</em>, ASIACRYPT 2012, LNCS, vol. 7658, pp. 208 – 225, Springer 2012.</figcaption>
         </figure>
-        <p> Each round by itself is simply four functions: <code>SubNibbles()</code>, <code>MLayer()</code>, <code>AddRoundConstant()</code>, and <code>AddKey()</code>. However, since the middle round is much different from the other rounds, I'm also going to need to go over
+        <p> Each round by itself is simply four functions: <code>SubNibbles()</code>, <code>MLayer()</code>, <code>AddRoundConstant()</code>, and <code>AddKey()</code>. However, since the middle round is different from the other rounds, I'm also going to need to go over
             <code>ShiftRows()</code> and <code>MPrimeLayer()</code>.
         </p>
         <p> Another distinction from AES is that PRINCE doesn't really have much of a key-schedule. Given a 128-bit key, \(k\), PRINCE splits the key into two 64-bit halves \( k_0 || k_1 \) and uses the two halves to create a third 64-bit chunk \(k_0'\). We construct \(k_0'\) using the simple operation:
@@ -231,9 +192,9 @@ void ExtendKey(const unsigned char * Key, unsigned char * newKey) {
         <br/>
         <p> As explained in the previous article for AES, the purpose of a substitution layer is to eliminate any linearity so that our cipher cannot be represented as a system of linear equations of any size. The <code>SBox</code> for AES was a large, 256-byte array which mapped every possible byte value to a new, distinct byte value.
         </p>
-        <p> We still desire the same effect of mapping all 256 possible byte values to a new distinct byte value; however, 256 bytes of data is a lot of unnecessary space if our goal is to make a lightweight cipher. Instead, what if we took every byte, cut it in half, and applied some sort of substitution box to each 4-bit chunk? In that case, we would only need an <code>SBox</code> of length \(2^4 = 16\)! Note that as long as our <code>SBox</code> is injective on 4-bits, it will be injective on the concatenated 8-bits as well. This is because you would reach a contradiction if two distinct tuples of nibbles mapped to the same byte, since that would imply the mapping is not injective on the nibbles themselves!
+        <p> We still desire the same effect of mapping all 256 possible byte values to a new distinct byte value; however, 256 bytes of data is a lot of unnecessary space if our goal is to make a lightweight cipher. Instead, what if we took every byte, cut it in half, and applied some sort of substitution box to each 4-bit chunk? In that case, we would only need an <code>SBox</code> of length \(2^4 = 16\). Note that as long as our <code>SBox</code> is injective on 4-bits, it will be injective on the concatenated 8-bits as well. This is because you would reach a contradiction if two distinct tuples of nibbles mapped to the same byte, since that would imply the mapping is not injective on the nibbles themselves!
         </p>
-        <p> The researchers had a few other security constraints when it came to choosing the <code>SBox</code>, so that ultimately there were only 8 possibilities to choose from out of about 20 trillion. The <code>SBox</code> that was chosen for PRINCE is the following:
+        <p> The researchers had a few other security constraints when it came to choosing the <code>SBox</code>, so that in the end there were only 8 possibilities to choose from out of about 20 trillion. The <code>SBox</code> that was ultimately chosen for PRINCE is the following:
         </p>
 
         <div class="showbar">
@@ -270,7 +231,7 @@ static void SubNibbles() {
           </div>
         </div>
         <br/>
-        <p>Luckily, finding an inverse <code>SBox</code> is much easier when there's 16 elements as opposed to 256. Thus, one can simply find which index maps to each element and sort the results by ascending order:
+        <p>Luckily, finding an inverse <code>SBox</code> is much easier when there are 16 elements as opposed to 256. Thus, one can simply find which index maps to each element and sort the results by ascending order:
         </p>
         <div class="showbar">
           <button type="button" id="showInvSubBoxBut" onclick="showbutton('invsubbox', 'showInvSubBoxBut', 'InvSBox')" class="btn btn-dark">Show InvSBox</button>
@@ -281,7 +242,7 @@ static void SubNibbles() {
             </code>
           </div>
         </div>
-        <p> The code for <code>InvSubNibbles()</code> is basically the exact same as <code>SubNibbles()</code> - in fact, we could simply use the same function and add a second argument to specify which <code>SBox</code> we want. I will leave this choice up to the reader; however, I will use two functions for the sake of clarity with respect to the overall cipher.
+        <p> The code for <code>InvSubNibbles()</code> is basically the exact same as <code>SubNibbles()</code> — in fact, we could save some space and use the same function with an additional argument to specify which <code>SBox</code> we want. I will leave this choice up to the reader; however, I will use two functions for the sake of clarity with respect to the overall cipher.
         </p>
         <div class="showbar">
           <button type="button" id="showInvSubPyBut" onclick="showbutton('invsubpycode','showInvSubPyBut','Python')" class="btn btn-dark">Show Python</button>
@@ -308,12 +269,12 @@ static void InvSubNibbles() {
         <br/>
         <h3 id="MPrimeLayer"><code>MPrimeLayer()</code></h3>
         <br/>
-        <p>The only other notably difficult subroutine involved in PRINCE is the linear layer. The linear layer, as the name suggests, simply applies a linear transform to our data. Since we are encrypting a 64-bit state, we simply represent this linear transform as a \(64 \times 64\) matrix. The developers of PRINCE designed the matrix such that the output of an <code>SBox</code> in one round influences at least 3 <code>SBoxes</code> in the next round. In addition, since the lightweight property of the cipher results from its reflectivity, we must ensure that the matrix is an inversion (its own inverse). The resulting matrix that was chosen has the following format:
+        <p>The only other notably difficult subroutine involved in PRINCE is the linear layer. The linear layer, as the name suggests, simply applies a linear transform to our data. Since we are encrypting a 64-bit state, we choose to represent this linear transform as a \(64 \times 64\) matrix. The developers of PRINCE designed the matrix such that the output of an <code>SBox</code> in one round influences at least 3 <code>SBoxes</code> in the next round. In addition, since the lightweight property of the cipher results from its reflectivity, we must ensure that the matrix is an inversion (its own inverse). The resulting matrix that was chosen can be constructed according to the following format:
         </p>
         $$ M_0 = \begin{pmatrix} 0 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}, M_1 = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} M_2 = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}, M_3 = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 \end{pmatrix} $$
         $$ \hat{M}_0 = \begin{pmatrix} M_0 & M_1 & M_2 & M_3 \\ M_1 & M_2 & M_3 & M_0 \\ M_2 & M_3 & M_0 & M_1 \\ M_3 & M_0 & M_1 & M_2 \end{pmatrix}, \hat{M}_1 = \begin{pmatrix} M_1 & M_2 & M_3 & M_0 \\ M_2 & M_3 & M_0 & M_1 \\ M_3 & M_0 & M_1 & M_2 \\ M_0 & M_1 & M_2 & M_3 \end{pmatrix} $$
         $$ M' = \begin{pmatrix} \hat{M}_0 & 0 & 0 & 0 \\ 0 & \hat{M}_1 & 0 & 0 \\ 0 & 0 & \hat{M}_1 & 0 \\ 0 & 0 & 0 & \hat{M}_0 \end{pmatrix} $$
-        <p> Now this is where most developers begin to understand that this cipher was really meant for a hardware-level implementation and not a software-level implementation. In order to actually make the code attractive, one would have to waste clock cycles, program space, and potentially memory by creating additionaly variables and commenting everything - since this is a lightweight cipher, that is incredibly counterintuitive and I will not be doing so (software engineers please look away).
+        <p> This is where most developers begin to understand that this cipher was really meant for a hardware-level implementation and not a software-level implementation. In order to actually make the code attractive, one would have to waste clock cycles, program space, and potentially memory by creating additional storage variables for each operation - since this is a lightweight cipher, doing so would be incredibly counterintuitive. Thus, for this next code segment, I ask that all small children and software engineers please look away:
         </p>
         <div class="showbar">
           <button type="button" id="showMPrimePyBut" onclick="showbutton('mprimepycode','showMPrimePyBut','Python')" class="btn btn-dark">Show Python</button>
@@ -372,7 +333,7 @@ static void MPrimeLayer() {
         <br/>
         <h3 id="ShiftRows"><code>ShiftRows()</code></h3>
         <br/>
-        <p> Much like AES, there is a <code>ShiftRows()</code> function which partly gives us the whole "permutation" part of our substitution-permutation network. However, PRINCE's version works a bit differently since we no longer imagine the state as a \(4 \times 4\) matrix of bytes. As I've breifly mentioned, we instead visualize the state as a one-dimensional array of 16 nibbles (in all honesty I don't know why they called it <code>ShiftRows()</code> if there's no concept of rows to begin with). Thus, the permutation we are applying to our state is the following:
+        <p> Much like AES, there is a <code>ShiftRows()</code> function which (partly) gives us the whole "permutation" part of our substitution-permutation network. However, PRINCE's version works a bit differently since we no longer imagine the state as a \(4 \times 4\) matrix of bytes. As I've briefly mentioned, we instead visualize the state as a one-dimensional array of 16 nibbles (in all honesty I don't know why they called it <code>ShiftRows()</code> if there's no concept of rows to begin with). Thus, the permutation we're applying to our state is the following:
         </p>
         $$ \tau = \begin{pmatrix} 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15
         \\ 0 & 5 & 10 & 15 & 4 & 9 & 14 & 3 & 8 & 13 & 2 & 7 & 12 & 1 & 6 & 11 \end{pmatrix} $$
@@ -462,7 +423,7 @@ static void InvShiftRows() {
         <br/>
         <h3 id="MLayer"><code>MLayer()</code></h3>
         <br/>
-        <p> Just as I mentioned like a paragraph ago or something, this function is nothing more than <code>ShiftRows()</code> applied after <code>MPrimeLayer()</code> ... so ... if you really want the code:
+        <p> Just like I mentioned like a paragraph ago or something, this function is nothing more than <code>ShiftRows()</code> applied after <code>MPrimeLayer()</code> ... so ... if you really want the code:
         </p>
         <div class="showbar">
           <button type="button" id="showMLayerPyBut" onclick="showbutton('mlayerpycode', 'showMLayerPyBut', 'Python')" class="btn btn-dark">Show Python</button>
@@ -484,7 +445,7 @@ static void MLayer() {
           </div>
         </div>
         <br/>
-        <p> A simple rule of algebra is that, for functions \(f : X \to Y \) and \(g : Y \to Z\), we have \( (g \circ f)^{-1} = f^{-1} \circ g^{-1} \) (note how this allows the codomains to align). Since <code>MPrimeLayer()</code> is its own inverse, we get \( M^{-1} = (SR \circ M')^{-1} = M' \circ SR^{-1} \) which gives us the following code:
+        <p> A simple rule of algebra is that, for functions \(f : X \to Y \) and \(g : Y \to Z\), we have \( (g \circ f)^{-1} = f^{-1} \circ g^{-1} \) (note that this allows the codomains to align). Since <code>MPrimeLayer()</code> is its own inverse, we get \( M^{-1} = (SR \circ M')^{-1} = M' \circ SR^{-1} \), which gives us the following code:
         </p>
         <div class="showbar">
           <button type="button" id="showInvMLayerPyBut" onclick="showbutton('invmlayerpycode', 'showInvMLayerPyBut', 'Python')" class="btn btn-dark">Show Python</button>
@@ -511,10 +472,10 @@ static void InvMLayer() {
         <br/>
         <h3 id="AddRoundConstant"><code>AddRoundConstant()</code></h3>
         <br/>
-        <p> At this point it's worth mentioning at this point the <em>\( \alpha\)-reflection</em> property of PRINCE. As I've discussed, PRINCE has a very nice symmetry which we anticipate will allow us to go back and forth between the encryption and decryption easily. It so happens that if we introduce just the right constant, \(\alpha =\) <text style="font-family: Courier New, courier;">0xc0ac29b7c97c50dd</text>, we get:
+        <p> At this point it's worth mentioning the <em>\( \alpha\)-reflection</em> property of PRINCE. As I've discussed, PRINCE has a very nice symmetry which we anticipate will allow us to go back and forth between the encryption and decryption easily. It so happens that if we introduce just the right constant, \(\alpha =\) <text style="font-family: Courier New, courier;">0xc0ac29b7c97c50dd</text>, we get:
         </p>
         $$ \text{Dec}(k_0 || k'_0 || k_1) = \text{Enc}(k'_0 || k_0 || k_1 \oplus \alpha) $$
-        <p> Since there are numerous rounds, we can't merely introduce the value \(\alpha\) all at once. In addition, we want to preserve the reflective nature of PRINCE so that our last five constants summed with our first five constants give us the identity (that is, \(RC_i \oplus RC_{11 - i} = \alpha \) for any \(0 \leq i \leq 11\) ). The nice property of XOR (which I mentioned in the previous article) is we can simply add some number to \(\alpha\) in order to find out which two numbers sum up to \(\alpha\). In other words, it really doesn't matter which numbers we choose for the first five round constants. Thus, the developers decided to start with the \(17^{th}\) decimal in the hex expansion for \(\pi\)
+        <p> Since there are numerous rounds, we can't merely introduce the value \(\alpha\) all at once. In addition, we want to preserve the reflective nature of PRINCE so that our last five constants summed with our first five constants give us \(\alpha\) (that is, \(RC_i \oplus RC_{11 - i} = \alpha \) for any \(0 \leq i \leq 11\) ). The nice property of XOR (which I mentioned in the previous article) is that we can simply add some number to \(\alpha\) in order to find out which two numbers sum up to \(\alpha\). In other words, it really doesn't matter which numbers we choose for the first five round constants. Thus, the developers of PRINCE decided to start at the \(17^{th}\) decimal in the hex expansion for \(\pi\): 
         </p>
         $$ \pi =  3.243F6A8885A308D3\color{red}{13198A2E037073 \\
         44A4093822299F31D0082EFA9\\8EC4E6C89452821E638D01377\\BE5466CF34E90C6C}$$
@@ -566,7 +527,7 @@ static void AddRoundConstant(unsigned char round) {
         <br/>
         <br/>
         <h3 id="AddKey"><code>AddKey()</code></h3>
-        <p>Despite only having 192 bits of extended key, we only really use the last 64 bits for encryption / decryption rounds (that is, \(k_1\)). The first 128 bits is simply used for key whitening before and after the cipher.
+        <p>Despite only having 192 bits of extended key, we only use the last 64 bits (that is, \(k_1\)) for encryption / decryption rounds. The first 128 bits are simply used for key whitening before and after the cipher.
         </p>
         <div class="showbar">
           <button type="button" id="showAddKeyPyBut" onclick="showbutton('addkeypycode', 'showAddKeyPyBut', 'Python')" class="btn btn-dark">Show Python</button>
@@ -1068,10 +1029,10 @@ static void AddKey(unsigned char * ExtendedKey) {
         <br/>
         <br/>
         <h3 id="DecryptionCode">Decryption Code</h3>
-        <p> Oh, one last thing. I mentioned it in the <code>AddRoundConstant()</code> section, but our cipher is minimally designed so that instead of having to write a whole new function to retrace our steps we merely swap around our extended key! This nice little feature is a direct result of PRINCE's \(\alpha\)-reflection property, which tells us
+        <p> Oh, one last thing. I mentioned it in the <code>AddRoundConstant()</code> section, but our cipher is minimally designed so that, instead of having to write a whole new function to retrace our steps, we merely swap around our extended key! This nice little feature is a direct result of PRINCE's \(\alpha\)-reflection property, which tells us:
         </p>
         $$ \text{Dec}(k_0 || k'_0 || k_1) = \text{Enc}(k'_0 || k_0 || k_1 \oplus \alpha) $$
-        <p> Thus, we merely need to swap \(k_0\) with \(k'_0\), add \(\alpha\) to \(k_1\), and encrypt! Here's the code </p>
+        <p> Thus, we merely need to swap \(k_0\) with \(k'_0\), add \(\alpha\) to \(k_1\), and encrypt! Here's the code: </p>
         <div class="showbar">
           <button type="button" id="showDecPyBut" onclick="showbutton('decpycode', 'showDecPyBut', 'Python')" class="btn btn-dark">Show Python</button>
           <div id="decpycode" style="display: none; text-align: left;">
@@ -1105,7 +1066,7 @@ void decipher(unsigned char * ExtendedKey) {
           </div>
         </div>
         <br/>
-        <p> and there you have it! Hopefully everything was straightforward enough - I understand I may have not fully explained some things such as <a class="popLink" href="https://en.wikipedia.org/wiki/Clock_signal">clock-cycles</a> and bit-wise arithmetic (primarily masks and shifts), but these are pretty easy to pick up. As always, thanks for reading! &#x1F601
+        <p> And there you have it! Hopefully everything was straightforward enough — I understand I may have not fully explained some things such as <a class="popLink" href="https://en.wikipedia.org/wiki/Clock_signal">clock-cycles</a> and bit-wise arithmetic (primarily masks and shifts), but these are pretty easy to pick up. As always, thanks for reading! &#x1F601
         </p>
         <br/>
         <br/>
@@ -1117,6 +1078,26 @@ void decipher(unsigned char * ExtendedKey) {
   </div> <!-- row -->
 </div> <!-- container -->
 
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = 'https://christopherdare.com/code/prince.html';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'prince'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://christopherdare.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- webpage footer -->
 <div class="jumbotron vertical-center footer">

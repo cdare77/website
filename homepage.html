@@ -3,10 +3,21 @@
 <head>
   <title>Home</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
   <meta name="keywords" content="Home page, Home">
-  <meta name="description" content="My personal homepage">
+  <meta name="description" content="My personal blog, where I discuss the development of manifolds, cryptography, and many other topics soon to come.">
   <meta name="author" content="Chris Dare">
+  <!-- Social media -->
+  <meta property="og:image" content="/images/beach.jpg">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1182">
+  <meta property="og:image:height" content="750">
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://www.christopherdare.com/"/>
+  <meta property="og:title" content="Chris Dare's blog" />
+  <meta property="og:description" content="My personal blog, where I discuss the development of manifolds, cryptography, and many other topics soon to come." />
+  <!-- icon -->
+  <link rel="icon" href="favicon.ico">
   <!-- Bootstrap 4.1 -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <!-- actual stylesheet -->
@@ -14,52 +25,143 @@
   <!-- google fonts -->
   <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Fredericka+the+Great" rel="stylesheet">
   <!-- jquery -->
-  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
   <script src="footerscript.js"></script>
+  <script src="navbarTemplate.js"></script>
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "AboutPage",
+  "image" : "https://christopherdare.com/images/beach.jpg",
+  "name" : "Christopher Dare Home Page",
+  "description" : "The home page of my personal website, which gives a brief overview about me.",
+  "breadcrumb" : {
+      "@type" : "BreadcrumbList",
+      "itemListElement" : [
+      {
+          "@type" : "ListItem",
+          "position" : 1,
+          "item" : {
+              "@type" : "WebSite",
+              "@id" : "https://christopherdare.com",
+              "image" : "https://christopherdare.com/images/beach.jpg",
+              "name" : "ChristopherDare.com",
+              "description" : "My personal blog, where I discuss the development of manifolds, cryptography, and many other topics soon to come."
+          }
+      },
+      {
+          "@type" : "ListItem",
+          "position" : 2,
+          "item" : {
+              "@type" : "WebPage",
+              "@id" : "https://christopherdare.com/homepage.html",
+              "image" : "https://christopherdare.com/images/beach.jpg",
+              "name" : "Christopher Dare Home Page",
+              "description" : "The home page of my personal website, which gives a brief overview about me."
+          }
+      },
+      {
+          "@type" : "ListItem",
+          "position" : 3,
+          "item" : {
+              "@type" : "WebPage",
+              "@id" : "https://christopherdare.com/codepage.html",
+              "image" : "https://christopherdare.com/images/binary.png",
+              "name" : "Christopher Dare Code Page",
+              "description" : "The overview of my personal code, which includes code snippets and explanations of algorithms."
+          }
+      },
+      {
+          "@type" : "ListItem",
+          "position" : 4,
+          "item" : {
+              "@type" : "WebPage",
+              "@id" : "https://christopherdare.com/code/aes.html",
+              "image" : "https://christopherdare.com/images/aes.png",
+              "name" : "AES Rundown",
+              "description" : "An in-depth explanation of AES (the Advanced Encryption Standard), which includes an implementation in Python, an implementation in C, and background on Galois Fields.",
+              "keywords" : ["AES", "AES Python", "AES C", "Advanced Encryption Standard", "Cryptography", "AES implementation"]
+          }
+      },
+      {
+          "@type" : "ListItem",
+          "position" : 5,
+          "item" : {
+              "@type" : "WebPage",
+              "@id" : "https://christopherdare.com/code/prince.html",
+              "image" : "https://christopherdare.com/images/princecipher.png",
+              "name" : "PRINCE Cipher Rundown",
+              "description" : "An in-depth explanation of the PRINCE block cipher, which includes an implementation in C, an implementation in Python, and an overview of block ciphers",
+              "keywords" : ["PRINCE", "PRINCE Cipher", "PRINCE C", "PRINCE Python", "Lightweight cipher"]
+          }
+      },
+      {
+          "@type" : "ListItem",
+          "position" : 6,
+          "item" : {
+              "@type" : "WebPage",
+              "@id" : "https://christopherdare.com/blogpage.html",
+              "image" : "https://christopherdare.com/images/sunset.png",
+              "name" : "Blog Page",
+              "description" : "My personal blog which covers topics in mathematics and theoretical physics."
+          }
+      },
+      {
+          "@type" : "ListItem",
+          "position" : 7,
+          "item" : {
+              "@type" : "WebPage",
+              "@id" : "https://christopherdare.com/blogposts/manifoldparti.html",
+              "image" : "https://christopherdare.com/images/mychalkboard.jpg",
+              "name" : "Manifolds Part I",
+              "description" : "An overview of topological spaces for the non-mathematical reader, which includes all background required for manifolds",
+              "keywords" : ["Manifolds", "Topology", "Topological spaces", "Hausdorff spaces", "Infinity"]
+          }
+      },
+      {
+          "@type" : "ListItem",
+          "position" : 8,
+          "item" : {
+              "@type" : "WebPage",
+              "@id" : "https://christopherdare.com/blogposts/manifoldpartii.html",
+              "image" : "https://christopherdare.com/images/manifoldfunction.png",
+              "name" : "Manifolds Part II",
+              "description" : "An introduction to manifolds, functions on manifolds, and introductory concepts such as the tangent bundle and cotangent bundle",
+              "keywords" : ["Manifolds", "Tangent Bundle", "Cotangent Bundle", "Differential forms", "k-forms"]
+          }
+      },
+      {
+          "@type" : "ListItem",
+          "position" : 9,
+          "item" : {
+              "@type" : "WebPage",
+              "@id" : "https://christopherdare.com/mymusicpage.html",
+              "image" : "https://christopherdare.com/images/GreeceRock.jpg",
+              "name" : "My Music Page",
+              "description" : "A webpage with links to my playlists and tastes in music"
+          }
+      },
+      {
+          "@type" : "ListItem",
+          "position" : 10,
+          "item" : {
+              "@type": "CollectionPage",
+              "@id" : "https://christopherdare.com/photospage.html",
+              "image" : "https://christopherdare.com/images/GreeceBay.jpg",
+              "name" : "My Photos Page",
+              "keywords": [
+                  "Chris Dare", 
+                  "Christopher Dare",
+                  "Christopher Dare Photos",
+                  "Chris Dare Photos"
+               ]
+           }
+      }]
+  }
+}
+</script>
 </head>
 <body>
-
-<!-- Navigation bar -->
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Chris Dare</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-      </li>
-      <!-- Blog Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="blogpage.html" id="navbarDropdownBlogLink"  aria-haspopup="true" aria-expanded="false">Blog</a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownBlogLink">
-          <a class="dropdown-item" href="blogposts/manifoldparti.html">Manifolds: Part I</a>
-          <a class="dropdown-item" href="blogposts/manifoldpartii.html">Manifolds: Part II</a>
-        </div>
-      </li>
-      <!-- Code Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="codepage.html" id="navbarDropdownCodeLink" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
-          Code
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
-          <a class="dropdown-item" href="code/aes.html" style="font-family: 'Courier New', Courier;">AES</a>
-          <a class="dropdown-item" href="code/prince.html" style="font-family: 'Courier New', Courier;">PRINCE</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="mymusicpage.html">My Music</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="photospage.html">Photos</a>
-      </li>
-    </ul>
-  </div>
-</nav>
 
 <!-- webpage header -->
 
@@ -82,11 +184,11 @@
     <br/>
     <br/>
     <br/>
-    <div class="card">
-      <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" width="640" height="480" src="videos/GreeceTrip.mp4" frameborder="0" allowfullscreen></iframe>
-      </div> 
+    <br/>
+    <div class="video-container">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/BMTj5g6P0Q8?rel=0&amp;showinfo=0&amp;ecver=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
+    
   </div>
   <!-- Right column elements -->
   <div class="rightcolumn">
@@ -100,14 +202,32 @@
     <br/>
     <div class="card">
       <h2>About Me</h2>
-      <img src="images/aboutme.png" alt="About Me Headshot" style="width: 60%; height: auto; margin-left: 3%; border-radius: 10px 10px 10px 10px;">
-      <p style="font-size: 70%; margin-top: 15px;">Hey what's up guys, my name's Chris and I'm a student at Virginia Tech working on my masters in mathematics and bachelors in computer science. I do research in discrete Morse theory and enjoy reading up on theoretical physics. I have a whippet named Ryder and a much cooler boxer named <span lang="grc" title="Ancient Greek language text">Κυνίσκα</span>. Over the past few years, I've become a huge enthusiast of Hellenistic and Roman culture, as well as their respective languages. Thanks for visiting!</p>
+      <img src="images/aboutme.jpg" alt="About Me Headshot" style="width: 60%; height: auto; margin-left: 3%; border-radius: 10px 10px 10px 10px;">
+      <p style="font-size: 70%; margin-top: 15px;">Hey what's up guys, my name's Chris and I'm a student at Virginia Tech. I just recieved my masters in mathematics and plan on finishing my bachelors in computer science by winter 2019. I do research in discrete Morse theory and enjoy reading up on theoretical physics. I have a whippet named Ryder and a much cooler boxer named <span lang="grc" title="Ancient Greek language text">Κυνίσκα</span>. Over the past few years, I've become a huge enthusiast of Hellenistic and Roman culture, as well as their respective languages. Thanks for visiting!</p>
     </div>
     <div class="card">
       <h3><em>Popular Posts</em></h3>
-      <a href="code/aes.html" style="text-decoration: none; color: black;"><div class="wobble rect-fill-yellow">AES</div></a><br>
-      <a href="blogposts/manifoldpartii.html" style="text-decoration: none; color: black;"><div class="wobble rect-fill-green">Manifolds: Part II</div></a><br>
-      <a href="code/prince.html" style="text-decoration: none; color: black;"><div class="wobble rect-fill-blue">PRINCE</div></a>
+      
+      <a href="code/aes.html" style="text-decoration: none; color: black;">
+          <div ontouchstart="" id="firstPost" class="wobble rect-fill-yellow">
+              <text style="font-family: Courier New, courier;">code &gt;</text>
+              AES
+          </div>
+      </a>
+      <br/>
+      <a href="blogposts/manifoldpartii.html" style="text-decoration: none; color: black;">
+          <div ontouchstart="" class="wobble rect-fill-green" id="secondPost">
+              <text style="font-family: Courier New, courier;">blog &gt;</text>
+              Manifolds: Part II
+          </div>
+      </a>
+      <br/>
+      <a href="blogposts/maxwellseq.html" style="text-decoration: none; color: black;">
+          <div ontouchstart="" class="wobble rect-fill-blue" id="thirdPost">
+              <text style="font-family: Courier New, courier;">blog &gt;</text>
+              Maxwell's Equations
+          </div>
+      </a>
     </div>
     
     <div class="card">

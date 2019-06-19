@@ -3,14 +3,16 @@
 <head>
   <title>Manifolds: Part II</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="keywords" content="Manifold, Tangent Bundle, Cotangent bundle">
-  <meta name="description" content="An introduction to elementary topology in anticipation of smooth and Riemaniann manifolds">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="keywords" content="Manifold, Tangent Bundle, Cotangent bundle, Theoretical Physics">
+  <meta name="description" content="An discussion of the k-forms, covectors, and the cotangent bundle on smooth manifolds in anticipation of integration over a manifold">
   <meta name="author" content="Chris Dare">
+  <!-- icon -->
+  <link rel="icon" href="../favicon.ico">
   <!-- Bootstrap 4.1 -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <!-- actual stylesheet -->
-  <link href="manifoldpartii.css" rel="stylesheet" type="text/css">
+  <link href="blogpost.css" rel="stylesheet" type="text/css">
   <!-- google fonts -->
   <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite|Roboto" rel="stylesheet">
   <!-- jquery -->
@@ -20,48 +22,9 @@
   <script src="../footerscript.js"></script>
   <script src="../tooltip.js"></script>
   <script src="../showbutton.js"></script>
+  <script src="../navbarTemplate.js"></script>
 </head>
 <body data-spy="scroll" data-target="#sidemenu" data-offset="100" style="height: 100%;">
-
-<!-- Navigation bar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="../homepage.html">Chris Dare</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="../homepage.html">Home<span class="sr-only">(current)</span></a>
-      </li>
-      <!-- Blog Dropdown -->
-      <li class="nav-item active dropdown">
-        <a class="nav-link dropdown-toggle" href="../blogpage.html" id="navbarDropdownBlogLink"  aria-haspopup="true" aria-expanded="false">Blog<span class="sr-only">(current)</span></a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownBlogLink">
-          <a class="dropdown-item" href="manifoldparti.html">Manifolds: Part I</a>
-          <a class="dropdown-item active" href="#">Manifolds: Part II</a>
-        </div>
-      </li>
-      <!-- Code Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="../codepage.html" id="navbarDropdownCodeLink" aria-haspopup="true" aria-expanded="false" style="font-family: 'Courier New', Courier;">
-          Code
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownCodeLink">
-          <a class="dropdown-item" href="../code/aes.html" style="font-family: 'Courier New', Courier;">AES</a>
-          <a class="dropdown-item" href="../code/prince.html" style="font-family: 'Courier New', Courier;">PRINCE</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../mymusicpage.html">My Music</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../photospage.html">Photos</a>
-      </li>
-    </ul>
-  </div>
-</nav>
 
 <!-- webpage header -->
 
@@ -92,26 +55,31 @@
                 <li>\(X\) is Hausdorff</li>
                 <li>\(X\) is second-countable</li>
             </ol>
-        <p>I hope explained the concepts of Hausdorff and second-countable well enough in the previous post, because I'm now turning the focus to our locally Euclidean condition. </p>
+        <p>I hope that I explained the concepts of Hausdorff-ness and second-countability well enough in the previous post, because now I'm turning the focus to the locally Euclidean condition. </p>
         <p> By definition, an \(n\)-dimensional topological space \(X\) is <u>locally Euclidean</u> if for every point \(p \in X\), there exists some neighborhood \(U\) of \(p\) and <a class="popLink" href="https://en.wikipedia.org/wiki/Homeomorphism">homeomorphism</a> \(\phi: U \to \mathbb{R}^n\). The pair \( (U, \phi) \) is referred to as a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A small neighborhood that represents Euclidean space">chart</a> or a <u>coordinate neighborhood</u>. We say that a coordinate neighborhood is <em>centered</em> at \(p \in U\) if \(\phi(p) = 0 \).
         </p>
-        <p> What is the significance of this and why do we care about a bunch of 'coordinate neighborhoods'? To shed some light on this, imagine you're at the beach and looking over the water's horizon. To you (an observer), the world around you seems to be a flat endless plane (c.f. \(\mathbb{R}^2\)). In reality, however, the earth is a sphere (not a perfect sphere, but we can overlook this for the sake of our example) which has properties like curvature and compactness that the plane does not. This is the nature of a manifold - reality looks flat to an observer, but may begin to have strange properties when the entire manifold is considered.
+        <p> What is the significance of this and why do we care about a bunch of 'coordinate neighborhoods'? To shed some light on this, imagine you're at the beach looking over the water's horizon. To you (an observer), the world around you seems to be a flat endless plane (c.f. \(\mathbb{R}^2\)). In reality, however, the earth is a sphere (not a perfect sphere, but we can overlook this for the sake of our example), which has properties like curvature and compactness that the plane does not. This is the nature of a manifold - reality looks flat to an observer, but may begin to have strange properties when the entire manifold is considered.
         </p>
-        <p> As you will see, in order to build up structure on a manifold we actually 'steal' some of the structure from Euclidean space. Steal may be a bit harsh of a term, however, since in reality we just keep augmenting our assumptions until the desired properties are inherited under homeomorphism.
+        <p> As you will see, we actually 'steal' some of the structure from Euclidean space in order to build up structure on a manifold. Steal may be a bit harsh as a term, however, since in reality we just keep augmenting our assumptions until the desired properties are inherited under homeomorphism.
         <p>
-        <p> Returning to the technical discussion - what would happen if we pick two points, \(p\) and \(q\), but their coordinate neighborhoods \( (U, \phi) \) and \((V, \psi)\) intersect (i.e. \( U \cap V \neq \emptyset\))? First off, note that the inverse functions \(\phi^{-1}: \mathbb{R}^n \supseteq \phi(U) \to U\) and \(\psi^{-1}: \mathbb{R}^n \supseteq \psi(V) \to V\) are both homeomorphisms by definition of what a homeomorphism is. Since the composition of homeomorphisms is a homeomorphism, we now consider the two compositions
+        <p> Returning to the technical discussion - what would happen if we pick two points, \(p\) and \(q\), but their coordinate neighborhoods \( (U, \phi) \) and \((V, \psi)\) intersect (i.e. \( U \cap V \neq \emptyset\))? To begin, note that the inverse functions \(\phi^{-1}: \mathbb{R}^n \supseteq \phi(U) \to U\) and \(\psi^{-1}: \mathbb{R}^n \supseteq \psi(V) \to V\) are both homeomorphisms by definition of what a homeomorphism is. Since the composition of homeomorphisms is a homeomorphism, we now consider the two compositions
         $$ \begin{align} \psi \circ \phi^{-1}&: \mathbb{R}^n \supseteq \phi(U \cap V) \to \psi(U \cap V) \subseteq \mathbb{R^n}\\
             \phi \circ \psi^{-1}&: \mathbb{R}^n \supseteq \psi(U \cap V) \to \phi(U \cap V) \subseteq \mathbb{R}^n \end{align} $$
-            Each homeomorphism individually makes the manifold look like a flat plane to and observer, and we're curious to see whether the two planes give the observer the same perspective. Each composition will allow us to travel from one perspective to another.
+            Each homeomorphism individually makes the manifold look like a flat plane to an observer, and we're curious whether the two planes give the observer the same perspective.
         </p>
-        <p> What matters the most is that we can travel between perspectives <em>smoothly</em>. At this point, however, we have no way of defining differentiability on an arbitrary manifold \(M\) - but we know perfectly well how to define differentiability for \( \mathbb{R}^n\) (if not, refer to Ch. 9 of <em>Principles of Mathematical Analysis</em> by Walter Rudin). Luckily for us, both of our compositions \( \phi \circ \psi^{-1} \) and \( \psi \circ \phi^{-1} \) are functions from \(\mathbb{R}^n\) to \( \mathbb{R}^n \). Therefore, we say that two charts are <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Able to transition from one chart to the other smoothly"> \(C^\infty\)-compatible </a> if the two compositions are smooth (infinitely differentiable) in \( \mathbb{R}^n\).
+        <p> What matters most is that we can travel between perspectives <em>smoothly</em>. At this point, however, we have no way of defining differentiability on an arbitrary manifold \(M\), but we know perfectly well how to define differentiability for \( \mathbb{R}^n\) (if not, refer to Ch. 9 of <em>Principles of Mathematical Analysis</em> by Walter Rudin). Luckily, both of our compositions, \( \phi \circ \psi^{-1} \) and \( \psi \circ \phi^{-1} \), are functions from \(\mathbb{R}^n\) to \( \mathbb{R}^n \). Therefore, we say that two charts are <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Able to transition from one chart to the other smoothly"> \(C^\infty\)-compatible </a> if the two compositions are smooth (infinitely differentiable) in \( \mathbb{R}^n\).
         </p>
         <figure style="padding-bottom: 30px;">
-            <img src="../images/composition.png" style="width: 100%; border-radius: 5px 5px 5px 5px;"></img>
+            <img src="../images/composition.jpg" style="width: 100%; border-radius: 5px 5px 5px 5px;"></img>
             <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> Diagram of compatible functions</figcaption>
         </figure>
-        <p>Remember how I mentioned earlier that we would have to augment our assumptions until we get the properties we want? Well, we're going to need to make a big assumption here. We need to assume that whatever manifold we're talking about has a smooth structure: any two charts that intersect have are \( C^\infty \)-compatible.</p>
-        <p>More formally, we define an <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A collection of compatible charts">atlas</a> on our manifold \(M\) to be a collection \( \mathfrak{U} = \{ (U_\alpha, \phi_\alpha) \} \) such that any two \( U_{\alpha_1} \) and \( U_{\alpha_2} \) are \(C^\infty\)-compatible and \(\mathfrak{U}\) covers \(M\). We say that \(\mathfrak{U}\) is a <u>maximal atlas</u> if there does not exist another atlas with more charts. Despite its straightforward name, a maximal atlas is more often known as a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A structure which gives our topology differentiable properties">smooth structure</a>.
+        <p>Remember how I mentioned earlier that we would have to augment our assumptions until we get the properties we want? Well, we're going to need to make a big assumption here. We need to assume that whatever manifold we're talking about has a smooth structure: any two charts that intersect  are \( C^\infty \)-compatible.</p>
+        <p>More formally, we define an <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A collection of compatible charts">atlas</a> on our manifold \(M\) to be a collection \( \mathfrak{U} = \{ (U_\alpha, \phi_\alpha) \} \) such that: </p>
+        <ol>
+            <li> Any two charts, \( U_{\alpha_1} \) and \( U_{\alpha_2} \), are \(C^\infty\)-compatible.</li>
+            <li> \(\mathfrak{U}\) covers \(M\).</li>
+        </ol>
+        <p> We say that \(\mathfrak{U}\) is a <u>maximal atlas</u> if there does not exist another atlas with more charts. Despite its straightforward name, a maximal atlas is more often known as a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A structure which gives our manifold differentiable properties">smooth structure</a>.
         </p>
         <p> Most importantly, a topological manifold with a smooth structure is known as a <a class="popLink" href="https://en.wikipedia.org/wiki/Differentiable_manifold">smooth manifold</a>. This will be our main area of focus.
         </p>
@@ -122,35 +90,35 @@
         <br/>
         <p> Much like everything you've likely studied in math since geometry, functions are an <em>incredibly</em> important topic when it comes to manifolds.
         </p>
-        <p> The first and simplest case we want to consider is the case of real valued functions. Let \(M\) be our manifold, and suppose we have some function \(f: M \to \mathbb{R}\). Mimicing the point-wise definitions of continuity and differentiability, we say that \(f\) is <u>smooth at a point</u> \(p \in M\) if, given some chart \((U, \phi)\) containing \(p\), the composite function \(f \circ \phi^{-1}\) is smooth at \(p\). Globally, we say that a function \(f: M \to \mathbb{R}\) is <u>smooth on \(\underline{M}\)</u> if it is smooth at each point (big suprise).
+        <p> The first (and simplest) case we want to consider is the case of real valued functions. Let \(M\) be our manifold, and suppose we have some function \(f: M \to \mathbb{R}\). Mimicking the point-wise definitions of continuity and differentiability, we say that \(f\) is <u>smooth at a point</u> \(p \in M\) if, given some chart \((U, \phi)\) containing \(p\), the composite function \(f \circ \phi^{-1}\) is smooth at \(p\). Globally, we say that a function \(f: M \to \mathbb{R}\) is <u>smooth on \(\underline{M}\)</u> if it is smooth at each point \(p\) (big surprise).
         </p>
-        <p> If you think about it, we're basically doing the same thing here that we were doing for \(C^\infty\)-compatibility. We have two functions going from our manifold to \(\mathbb{R}^m\) (one of them is our homeomorphism), so we invert one and look at the overall process going from \(\mathbb{R}^n\) to \( \mathbb{R}^m \). In fact, this is a bit simpler than the problem of \(C^\infty \)-compatibility since we only care about the composition \(f \circ \phi^{-1} \) at each point and not \(\phi \circ f^{-1}\).
+        <p> If you think about it, we're basically doing the same thing here that we were doing for \(C^\infty\)-compatibility. We have two functions going from our manifold to \(\mathbb{R}^m\) (one of them is our homeomorphism), so we invert one and look at the overall process going from \(\mathbb{R}^n\) to \( \mathbb{R}^m \). In fact, this is a bit simpler than the problem of \(C^\infty \)-compatibility since we only care about the composition \(f \circ \phi^{-1} \) at each point (and not \(\phi \circ f^{-1}\)).
         </p>
-        <p> The next case we wish to consider is a function between manifolds. Let \(M\) be a smooth manifold of dimension \(m\), \(N\) be a smooth manifold of dimension \(n\), and consider some function \(F: M \to N\). As before, we define what it means for a function to be smooth <em>at a point</em> \(p \in M\). Given a point \(p \in M\), there must exist some charts \( (U, \phi) \) containing \(p\) and \( (V, \psi) \) containing \(F(p)\). Taking the idea of overall compositions on step further, we say that \(F\) is smooth at \(p\) if \( \psi \circ F \circ \phi^{-1}\) is smooth at \( \phi(p) \).
+        <p> The next case we wish to consider is a function between manifolds. Let \(M\) be a smooth manifold of dimension \(m\), \(N\) be a smooth manifold of dimension \(n\), and consider some function \(F: M \to N\). As before, we define what it means for a function to be smooth <em>at a point</em> \(p \in M\). Given a point \(p \in M\), there must exist some charts \( (U, \phi) \) containing \(p\) and \( (V, \psi) \) containing \(F(p)\). Taking the idea of compositions one step further, we say that \(F\) is smooth at \(p\) if \( \psi \circ F \circ \phi^{-1}\) is smooth at \( \phi(p) \).
         </p>
         <figure style="padding-bottom: 30px;">
-            <img src="../images/manifoldfunction.png" style="width: 100%; border-radius: 5px 5px 5px 5px;"></img>
+            <img src="../images/manifoldfunction.jpg" style="width: 100%; border-radius: 5px 5px 5px 5px;"></img>
             <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> Diagram of a function between manifolds</figcaption>
         </figure>
         <p>As before, we globally say that a function \(F: M \to N\) is smooth if it is smooth at <em>every</em> \(p \in M\).
         </p>
-        <p>I've now introduced enough to define a cool new term so that you guys can sound intellectual in your next manifolds conversation: the <a class="popLink" href="https://en.wikipedia.org/wiki/Diffeomorphism">diffeomorphism</a>. A diffeomorphism \(F: M \to N\) is simply a smooth map between manifolds such that its inverse \(F^{-1}: N \to M\) is also a smooth map between manifolds. Fair enough.
+        <p>I've now introduced enough material to define a cool new term, so that you guys can sound intellectual in your next manifolds conversation: the <a class="popLink" href="https://en.wikipedia.org/wiki/Diffeomorphism">diffeomorphism</a>. A diffeomorphism \(F: M \to N\) is simply a smooth map between manifolds such that its inverse \(F^{-1}: N \to M\) is a smooth map between manifolds as well. Fair enough.
         </p>
-        <p> For any categorty theory enthusiasts reading this, it turns out that diffeomorphisms are the morphisms over the category of smooth manifolds just as continuous maps are the morphisms over the category of topological spaces. If you don't know what category theory is, do yourself a favor and keep it that way.
+        <p> For any category theory enthusiasts reading this, it turns out that diffeomorphisms are the morphisms over the category of smooth manifolds just as continuous maps are the morphisms over the category of topological spaces. If you don't know what category theory is, do yourself a favor and keep it that way.
         </p>
-        <p> Now before I introduce the idea of a tangent vector, it's worthwhile to first introduce partial derivatves on a manifold. But ask yourself this question - have you thought about how to represent points on our manifold? What I'm talking about is a coordinate system. It doesn't have to be anything fancy, it could even be local for the moment!
+        <p> Now before I introduce the idea of a tangent vector, it's worthwhile to first introduce partial derivatives on a manifold. But ask yourself this question - have you thought about how to represent points on our manifold? What I'm talking about is a coordinate system. It doesn't have to be anything fancy, it could even be local for the moment!
         </p>
-        <p> At this point you should be well-acquainted with stealing properties of \( \mathbb{R}^n \) via our local charts, so it should feel perfectly natural when we say our new local coordinate system is
+        <p> At this point you should be well-acquainted with stealing properties of \( \mathbb{R}^n \) via our local charts (this can't be a good habit), so it should feel perfectly natural when we say our new local coordinate system is
         </p>
         $$ (x^1, x^2, \dots, x^n) = \phi^{-1}(t^1, t^2, \dots, t^n) $$
-        <p> for some local chart \( (U, \phi) \), where \( (t^1, t^2, \dots, t^n) \in \mathbb{R}^n \) are the coordinates of Euclidean space. It's worth noting that the superscripts here do not represent exponents, but indecies of our coordinates - this is because we will find other uses for subscripts later on when we get to duality. From here on out I may use the notation \( (U, x^1, x^2, \dots, x^n) \) to represent our coordinate chart \( (U, \phi) \), since this actually lets us look at the coordinates like the name suggests.
+        <p> for some local chart \( (U, \phi) \) (where \( (t^1, t^2, \dots, t^n) \in \mathbb{R}^n \) are the coordinates of Euclidean space). It's worth noting that the superscripts here do not represent exponents, but indices of our coordinates - this is because we will find other uses for subscripts later on when we get to duality. From here on out, I may use the notation \( (U, x^1, x^2, \dots, x^n) \) to represent our coordinate chart \( (U, \phi) \), since this actually lets us look at the coordinates (as the name suggests).
         </p>
         <p>Now assume we are given some function \(f: M \to \mathbb{R}^n\) which maps into Euclidean space. We have absolutely no idea how to find a partial derivative on our manifold at this point, but we <em><b>do</b></em> know how to find a partial derivative on Euclidean space. So why don't we just use that to define a partial derivative in our shiny new coordinate system? Fix \(p \in M\) and suppose \( (U, x^1, x^2, \dots, x^n) \) is a local coordinate chart. Then
         </p>
         $$ \left. \frac{\partial}{\partial x^i}\right|_{p} f = \left. \frac{\partial}{\partial t^i}\right|_{\phi(p)} f \circ \phi^{-1} $$
-        <p> Where \(t^i\) represents the \(i^{th}\) coordinate of Euclidean space.
+        <p> where \(t^i\) represents the \(i^{th}\) coordinate of Euclidean space.
         </p>
-        <p> As a basic example, we can think of the unit circle \(S^1\) as a manifold with the smooth atlas
+        <p> As a basic example, we can think of the unit circle, \(S^1\), as a manifold with the smooth atlas
             \(\mathfrak{U} = \{ (U_1, \phi_1), (U_2, \phi_2) \} \) where
         </p>
             $$ \begin{align} U_1 &= \{ e^{it} : -\pi < t < \pi \}
@@ -159,67 +127,67 @@
                     \\ \phi_2(e^{it}) &= t,\hspace{3em}0< t < 2\pi
                     \end{align}
                     $$
-        <p> and a real-valued function \( f: S^{1} \to \mathbb{R}\) defined by \(e^{it} \mapsto \frac{1}{2t} \). For \(i = 1,2\) we have \((f \circ \phi^{-1})(t) = \frac{1}{2t} \), and some local coordinate system \(x = \phi_i^{-1} (t)\). Choosing some point in the intersection of the two charts, say \(t_0 = \frac{\pi}{2} \), we have that
+        <p> and a real-valued function \( f: S^{1} \to \mathbb{R}\) defined by \(e^{it} \mapsto \frac{1}{2t} \). For \(i = 1,2\) we have \((f \circ \phi^{-1})(t) = \frac{1}{2t} \), and some local coordinate system \(x = \phi_i^{-1} (t)\). Choosing some point in the intersection of the two charts, say \(t_0 = \frac{\pi}{2} \), we have that:
         </p>
             $$ \left. \frac{\partial}{\partial x}\right|_{e^{\pi i/2}} f = \left. \frac{\partial}{\partial t}\right|_{\pi/2} f \circ \phi^{-1} = \left. \frac{\partial}{\partial t}\right|_{\pi/2} \frac{1}{2t} = \left. \frac{-1}{2t^2} \right|_{\pi/2} = \frac{-2}{\pi^2}$$
-        <p> Where are we going with this? Sure you could stop here, and you'd probably be able to understand some introductory Hamiltonian and Lagrangian mechanics but where's the fun in that?
+        <p> Where are we going with this? Sure, you could stop here, and you'd probably be able to understand some introductory Hamiltonian and Lagrangian mechanics. But where's the fun in that?
         </p>
-        <p> Recall from multivariable calculus that one can take the directional derivative at a point and it would give you a tangent vector. Well, what about the reverse - can we take a tangent vector and get a derivation? Hopefully it's not too much of a surprise for you, but the answer is yes. If we fix the base point \(p\), we can establish an <a class="popLink" href="https://en.wikipedia.org/wiki/Isomorphism">isomorphism</a> between the algebra of tangent vectors and the algebra of point derivations.
+        <p> Recall from multivariable calculus that one can take the directional derivative at a point and it would give you a tangent vector. Well, what about the reverse - can we take a tangent vector and get a derivation? Surprisingly, the answer is yes. If we fix a base point \(p\), we can establish an <a class="popLink" href="https://en.wikipedia.org/wiki/Isomorphism">isomorphism</a> between the algebra of tangent vectors and the algebra of point derivations.
         </p>
         <p> We're no longer going to use the standard Euclidean variables for tangent vectors \( (e_1, e_2, \dots, e_n) \), but instead the partial derivations \( (\frac{\partial}{\partial x^1}, \frac{\partial}{\partial x^2}, \dots, \frac{\partial}{\partial x^n} ) \) and the rules of math don't bend or break whatsoever! You can treat it like a vector or you can treat it like a derivative (which we'll see soon with vector fields) - and nothing changes! For example, the vector \( \overrightarrow{v} = 3\hat{\imath} + 4\hat{\jmath} = 3e_1 + 4e_2 \) can now be represented as \( \overrightarrow{v} = 3 \frac{\partial}{\partial x} + 4 \frac{\partial}{\partial y}\).
         </p>
-        <p> Despite this cool new notation for tangent vectors, we don't necessarily care about one specific tangent vector but instead the space of <em>ALL</em> tangent vectors at a fixed point. Fix some point \(p \in M\). We define the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The set of all tangent vectors eminating from a specific point">tangent space</a> at \(p\), denoted \( T_pM\), to be the set of all tangent vectors at \(p\)
+        <p> Despite this cool new notation for tangent vectors, we don't necessarily care about one specific tangent vector, but instead the space of <em>ALL</em> tangent vectors at a fixed point. Fix some point \(p \in M\). We define the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The set of all tangent vectors eminating from a specific point">tangent space</a> at \(p\), denoted \( T_pM\), to be the set of all tangent vectors at \(p\)
         </p>
         <figure style="padding-bottom: 30px; text-align: center;">
-            <img src="../images/tangentspace.png" style="width: 50%; border-radius: 5px 5px 5px 5px;"></img>
+            <img src="../images/tangentspace.jpg" style="width: 50%; border-radius: 5px 5px 5px 5px;"></img>
             <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> Visualization of tangent space on torus</figcaption>
         </figure>
         <br/>
         <br/>
         <h3 id="TheTangentBundleAndVectorFields">The Tangent Bundle and Vector Fields</h3>
         <br/>
-        <p> One consideration that will become familiar to the reader in the study of manifolds is 'what happens when we move from local coordinates to globabl coordinates?' In the context of our tangent space - what happens when we mush the tangent space of each point together into one big space? Well, this forms something known as the <a class="popLink" href="https://en.wikipedia.org/wiki/Tangent_bundle">tangent bundle</a>. The tangent bundle, denoted \(TM\), is formally defined as
+        <p> One consideration that will become familiar to the reader in the study of manifolds is, 'what happens when we move from local coordinates to global coordinates?' In the context of our tangent space - what happens when we mush the tangent space of each point together into one big space? Well, this forms something known as the <a class="popLink" href="https://en.wikipedia.org/wiki/Tangent_bundle">tangent bundle</a>. The tangent bundle, denoted \(TM\), is formally defined as
         </p>
         $$ TM = \coprod_{p\in M} T_pM = \bigcup_{p \in M} (\{ p\} \times T_pM)$$
-        <p> The purpose of the disjoint union is that no tangent vector from one tangent space accidentally finds itself in another tangent space - that is, the basepoint is preserved.
+        <p> The purpose of the disjoint union is that no tangent vector from one tangent space accidentally finds itself in another tangent space. In other words, the basepoint is preserved.
         </p>
-        <p> From a physical interpretation, we can think of the tangent bundle as the set of all points \(p \in M\) along with their respective velocities \( v \). Thus, a point in our tangent bundle would have the representation \((p, v) \in TM\). For any physicists or engineers out there, it should be evident that this tells us a fair amount (not necessarily everything since we're missing acceleration, but more is to come). In fact, the tangent bundle is one of the primary tools used in Hamiltonian mechanics.
+        <p> From a physical interpretation, we can think of the tangent bundle as the set of all points, \(p \in M\), along with their respective velocities, \( v \). Thus, a point in our tangent bundle will have the representation \((p, v) \in TM\). For any physicists or engineers out there, it should be evident that this tells us a fair amount (not necessarily everything, since we're missing acceleration). In fact, the tangent bundle is one of the primary tools used in Hamiltonian mechanics.
         </p>
-        <p> The first thing to establish is a basis on our tangent bundle. Suppose our manifold \(M\) has \(n\) dimensions. It follows that any tangent vector then has \(n\) degrees of freedom, so the tuple \((p, v) \in TM\) is a \(2n\)-dimensional object.
+        <p> The first thing to establish is a basis on our tangent bundle. Suppose our manifold \(M\) has \(n\) dimensions. It follows that any tangent vector must then have \(n\) degrees of freedom, so that the tuple \((p, v) \in TM\) is a \(2n\)-dimensional object.
         </p>
-        <p> In order to define our \(2n\)-dimensional basis, we must start off locally. At each point \(p\in M\) of our manifold, we have some local chart \((U, \phi)\) that maps points near \(p\) to points in \(\mathbb{R}^n\). However, as of right now it does not map <em>vectors</em> on \(M\) to vectors on \(\mathbb{R}^n\) - in order to do that we need to introduce the notion of a <a class="popLink" href="https://en.wikipedia.org/wiki/Pushforward_(differential)#Pushforward_of_vector_fields">pushforward</a> (this where we're going to use the derivation properties of a tangent vector).
+        <p> In order to define our \(2n\)-dimensional basis, we must start locally. At each point \(p\in M\) on our manifold, we have some local chart \((U, \phi)\) that maps points near \(p\) to points in \(\mathbb{R}^n\). However, as of right now, \(\phi\) does not map <em>vectors</em> on \(M\) to vectors on \(\mathbb{R}^n\) - in order to do that we need to introduce the notion of a <a class="popLink" href="https://en.wikipedia.org/wiki/Pushforward_(differential)#Pushforward_of_vector_fields">pushforward</a> (this where we're going to use the derivation properties of a tangent vector).
         </p>
-        <p> Suppose we have some smooth function \(F: M \to N\) between manifolds and some point \(p \in M\). Furthermore, suppose we have some tangent vector \(X_p \in T_pM\) eminating from \(p\). Since \(X_p\) also has the properties of a derivation, we anticipate that it will somehow satisfy the chain rule. Thus, we locally define the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The linear map between tangent spaces induced by a smooth function">pushforward</a> \(F_*:T_pM \to T_{F(p)}N \) as
+        <p> Suppose we have some smooth function \(F: M \to N\) between manifolds and some point \(p \in M\). Furthermore, suppose we have some tangent vector \(X_p \in T_pM\) emanating from \(p\). Since \(X_p\) also has the properties of a derivation, we anticipate that it will somehow satisfy the chain rule. Thus, we locally define the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The linear map between tangent spaces induced by a smooth function">pushforward</a> \(F_*:T_pM \to T_{F(p)}N \) as
         </p>
         $$ (F_*(X_p))f = X_p(f \circ F) $$
-        <p> for any local representative function \(f:M \to \mathbb{R}\). Our pushforward clearly satisfies the chain rule since for any third smooth manifold \(P\) and smooth function \(G: N \to P\), we have
+        <p> for any local representative function \(f:M \to \mathbb{R}\) (in textbooks, these would be called <em>germs</em>). Our pushforward clearly satisfies the chain rule since, for any third smooth manifold \(P\) and smooth function \(G: N \to P\), we have
         </p>
         $$ (G \circ F)_{*, p} = G_{*, F(p)} \circ F_{*, p} $$
-        <p> Now for our local basis. If we think of Euclidean space as a manifold (which it is), our coordinate chart could actually induce a pushforward between our tangent space and vectors over \(\mathbb{R}^n\)! This would be a huge help since the basis of tangent vectors for \(\mathbb{R}^n\) is well known (i.e. what some denote as \(\hat{\imath}, \hat{\jmath} \) while others use \(e_1, e_2\)). Despite many common notations, we will stick tosmooth manifolds' notation and let \( \frac{\partial}{\partial t_1}\frac{\partial}{\partial t_2}, \dots, \frac{\partial}{\partial t_n} \) denote the standard basis for vectors in \(\mathbb{R}^n\). Then the elements of the form
+        <p> Now for our local basis. If we think of Euclidean space as a manifold (which it is), our coordinate chart could actually induce a pushforward between our tangent space and vectors over \(\mathbb{R}^n\)! This would be a huge help since the basis of tangent vectors for \(\mathbb{R}^n\) is well known (i.e. what some denote as \(\hat{\imath}, \hat{\jmath} \), while others use \(e_1, e_2\)). Despite many common notations, we will stick to the notation of smooth manifolds and let \( \frac{\partial}{\partial t_1}\frac{\partial}{\partial t_2}, \dots, \frac{\partial}{\partial t_n} \) denote the standard basis for vectors in \(\mathbb{R}^n\). Then the elements of the form
         </p>
         $$  \frac{\partial}{\partial x^i} = (\phi^{-1})_*\left(\frac{\partial}{\partial t^i}\right) =  (\phi_*)^{-1}\left(\frac{\partial}{\partial t^i}\right)  $$
-        <p> Forms a basis for \(T_pM\). So what about the global setting? Well now that we have a basis, we can represent any tangent vector \( v\in T_pM \) in the form
+        <p> make a basis for \(T_pM\). So what about the global setting? Well, now that we have a basis, we can represent any tangent vector \( v\in T_pM \) in the form
         </p>
-        $$ v = \sum_{i=1}^n \alpha^i \frac{\partial}{\partial x^i} $$
-        <p> Thus, as \(v\) varies over \(T_pM\), we have that the \( \alpha_i \) become a function on \(T_pM\). Constructing the basis requires a few more steps for good measure, but the elements \( (x^1, \dots, x^n, \alpha_i, \dots, \alpha_n) \) form a prototype to our basis.
+        $$ v = \sum_{i=1}^n c^i \frac{\partial}{\partial x^i} $$
+        <p> Thus, as \(v\) varies over \(T_pM\), the \( c_i \) become functions on \(T_pM\). Constructing the basis requires a few more steps for good measure, but the elements \( (x^1, \dots, x^n, c_i, \dots, c_n) \) form a prototype to our basis.
         </p>
         <br/>
-        <p> A relatively trivial question to ask at this point is how to we get back to \(M\) from \(TM\)? Well our coordinates are of the form \( (p, v)\) and we want to get \(p\) - it seems natural to simply define a map \( \pi : TM \to M \) defined by \( (p, v) \mapsto p \). This kind of map as known as a <a class="popLink" href="https://en.wikipedia.org/wiki/Projection_(mathematics)">projection</a>.
+        <p> A question to ask at this point is how do we get back to \(M\) from \(TM\)? Well our coordinates are of the form \( (p, v)\) and we want to get \(p\) - it seems natural to simply define a map \( \pi : TM \to M \) by \( (p, v) \mapsto p \). This kind of map is known as a <a class="popLink" href="https://en.wikipedia.org/wiki/Projection_(mathematics)">projection</a>.
         </p>
         <p> Specifically, let \(E\) be some set (of possibly higher dimension) containing \(M\). Given some projection map \(\pi: E \to M\) and point \(p \in M\), the preimage \( \pi^{-1}(\{p\}) = E_p\) is known as a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The set of all points in the surrounding space which are projected down onto a point">fiber</a>
         </p>
         <figure style="padding-bottom: 30px; text-align: center;">
-            <img src="../images/projection.png" style="width: 50%; border-radius: 5px 5px 5px 5px;"></img>
-            <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> The fiber is represented by the vertical blue line, the projection by the dotted line</figcaption>
+            <img src="../images/projection.jpg" style="width: 50%; border-radius: 5px 5px 5px 5px;"></img>
+            <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> The fiber is represented by the vertical blue line, while the projection is represented by the dotted line</figcaption>
         </figure>
-        <p> Our projection is said to be <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Our ambient space locally looks like a Euclidean vector space">locally trivializing</a> is there is an isomorphism such that \( \pi^{-1}(\{p\}) \cong \{p\} \times \mathbb{R}^r \) for some dimension \(r\). That is, the graph of our fibers are simply Euclidean space warped a bit.
+        <p> Our projection is said to be <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="Our ambient space locally looks like a Euclidean vector space">locally trivializing</a> if there is a vector-space <a class="popLink" href="https://en.wikipedia.org/wiki/Isomorphism">isomorphism</a> such that \( \pi^{-1}(\{p\}) \cong \{p\} \times \mathbb{R}^r \) for some dimension \(r\). That is, the graph of our fibers are simply Euclidean space warped a bit.
         </p>
         <p> Much like everything we've done in this blog post, we are going to extend the notion of a fiber to a global setting. Doing this is quite simple in fact - we simply define some function \(\sigma: M \to E \), known as a <a class="popLink" href="https://en.wikipedia.org/wiki/Section_(fiber_bundle)">section</a>, by \( p \mapsto E_p \). Note, however, that our definition of section \( \sigma \) is dependent on our choice of projection \(\pi\). Since \(E_p\) is defined as \(E_p := \pi^{-1}(\{p\}) \), it follows that \( (\pi \circ \sigma)(p) = \pi(E_p) = \pi(\pi^{-1}(p)) = p \) so that \(\pi \circ \sigma = 1_M \).
         </p>
-        <p> Applying this idea of projections and sections to our tangent bundle, recall that we have the trivial projection \( \pi(p, v) = p \) on our tangent bundle. Therefore, our section must be some function of the form \(\sigma: M \to TM\) which assigns each point \(p \in M\) to some tangent vector \(X_p \in T_pM\). It may be a bit surprising, but this is something many multivariable calculus students have seen before. Recall that in \(\mathbb{R}^n\), a vector field is simply a function which takes a point in \(\mathbb{R}^n\) and returns a tangent vector. Therefore, we reach the conclusion that <u>a vector field is actually a section over the tangent bundle!</u>
+        <p> Applying the idea of projections and sections to our tangent bundle, recall that we have a trivial projection \( \pi(p, v) = p \) on our tangent bundle. Therefore, our sections must be some functions of the form \(\sigma: M \to TM\) which assign each point \(p \in M\) to some tangent vector \(X_p \in T_pM\). It may be a bit surprising, but this is something many multivariable calculus students have seen before. Recall that in \(\mathbb{R}^n\), a vector field is simply a function which takes a point in \(\mathbb{R}^n\) and returns a tangent vector. Therefore, we reach the conclusion that <u>a vector field is actually a section over the tangent bundle!</u>
         </p>
         <figure style="padding-bottom: 30px; text-align: center;">
-            <img src="../images/vectorfield.png" style="width: 50%; border-radius: 5px 5px 5px 5px;"></img>
+            <img src="../images/vectorfield.jpg" style="width: 50%; border-radius: 5px 5px 5px 5px;"></img>
             <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> The vector field \(X = y \frac{\partial}{\partial x} - x \frac{\partial}{\partial y} + \frac{xy}{12}\frac{\partial}{\partial z} \)</figcaption>
         </figure>
         <p> Instead of visualizing our vector field as a function that maps \(p \mapsto v\) for some point \(p\) and tangent vector \(v\), think of the vector field as a function that maps \(p \mapsto (p, v)\). This way, the vector field truly is a right inverse to our projection map.
@@ -228,7 +196,7 @@
         <br/>
         <h3 id="TheCotangentBundleAndKForms">The Cotangent Bundle and \(k\)-Forms</h3>
         <br/>
-        <p>We've still got a bit of work to do if we want to make it to Riemannian manifolds by the third blog post. It may not be entirely clear why I'm introducing some of the topics I've mentioned so far, but I guarentee it'll work out in the end.
+        <p>We've still got a bit of work to do if we want to make it to Riemannian manifolds soon. It may not be entirely clear why I'm introducing some of the topics I've mentioned so far, but I guarantee it'll work out in the end.
         </p>
         <p> For those of you who have taken vector calculus - consider the concept of a curve / work integral:
         </p>
@@ -237,33 +205,33 @@
         </p>
         <p> We will generalize this concept of a map from \(TM \to \mathbb{R}\) for some manifold \(M\) (this is different from our projection, which is a map from \(TM \to M\)).
         </p>
-        <p> Formally, given a vector space \(V\) we define the <a class="popLink" href="https://en.wikipedia.org/wiki/Dual_space">dual space</a> \(V^{\vee}\) to be the set
+        <p> Given a vector space \(V\) we define the <a class="popLink" href="https://en.wikipedia.org/wiki/Dual_space">dual space</a> \(V^{\vee}\) to be the set
         </p>
         $$ V^{\vee} = \text{Hom}(V, \mathbb{R}) = \{ f: V \to \mathbb{R}\ |\ f\ \ \text{is linear} \} $$
-        <p> Let \( \{ e_1, e_2, \dots, e_n \} \) denote the basis for our vector space \(V\), such that for any \(v \in V\) we have \(v = \sum_{i=1}^n v^ie_i\). For each \(1 \leq i \leq n\), we can define some linear, real-valued function \(\alpha^i:V \to \mathbb{R}\) that 'picks out' the \(t^{th}\) coordinate. Since the \(a^{i}\) is linear and \(\{e_1, \dots, e_n\}\) form a basis for \(V\) we need only define that</p>
+        <p> Let \( \{ e_1, e_2, \dots, e_n \} \) denote the basis for our vector space \(V\), such that for any \(v \in V\) we have \(v = \sum_{i=1}^n v^ie_i\). For each \(1 \leq i \leq n\), we can define some linear, real-valued function \(\alpha^i:V \to \mathbb{R}\) that "picks out" the \(t^{th}\) coordinate. Since the \(a^{i}\) is linear and \(\{e_1, \dots, e_n\}\) form a basis for \(V\), we need only define:</p>
             $$ \alpha^j(e_i) = \begin{cases} 1 & i = j \\ 0 & i \neq j \end{cases} $$
         <p> Then for any \(f \in V^{\vee} \) and \(v \in V\) we have</p>
         $$ f(v) = f\left( \sum_{i=1}^n v^ie_i \right) = \sum_{i=1}^n v^i f(e_i) = \sum_{i=1}^n \alpha^i(v) f(e_i) $$
-        <p> Since the \(f(e_i)\) are simply real numbers, we have that \(\{\alpha_1, \dots, \alpha_n\}\) forms a basis for \(V^{\vee}\). </p>
-        <p> Notice how in the example above with the line integral, we have in fact two inputs vectors - namely \( \frac{\partial}{\partial x} \) and \( \frac{\partial}{\partial y} \). We are now going to extend our dual space to consider \(k\) copies of a vector space \(V\).
+        <p> Since the \(f(e_i)\) are simply real numbers (and thus must be our coefficients), we have that \(\{\alpha_1, \dots, \alpha_n\}\) forms a basis for \(V^{\vee}\). </p>
+        <p> Notice in the example above with the line integral, we actually have two inputs vectors - namely \( \frac{\partial}{\partial x} \) and \( \frac{\partial}{\partial y} \). We are now going to extend our dual space to consider \(k\) copies of a vector space \(V\).
         </p>
         <p> Fix \(k\geq 0\). We say that a function \( f: V^k \to \mathbb{R} \) is <u>multilinear</u> or <u>\( \underline{k} \)-linear </u> if it is linear in each component. For example, in \(k = 2\), we would have</p>
-        $$ f(av_1 + bw_1, cv_2 + dw_2) = ac\,f(v_1, w_1) + ad\,f(v_1, w_1) + bc\,f(v_2, w_1) + bd\,f(v_2, w_2) $$
-        <p> I will outsource teaching the concept of <a class="popLink" href="https://en.wikipedia.org/wiki/Parity_of_a_permutation#Example">a permuation's sign / parity</a> to Wikipedia since it's a fairly straightforward concept that will take you 5 minutes tops to understand</p>
-        <p> Assuming you understand permutaions well by this point, we say that a multilinear function  \(f: V^k \to \mathbb{R}\) is <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The order of inputs affects the output's sign">alternating</a> if, for any permutation \(\sigma \in \Sigma^k \), we have </p>
+        $$ f(av_1 + bv_2, cw_1 + dw_2) = ac\,f(v_1, w_1) + ad\,f(v_1, w_2) + bc\,f(v_2, w_1) + bd\,f(v_2, w_2) $$
+        <p> I will outsource the teaching of <a class="popLink" href="https://en.wikipedia.org/wiki/Parity_of_a_permutation#Example">a permutation's sign / parity</a> to Wikipedia since it's a fairly straightforward concept (I promise that will take you 5 minutes to understand).</p>
+        <p> Assuming that you understand permutations well by this point, we say that a multilinear function  \(f: V^k \to \mathbb{R}\) is <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The order of inputs affects the output's sign">alternating</a> if, for any permutation \(\sigma \in \Sigma^k \), we have </p>
         $$ f(v_{\sigma(1)}, \dots, v_{\sigma(k)}) = (\text{sgn}\, \sigma) f(v_1, \dots, v_k) $$
         <p> A great example of an alternating multilinear function from a vector space to \( \mathbb{R} \) is the determinant! For example, if we have some vectors \(v_1, v_2, \dots, v_k \in V\), then</p>
         $$ \begin{align} \det \begin{pmatrix} v_1 & v_2 & \dots & v_k \end{pmatrix} &= - \det \begin{pmatrix} v_2 & v_1 & \dots & v_n \end{pmatrix} \\
             \det \begin{pmatrix} v_1 & v_2 & \dots & v_n \end{pmatrix} &= \det (-1)^{k-1} \begin{pmatrix} v_k & v_1 & v_2 & \dots & v_{k-1} \end{pmatrix} \end{align}$$
         <p> The multilinearity should be clear from linear algebra.</p>
-        <p> The set of \(k\)-linear alternating functions on \(V\) is commonly denoted by \(A_k(V)\). The elements of \(A_k(V)\) are often called <u>alternating \(\underline{k}\)-tensors</u> or <u>alternating \(\underline{k}\)-covectors</u>. Though this definition of a tensor may seem different from fields like machine learning, it is actually the same concept. In machine learning, one simply takes a \(k\)-dimensional datum and associates an \(\mathbb{R}\)-valued weight to the object in terms of significance.</p>
+        <p> The set of \(k\)-linear alternating functions on \(V\) is commonly denoted by \(A_k(V)\). The elements of \(A_k(V)\) are often called <u>alternating \(\underline{k}\)-tensors</u> or <u>alternating \(\underline{k}\)-covectors</u>. Though this definition of a tensor may seem different from fields like machine learning, it is actually the same concept! In machine learning, one simply takes a \(k\)-dimensional datum and associates an \(\mathbb{R}\)-valued weight to the object in terms of significance.</p>
         <p> We now wish to establish a set of operations on our tensors to form an <a class="popLink" href="https://en.wikipedia.org/wiki/Algebra_over_a_field">algebra</a>. Our first operation is actually very straightforward - the <a class="popLink" href="https://en.wikipedia.org/wiki/Tensor_product">tensor product</a>.</p>
         <p> Let \(V\) be a vector space and \( \alpha, \beta \) be \(m\) and \(n\)-tensors, respectively. Then the <u>tensor product</u> \( \alpha \otimes \beta\) is the \(m + n\) tensor defined to be
         $$ (\alpha \otimes \beta)(v_1, \dots, v_m, w_1, \dots, w_n) = \alpha(v_1, \dots, v_m)\beta(w_1, \dots, w_n) $$
         <p> for some vectors \(v_1, \dots, v_m, w_1, \dots, w_n \in V\). Easy as that. </p>
-        <p> Unfortunately, the next operation isn't as easy. Again, let \(V\) be a vector space and \( \alpha, \beta \) be \(m\) and \(n\)-tensors, respectively. Then the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An exterior product used to generalize determinants and volumes">wedge product</a> is defined to be</p>
+        <p> Unfortunately, the next operation isn't as easy. Again, let \(V\) be a vector space and \( \alpha, \beta \) be \(m\) and \(n\)-tensors, respectively. Then the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="An exterior product used to generalize determinants and volumes">wedge product</a> is defined to be:</p>
         $$ (\alpha \wedge \beta)(v_1, \dots, v_{m + n}) = \frac{1}{m!\,n!} \sum_{\sigma \in \Sigma_{m+n}} (f \otimes g)(v_{\sigma(1)}, \dots, v_{\sigma(m+n)}) $$
-        <p> That is, we must sum up <em>every</em> possible permutation of our input vectors</p>
+        <p> That is, we must sum up <em>every</em> possible permutation of our input vectors (if it sounds like a pain in the ass, that's because it <em>is</em> a pain in the ass).</p>
         <br/>
         <h6><b>Theorem:</b><h6> Given an \(m\)-tensor \(\alpha\) and an \(n\)-tensors \(\beta\), their wedge product \( \alpha \wedge \beta\) is anti-commutative. That is
         $$ \alpha \wedge \beta = (-1)^{mn}(\beta \wedge \alpha) $$
@@ -288,7 +256,7 @@
           </div>
         </div>
         <br/>
-        <p> A simple result of this theorem is that if \(k\) is odd and \(\alpha: V^k \to \mathbb{R}\), then \(\alpha \wedge \alpha = 0\). This follows from the fact that \(k^2\) is also odd, so \( \alpha \wedge \alpha = (-1)^{k^2} (\alpha \wedge \alpha) = -\alpha \wedge \alpha \).</p>
+        <p> A simple result of this theorem is that, if \(k\) is odd and \(\alpha: V^k \to \mathbb{R}\), then \(\alpha \wedge \alpha = 0\). This follows from the fact that \(k^2\) is also odd, so \( \alpha \wedge \alpha = (-1)^{k^2} (\alpha \wedge \alpha) = -\alpha \wedge \alpha \).</p>
         <br/>
         <h6><b>Theorem:</b><h6> Fix \(k \geq 0\) and let \(V\) be a vector space. If \(\alpha^1, \dots, \alpha^k\) are \(1\)-covectos and \(v_1, \dots, v_k\) are vectors, then
         $$ (a^1 \wedge \dots \wedge a^k)(v_1, \dots, v_k) = \det[a^i(v_j)] $$
@@ -303,12 +271,12 @@
           </div>
         </div>
         <br/>
-        <p> Let \( \alpha^1, \dots, \alpha^n \) denote the basis of 1-covectors over \(V\). We wish to consider all combinations of \(k\) wedge products possible over our \(n\) coordinates. That is, let \(1 \leq i_1 < i_2 < \dots < i_k \leq n\) be \(k\) indecies, and let \(I = \{ i_1, \dots, i_k\}\) be known as our <em>indexing set</em> (we require that the indexes be strictly increasing since \(dx_2 \wedge dx_1 = - dx_1 \wedge dx_2 \) by our alternating property).
+        <p> Let \( \alpha^1, \dots, \alpha^n \) denote the basis of 1-covectors over \(V\). We wish to consider all combinations of \(k\) wedge products possible over our \(n\) coordinates. That is, let \(1 \leq i_1 < i_2 < \dots < i_k \leq n\) be \(k\) indices, and let \(I = \{ i_1, \dots, i_k\}\) be known as our <em>indexing set</em>. We require that the indexes be strictly-increasing since \(dx_2 \wedge dx_1 = - dx_1 \wedge dx_2 \) by our alternating property.
         </p>
-        <p> Given some indexing set \(I = \{i_1, \dots, i_k \}\), we denote \(\alpha^{i_1} \wedge \alpha^{i_2} \wedge \dots \wedge \alpha^{i_k} \) by \(\alpha^I \). We claim that \( \{\alpha^I \mid I\ \text{is a strictly increasing indexing set}\} \) is a basis for \(A^k(V)\). However, this simply follows from the fact that, given two strictly increasing index sets \(I\) and \(J\), we have that
+        <p> Given some strictly-increasing indexing set \(I = \{i_1, \dots, i_k \}\), we denote \(\alpha^{i_1} \wedge \alpha^{i_2} \wedge \dots \wedge \alpha^{i_k} \) by \(\alpha^I \). We claim that \( \{\alpha^I \mid I\ \text{is a strictly increasing indexing set}\} \) is a basis for \(A^k(V)\). However, this simply follows from the fact that, given two strictly increasing index sets \(I\) and \(J\), we have that
         $$ \alpha^I(e_J) = \det[\alpha^i(e_j)]_{i\in I, j \in J} = \delta^I_J = \begin{cases} 1 & I = J \\ 0 & I \neq J \end{cases}$$
         </p>
-        <p> where \(e_1, \dots, e_n\) is the same basis for \(V\) as before. This simple fact allows us to deduce linear independence in a straightforward fashion. Since there are \(k \) choices for basis elements out of \(n\) possibilities, \(A^k(V)\) must be of dimension \( n \choose k \).
+        <p> where \(e_1, \dots, e_n\) is the same basis for \(V\) as before. This fact allows us to deduce linear independence in a straightforward fashion. Since there are \(k \) choices for basis elements out of \(n\) possibilities, \(A^k(V)\) must be of dimension \( n \choose k \).
         </p>
         <br/>
         <p> So why do we care about a bunch of abstract covectors? Well our tangent bundle locally looks like a vector space, so we could begin applying our knowledge of the dual space to \(T_pM\) (not the whole tangent bundle, since that doesn't necessarily have vector space properties). Formally, let \(M\) be a smooth manifold and \(p \in M\). Then the cotangent space at \(p\), denoted \(T_pM\), is defined to be
@@ -316,30 +284,33 @@
         $$ T^*_p(M) = (T_pM)^{\vee} = \text{Hom}(T_pM, \mathbb{R}) = \{ f: T_pM \to \mathbb{R}\ \mid \ f\ \ \text{is linear}  \}$$
         <p> In order to define our space of covectors globally, we simply use the same trick that we did for the tangent bundle. That is, the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The set of all 'covectors' which are linear functions that assign weights to vectors">cotangent bundle</a> is defined to be</p>
         $$ T^*M = \coprod_{p \in M} T^*_pM = \bigcup_{p \in M} (\{ p\} \times T^*_pM ) $$
-        <p> As before, the first thing we want to do is establish a basis for the bundle. In a more general setting, suppose \(f: M \to \mathbb{R}\) is any real-valued function over our manifold \(M\) and \(p\) is some point in \(M\). Then the <a class="popLink" href="https://en.wikipedia.org/wiki/Pushforward_(differential)#Pushforward_of_vector_fields">differential</a> of \(f\) at \(p\), denoted \((df)_p\) is defined by </p>
+        <p> As before, the first thing we want to do is establish a basis for the bundle.</p>
+        <p>In a more general setting, suppose \(f: M \to \mathbb{R}\) is any real-valued function over our manifold \(M\), and \(p\) is some point in \(M\). Then the <a class="popLink" href="https://en.wikipedia.org/wiki/Pushforward_(differential)#Pushforward_of_vector_fields">differential</a> of \(f\) at \(p\), denoted \((df)_p\) is defined by </p>
         $$ (df)_p(X_p) = X_pf $$
-        <p> Mimicing our construction of the dual basis for a general vector space \(V\), let \( \frac{\partial}{\partial x^1}, \frac{\partial}{\partial x^2}, \dots, \frac{\partial}{\partial x_n} \) denote the basis for \(T_pM\). If we think of the local coordinate \(x^i\) as the identity, then  </p>
+        <p> Mimicking our construction of the dual basis for a general vector space \(V\), let \( \frac{\partial}{\partial x^1}, \frac{\partial}{\partial x^2}, \dots, \frac{\partial}{\partial x_n} \) denote the basis for \(T_pM\). If we think of the local coordinate \(x^i\) as the identity on that coordinate, then  </p>
         $$ (dx^i)_p \left( \frac{\partial}{\partial x^i} \right) = \frac{\partial}{\partial x^i} x^i = 1$$
         <p> so,</p>
         $$ (dx^i)_p \left( \frac{\partial}{\partial x^j} \right) = \begin{cases} 1 & i = j \\ 0 & i \neq j \end{cases} $$
         <p>In addition, it is easy to show that
         $$ df = \sum_{i} \frac{\partial f}{\partial x^i} dx^i  $$
-        <p> So let's sum up what we have: an orthonormal system of \(n\) non-zero covectors, such that every differential can be represented as a linear combination of such covectors. Sounds like \( dx^1, dx^2, \dots, dx^n  \) is a basis for \(T^*_pM\) to me.
+        <p> So let's sum up what we have: an orthonormal system of \(n\) non-zero covectors, such that every differential can be represented as a linear combination of these covectors. Sounds like \( dx^1, dx^2, \dots, dx^n  \) is a basis for \(T^*_pM\) to me!
         </p>
-        <p> But wait a minute - we replaced our general vector space \(V\) with \(T_pM\), so does the analogy extend for \(A_k(V)\)? It surely does. The idea for finding a basis over \(A^k(T_pM) \) is the exact same as it is for \(A^k(V)\) - simply let \(I\) be some increasing index set of length \(k\). Then the \(k\)-covectors of the form \(dx^I =  dx^{i_1} \wedge dx^{i_2} \wedge \dots \wedge dx^{i_k} \) form a basis for \(A^k(T_pM)\).
+        <p> But wait a minute - we just replaced our general vector space \(V\) with \(T_pM\), so does the analogy extend for \(A_k(V)\)? It surely does. The idea for finding a basis over \(A^k(T_pM) \) is the exact same as it is for \(A^k(V)\) - simply let \(I\) be some increasing index set of length \(k\). Then the \(k\)-covectors of the form \(dx^I =  dx^{i_1} \wedge dx^{i_2} \wedge \dots \wedge dx^{i_k} \) form a basis for \(A^k(T_pM)\).
         </p>
         <p> The last thing for me to introduce is the concept of \(k\)-forms. Recall on the tangent bundle \(TM\), we defined a vector field to be a function \(X\) that assigned some point \(p \in M\) to a vector \(v \in T_pM\). Well a \(k\)-form is basically the same thing as a vector field, but for the cotangent bundle!
         </p>
-        <p> Formally, we define a <a class="popLink" href="https://en.wikipedia.org/wiki/Differential_form">\(k\)-form</a> \(\omega\) to be a function that maps each \(p \in M\) to some \(\omega_p \in A^k(T_pM) \). Much as before, we choose to define such \(k\)-forms in terms of sections. That is given some \(k\)-covector \(\alpha\), \(\alpha\) must satisfy \(\alpha \in A^k(T_pM) \) for some \(p \in M\) by definition. We therefore define a projection \( \pi: A^k(TM) \to M \) by \(\pi(\alpha) = p\). Thus, our \(k\)-forms are simply sections \(\sigma: M \to A^k(TM) \) such that \(\pi \circ \sigma = 1_M\)
+        <p> Formally, we define a <a class="popLink" href="https://en.wikipedia.org/wiki/Differential_form">\(k\)-form</a> \(\omega\) to be a function that maps each \(p \in M\) to some \(\omega_p \in A^k(T_pM) \). Much as before, we choose to define \(k\)-forms in terms of sections. That is, given some \(k\)-covector \(\gamma\), \(\gamma\) must satisfy \(\gamma \in A^k(T_pM) \) for some \(p \in M\) by definition. Therefore, we define a projection \( \pi: A^k(TM) \to M \) by \(\pi(\gamma) = p\). Thus, our \(k\)-forms are simply sections \(\sigma: M \to A^k(TM) \) such that \(\pi \circ \sigma = 1_M\).
         </p>
         <figure style="padding-bottom: 30px; text-align: center;">
           <img src="../images/kforms.png" style="width: 50%; border-radius: 5px 5px 5px 5px;"></img>
           <figcaption style="text-align: center; font-size: 85%; font-color: gray;"> <em>Adapted from:<br/> Stan Shunpike (https://math.stackexchange.com/users/197705/stan-shunpike), How to visualize $1$-forms and $p$-forms?, URL (version: 2014-12-24): https://math.stackexchange.com/q/1079366 </em> </figcaption>
         </figure>
         <p> We denote the set of all \(k\)-forms over a smooth manifold \(M\) by \(\Omega^k(M)\).</p>
-        <p> There are a few other topics that I could cover regarding differential forms like <a class="popLink" href="https://en.wikipedia.org/wiki/Pullback_(differential_geometry)">pullbacks</a> and <a class="popLink" href="https://en.wikipedia.org/wiki/Integral#Integrals_of_differential_forms">integration on forms</a>; however, I have gone over a ton in this post and I would like to write another article on applied cryptography before I publish the site.
+        <p> There are a few other topics that I could cover regarding differential forms, like <a class="popLink" href="https://en.wikipedia.org/wiki/Pullback_(differential_geometry)">pullbacks</a> and <a class="popLink" href="https://en.wikipedia.org/wiki/Integral#Integrals_of_differential_forms">integration on forms</a>, but I have gone over a ton in this post and I would like to write another article on applied cryptography before I publish the site.
         </p>
-        <p> That said, thank you guys for reading and hope you enjoyed! &#x1F601 </p>
+        <p> That said, thank you guys for reading and I hope you enjoyed! &#x1F601 </p>
+        <br/>
+        <br/>
         <div class="video-container">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/b9434BoGkNQ" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
         </div>
@@ -348,6 +319,26 @@
   </div> <!-- end row -->
 </div> <!-- end container -->
 
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = 'https://christopherdare.com/blogposts/manifoldpartii';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'manifoldspartii'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://christopherdare.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 <!-- webpage footer -->
 <div class="jumbotron vertical-center footer">
