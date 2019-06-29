@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Riemannian Manifolds: Part I</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+  <meta name="keywords" content="Manifold, Vector Field, Maxwell's Equations">
+  <meta name="description" content="A discussion of how smooth manifolds and differential forms tie into Maxwell's equations">
+  <meta name="author" content="Chris Dare">
+  <!-- Social media -->
+  <meta property="og:image" content="http://www.christopherdare.com/images/minkowskicone.jpg">
+  <meta property="og:image:type" content="image/jpg">
+  <meta property="og:image:width" content="1752">
+  <meta property="og:image:height" content="721">
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://www.christopherdare.com/blogposts/riemanniani.html"/>
+  <meta property="og:title" content="Chris Dare's blog: Maxwell's Equations" />
+  <meta property="og:description" content="A discussion of how smooth manifolds and differential forms tie into Maxwell's equations." />
+  <!-- icon -->
+  <link rel="icon" href="../favicon.ico">
+  <!-- Bootstrap 4.1 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <!-- actual stylesheet -->
+  <link href="blogpost.css" rel="stylesheet" type="text/css">
+  <!-- google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Quattrocento|Aldrich|Special+Elite|Roboto" rel="stylesheet">
+  <!-- jquery -->
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+  <!-- MathJax -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+  <script src="../footerscript.js"></script>
+  <script src="../tooltip.js"></script>
+  <script src="../showbutton.js"></script>
+  <script src="../navbarTemplate.js"></script>
+</head>
+<body data-spy="scroll" data-target="#sidemenu" data-offset="100" style="height: 100%;">
+
+<!-- webpage header -->
+
+<div class="jumbotron vertical-center header">
+  <h1 style="font-family:'Special Elite', cursive;">Riemannian Manifolds</h1>
+  <h5 style="font-family:'Special Elite', cursive;">Part I: Theorema Egregium</h5>
+</div>
+
+<div class="container">
+  <div class="row py-3">
+  
+    <!-- Side navbar -->
+    <div class="col-md-3 col-sm-0" id="sidemenu">
+      <div class="menu sticky-top p-3 bg-light">
+        <a class="nav-link pl-0" href="#item-1">Some Algebra and Sophus Lie</a>
+            <ul class="nav flex-md-column ml-2 hidden-sm-down">
+              <li class="nav-item"><a href="#item-1-1" class="nav-link">Algebraic Structures</a></li>
+              <li class="nav-item"><a href="#item-1-2" class="nav-link">Lie Structures</a></li>
+            </ul>
+        <a class="nav-link pl-0" href="#item-2">A Sense of Direction</a>
+        <a class="nav-link pl-0" href="#item-3">An Introduction to Riemann</a>
+            <ul class="nav flex-md-column ml-2 hidden-sm-down">
+              <li class="nav-item"><a href="#item-3-1" class="nav-link">A Connection to Riemann</a></li>
+              <li class="nav-item"><a href="#item-3-2" class="nav-link">Gauss' Theorema Egregium</a></li>
+            </ul>
+      </div>
+    </div> <!-- end col-3-->
+
+    <div class="col-md-9 col-sm-12 content">
+        <h3 id="item-1">Some Algebra and Sophus Lie</h3>
+        <br/>
+        <p id="item-1-1"> I want to take a second to thank everyone who's managed to read this far into my blog posts; I know better than most that mathematics is not the most popular subject amongst the masses, and reading material that one finds mundane can be one of the most difficult tasks. However, I imagine that I have found my target audience after four blog posts (unless your my mom reading for support and error checking — thanks mom), so I will likely continue down this path.
+        </p>
+        <p> In my experience of theoretical mathematics, I have failed to find a subject that does not — in some way — incorporate algebra. Now when I say algebra, I am not referring to the high school algebra which tests students on the focus of a parabola, long polynomial division, etc; algebra (often referred to as <a class="popLink" href="https://en.wikipedia.org/wiki/Abstract_algebra">abstract algebra</a> by universities) is the study of algebraic structures. Now an algebraic structure is (in simplified terms) a generalization of our number system and standard operations (i.e. addition, subtraction, multiplication, and division).
+        </p>
+        <p>
+        Now I'm going to attempt to crash through the definitions of our primary algebraic structures without really stopping to give the background theory of each (at least yet — if I do blog posts on algebraic geometry later on I will need to). To start off, suppose we have some set \(A\); this can be a set of anything from numbers to colors to animals.
+        </p>
+        <ol>
+        <li> A <a class="popLink" href="https://en.wikipedia.org/wiki/Group_(mathematics)">group</a> is our set \(A\) along with a binary operation \(\oplus : A \times A \to A\) which satisfies:
+            <ul>
+            <br/>
+                <li><u><b>Closure</b></u>: For all \(a, b \in A\), we have that \(a \oplus b\) is also an element of \(A\). </li>
+                <br/>
+                <li><u><b>Associativity</b></u>: For all \(a, b, c \in S\), we have that \( (a \oplus b )\oplus c = a \oplus (b \oplus c) \). </li>
+                <br/>
+                <li><u><b>Identity</b></u>: There exists an element \(e \in A\) (called the identity) such that \(a \oplus e = e \oplus a = a\) for all \(a \in A\). </li>
+                <br/>
+                <li><u><b>Inverse</b></u>: For each element \(a \in A\), there exists some element \(a^{-1} \in A\) that satisfies \(a \oplus a^{-1} = a^{-1} \oplus a = e \). </li>
+            </ul>
+            It is worth noting that our binary operation \(\oplus\) does not necessarily have to be commutative (that is, \( a \oplus b = b \oplus a \) for all \(a, b \in A\)). However, when our operation <em>is</em> commutative, we call \(A\) an <u><em>abelian group</em></u>.
+        </li>
+        <br/>
+        <li> A <a class="popLink" href="https://en.wikipedia.org/wiki/Ring_(mathematics)">ring</a> is our set \(A\) along with <b>TWO</b> binary operations \( \oplus : A \times A \to A \) and \( \otimes : A \times A \to A \), where \(A\) together with \(\oplus\) forms an abelian group (that is, \( \oplus \) satisfies the axioms of closure, associativity, commutativity, identity, and inverse) and \(\otimes\) satisfies:
+            <ul>
+            <br/>
+                <li><u><b>Closure</b></u>: For all \(a, b \in A\), we have that \(a \otimes b\) is also an element of \(A\). </li>
+                <br/>
+                <li><u><b>Associativity</b></u>: For all \(a, b, c \in A\), we have that \( (a \otimes b )\oplus c = a \oplus (b \otimes c) \). </li>
+                <br/>
+                <li><u><b>Multiplicative Identity</b></u>: There exists an element \(1 \in A\) (sometimes called the unit) such that \(a \otimes 1 = e \otimes 1 = a\) for all \(a \in A\). </li>
+                <br/>
+                <li><u><b>Distributive Law</b></u>: For all \(a, b, c \in A\) we have that \( a \otimes ( b \oplus c ) = (a \otimes b) \oplus (a \otimes c) \) and \( (b \oplus c) \otimes a = (b \otimes a) \oplus (b \otimes c) \).
+            </ul>
+            It is worth noting that \(A\) together with \(\otimes\) <em>almost</em> forms a group — however, we do not require that every element necessarily have a multiplicative inverse. Much like groups, we do not require that \(\otimes\) necessarily be commutative — however, when it is we call \((A, \oplus, \otimes) \) a <u><em>commutative ring</em></u> (no, I don't know why its not called an abelian ring; don't ask).
+        </li>
+        <br/>
+        <li>
+        A <a class="popLink" href="https://en.wikipedia.org/wiki/Field_(mathematics)">field</a> is our set \(A\) along with two binary operations \( \oplus : A \times A \to A \) and \( \otimes : A \times A \to A \) (as before) such that both \( (A, \oplus)\) and \( (A, \otimes) \) form abelian groups, and the two operations satisfy the distributive law. In other words, a field is a commutative ring where multiplicative inverse is obeyed.
+        </li>
+        <br/>
+        <li>
+        Assuming \(A\) is a field, an <a class="popLink" href="https://en.wikipedia.org/wiki/Algebra_over_a_field">algebra</a> over \(A\) is a vector space \(V = A \times A \times \dots \times A = A^n\) along with a binary operation \( \odot : V \times V \to V \) that satisfies:
+        <ul>
+        <br/>
+        <li><u><b>Distributive Law</b></u>: For all \(\overrightarrow{u}, \overrightarrow{v}, \overrightarrow{w} \in V\) we have that \( \overrightarrow{u} \odot ( \overrightarrow{v} \oplus \overrightarrow{w} ) = (\overrightarrow{u} \odot \overrightarrow{v}) \oplus (\overrightarrow{u} \odot \overrightarrow{w}) \) and \( (\overrightarrow{v} \oplus \overrightarrow{w}) \odot \overrightarrow{u} = (\overrightarrow{v} \odot \overrightarrow{u}) \oplus (\overrightarrow{w} \odot \overrightarrow{u}) \).
+        </li>
+        <br/>
+        <li>
+        <u><b>Scalar Compatibility</b></u>: For all \( a, b \in A \) and \( \overrightarrow{u}, \overrightarrow{v} \in V \), we have that \( a \overrightarrow{u} \odot b \overrightarrow{v} = (a\otimes b) (\overrightarrow{u} \odot \overrightarrow{v}) \).
+        </li>
+        </ul>
+        </li>
+        </ol>
+        <br/>
+        <p> Alright, so we're all experts in algebra now. Just in case you need a bit more concrete of an explanation, lets go over a few examples.</p>
+        <p> Let's start with groups — I like to think of groups as generalizations of the integers \( \mathbb{Z} = \{ \dots, -2, -1, 0, 1, 2, \dots \} \) under the standard binary operation of addition \( + \). Clearly, for any integer \(n \in \mathbb{Z}\) we must have that \(n + 0 = 0 + n = n\), so it follows that \(0\) is the identity element over the group \( (\mathbb{Z}, +) \). Now under addition, we must have that \(-n\) is the inverse for any element \(n \in \mathbb{Z}\) since \(n + (-n) = n - n = 0 \).
+        </p>
+        <p>
+        Next, lets consider applications of rings — I like to think of rings as generalizations of polynomials (we will come to see in algebraic geometry that every field has an associated polynomial ring). For example, we can always add and subtract polynomials by looking at terms of the same degree. Moreover, multiplying two polynomials \(f(x)g(x)\) also results in a polynomials; yet, it is not the case that \(\frac{1}{f(x)}\) is a polynomial unless \(f(x)\) is constant. Therefore, the set of polynomials over a field \(k\) (usually denoted \( k[x] \)) is a ring but not a field.
+        </p>
+        <p> Lastly, we consider fields and algebras over fields; fields are simply generalizations of our number systems \( \mathbb{R} \) and \( \mathbb{C} \) with the usual addition, subtraction, multiplication, and division. In a similar fashion, algebras are generalizations of \( \mathbb{R}^n \) and \( \mathbb{C}^n \) for \(n \geq 2\), equipped with the standard cross-product of vectors \(\times\).
+        </p>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <p id="item-1-2">Up to this point, we really haven't used any information from our previous blog posts — in most contexts, algebra and differential geometry are quite distinct. However, what happens when we have a space that is both a smooth manifold <em>AND</em> a group? Suppose \(G\) is a smooth manifold, and \(\oplus : G \times G \to G\) is the binary group operation on \(G\). If the functions
+        </p>
+        $$
+        \begin{align}
+        \mu(a, b) &= a \oplus b
+        \\ \iota (a) &= a^{-1}
+        \end{align}
+        $$
+        <p>
+        are both smooth on \(G\), then we call \(G\) a <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A space that roughly provides a model for continuous symmetry">Lie group</a>.
+        </p>
+        <p> For every element \(g \in G\) we define the "left-translation by \(g\)" function \(l_g : G \to G\) by \(l_g(x) = \mu(g, x) = g \oplus x\) which must also be smooth by smoothness of \(\mu\). Even more interesting, since we defined our inverse function \(\iota(x)\) to be smooth, the function \(l_{g^{-1})(x) = \mu(\iota(g), x) = g^{-1} \oplus x\) is smooth as well! But since
+        </p>
+        $$
+        \begin{align}
+        (l_g \circ l_{g^{-1}})(x) &= g \oplus (g^{-1} \oplus x)
+        \\&= (g \oplus g^{-1}) \oplus x \hspace{2em} (\textrm{associativity})
+        \\&= e \oplus x
+        \\&= x \hspace{8em} (\textrm{identity})
+        \end{align}
+        $$
+        <p>
+        is the identity function on \(G\), we must have that \(l_g\) is a diffeomorphism. That's good an all, but what does this tell us about our tangent vectors? Great question, you really are on the road to becoming active listeners! If you recall from my <a class="popLink" href="https://www.christopherdare.com/blogposts/manifoldpartii.html#TheTangentBundleAndVectorFields">second post</a> we have that every smooth function \(F\) induces a linear ismorphism on the tangent space via the pushforward \(F_*\). By definition of the identity \(e\in G\), we have that \(l_g(e) = g\) for any \(g \in G\). Thus, the pushforward of \(l_g\) at the identity gives us a function
+        </p>
+        $$
+        (l_g)_{*,e} : T_eG \to T_gG
+        $$
+        <p>
+        Therefore, all the information about our Lie group \(G\) is actually contained in a neighborhood of \(e\)! We wish to make this idea a little bit more concrete: suppose we have some vector field \(X : G \to TG\). Since \(l_g\) is a map from \(G\) to \(G\), our pushforward \((l_g)_*\) takes vector fields on \(G\) to vector fields on \(G\). As one would expect, we call our vector field \(X\) <u>left-invariant</u> if
+        </p>
+        $$
+        (l_g)_*(X) = X
+        $$
+        <p>
+        Let \(L(G)\) denote the set of all left-invariant vector fields on \(G\). Now since \((l_g)_*(X_e) = X_g\), we need only know our vector field's value at \(X_e\). Thus, we have a clear map \(L(G) \to T_e(G)\) given by \(X \mapsto X_e\). Next, we wish to associate each tangent vector \(Y_e \in T_e(G)\) to a left-invariant vector field. Define the vector field \(\widetilde{Y}\) pointwise by \( (\widetilde{Y})_g = (l_g)_*(Y) \) for each \(g \in G\); then \(\widetilde{Y}\) must be left-invariant since
+        </p>
+        $$
+        (l_h)_*(\widetilde{Y}_g) = (l_h)_*((l_g)_*(Y)) = (l_h \circ l_g)_*(Y) = (l_{hg})(Y) = \widetilde{Y}_{hg}
+        $$
+        <p>
+        Giving us a map \(T_eG \to L(G)\) defined by \(Y \mapsto \widetilde{Y}\). In particular, this tells us that \(T_eG \simeq L(G)\).
+        </p>
+        <p>
+        "<em>This is all good and well,</em>" you may say, "<em>but does \(T_eG\) inherit any algebraic structure from \(G\)?</em>" Great question — as we've done with everything so far, we're going to examine this directly. For starters, how might you define a binary operation on two vector fields \(X\) and \(Y\)? Adding them could work. What about multiplication? Well if you remember from my <a class="popLink" href="https://www.christopherdare.com/blogposts/manifoldpartiii.html#CleaningUpMyPreviousPost">third post</a>, we require that our tangent vectors be derivations, so that they are linear and satisfy
+        </p>
+        $$
+        X(fg) = X(f)g + fX(g)
+        $$
+        <p>
+        (also known as the Liebniz rule) for all smooth functions \(f, g\) on \(M\). <em>HOWEVER</em>, when we try the same with the product \(XY\), we get the following:
+        </p>
+        $$
+        \begin{align}
+        XY(fg) &= X( Y(f)g + fY(g))
+        \\&= X(Yf)g + Y(f)X(g) + X(f)Y(g) + fXY(g)
+        \end{align}
+        $$
+        <p>
+        This is clearly not the Liebniz rule, due to those pesky \(Y(f)X(g) + X(f)Y(g)\) terms. It is worth noting, though, that if we swapped the order of \(XY\) to \(YX\), we would simply get our middle terms as \( X(f)Y(g) + Y(f)X(g) \) which is the exact same due to commutativity! Therefore, we define what is known as the <a class="popLink" href="https://en.wikipedia.org/wiki/Lie_bracket_of_vector_fields">Lie bracket</a> to be the binary operator \( [ \cdot, \cdot] : T_eG \times T_eG \to T_eG \) defined by
+        </p>
+        $$
+        [X, Y] = XY - YX
+        $$
+        <p>
+        Ultimately, we will show that the Lie bracket establishes an algebraic structure on \(L(G)\). We've already shown that \( [X, Y] \) allows us to construct a derivation from two derivations — but how do we know that our binary operation is closed. That is, will the Lie bracket of two left-invariant vector-fields in \(L(G)\) give us a left-invariant vector field in \(L(G)\)?
+        </p>
+        <br/>
+        <h6><b>Theorem:</b><h6> Let \(G\) be a Lie group and \(X, Y : G \to TG\) be two vector fields over \(G\). If \(X\) and \(Y\) are both left-invariant, then \([X, Y]\) is left-invariant as well.
+        <div class="showbar">
+          <button type="button" id="showLeftInvariant" onclick="showbutton('leftinvariantproof', 'showLeftInvariant', 'Proof')" class="btn btn-dark">Show Proof</button>
+          <div id="leftinvariantproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px; padding-bottom:15px;">
+            <h6><b>Proof:</b></h6>
+                    Let \(f \in C^\infty(G)\) be a smooth function on \(G\). Since \(X\) and \(Y\) are left-invariant, we know that for each \(g \in G\) we have
+                    $$
+                    \begin{align}
+                    X(f) &= (l_g)_*(X)(f) = X(f \circ l_g)
+                    Y(f) &= (l_g)_*(Y)(f) = Y(f \circ l_g)
+                    \end{align}
+                    $$
+                    Therefore, we directly compute
+                    $$
+                    \begin{align}
+                    (l_g)_*([X, Y])(f) &= (l_g)_*( XY - YX) (f)
+                    \\&= XY(f \circ l_g) - YX(f \circ l_g)
+                    \\&= X(Y(f) \circ l_g) - Y(X(f) \circ l_g)
+                    \\&= X(Y(f)) - Y(X(f))
+                    \\&= [X, Y](f)
+                    \end{align}
+                    $$
+                    $$\tag*{$\blacksquare$}$$
+                </em>
+          </div>
+        </div>
+        <br/>
+        <p> This tells us that \( [\cdot, \cdot] : L(G) \times L(G) \to L(G) \) is a closed binary operator over left-invariant derivations. However, since we showed \(L(G) \simeq T_eG\), we have that it is also a closed binary operator over \(T_eG\). You might not find this distinction particularly useful right away, but it is worth noting that \(T_eG\) forms a vector space over \(G\) (see where this is going?) Hence we have that \( [\cdot, \cdot] : T_eG \times T_eG \to T_eG \) is bilinear by our definition of the Lie bracket, so that
+        </p>
+        $$
+        \begin{align}
+        [aX + bY, Z] &= (aX + bY)Z - Z(aX + bY)
+        \\&= (aXZ - ZaX) + (bYZ - ZbY) \\&= a(XZ - ZX) + b(YZ - ZY) \\&= a[X, Z] + b[Y, Z]
+        \\ [X, aY + bZ] &= X(aY + bZ) - (aY + bZ)X \\&= (XaY - aYX) + (XbZ - bZX) \\&= a(XY - YX) + b(XZ - ZX) \\&= a[X, Y] + b[X, Z]
+        \end{align}
+        $$
+        <p>for \(a, b \in G\) and \(X, Y: G \to TG\). Therefore, the Lie bracket \([ \cdot , \cdot]\) is a binary operator over the vector space \(T_eG\) that satisfies the distributive law (with respect to standard addition) and scalar compatibility, so that \(T_eG\) along with the Lie bracket becomes an algebra! We will normally refer to this as the <a class="popLink" href="https://en.wikipedia.org/wiki/Lie_algebra">Lie algebra</a> of the Lie group \(G\) and denote it \(\mathfrak{g}\). Pretty cool stuff, huh?
+        </p>
+        <p>
+        As a bit of an aside, a general Lie algebra is defined to be a vector space \(\mathfrak{h}\) over some field \(k\), along with a binary operation \([\cdot, \cdot] : \mathfrak{h} \times \mathfrak{h} \to \mathfrak{h}\) that satisfies
+        </p>
+        
+        <ol>
+        <li> <u><b> Bilinearity </b></u>: \([ax + by, z] = a[x, z] + b[y,z]\) and \([x, ay + bz] = a[x,y] + b[x,z]\) for all \(a, b \in k\) and \(x, y, z \in \mathfrak{h}\).</li>
+        <br/>
+        <li><u><b> Alternativity </b></u>: \([x, x] = 0\) for all \(x \in \mathfrak{h}\).</li>
+        <br/>
+        <li><u><b> The Jacobi Identity </b></u>: \( [x, [y,z]] + [z, [x,y]] + [y, [z,x]] = 0 \) for all \(x, y, z \in \mathfrak{h}\).</li>
+        </ol>
+        <p>
+        I know what you might be wondering, and the answer is no — we did not prove axioms 2 or 3 for our example of the Lie bracket \([X, Y] = XY - YX\) on \( \mathfrak{g} = T_eG\). However, axiom 2 should be pretty obvious since \([X, X] = XX - XX = 0\). I will conclude this section with the following theorem:
+        </p>
+        <br/>
+        <h6><b>Theorem:</b><h6> Let \(G\) be a Lie group and \(\mathfrak{g} = T_eG\) be the Lie algebra of \(G\) with Lie bracket \([\cdot, \cdot] : T_eG \times T_eG \to T_eG\). Then \([\cdot, \cdot]\) satisfies the Jacobi Identity
+        $$
+         [X, [Y,Z]] + [Z, [X,Y]] + [Y, [Z,X]] = 0 \hspace{3em}\forall X, Y, Z \in \mathfrak{g}
+        $$
+        <div class="showbar">
+          <button type="button" id="showJacobiIdentity" onclick="showbutton('jacobiidentityproof', 'showJacobiIdentity', 'Proof')" class="btn btn-dark">Show Proof</button>
+          <div id="jacobiidentityproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px; padding-bottom:15px;">
+            <h6><b>Proof:</b></h6>
+                    Let \(X, Y, Z \in \mathfrak{g}\). We directly compute
+                    $$
+                    \begin{align}
+                    [X, [Y,Z]] + [Z, [X,Y]] + [Y, [Z,X]] &= [X, YZ - ZY] + [Z, XY - YX] + [Y, ZX - XZ]
+                    \\&= XYZ - XZY - YZX + ZYX
+                    \\&\hspace{2em}+ZXY - ZYX - XYZ + YXZ
+                    \\&\hspace{2em}+YZX - YXZ - ZXY + XZY
+                    \end{align}
+                    $$
+                    It is straightforward to check that every term has two copies of opposite signs, so that the entire equation cancells out.
+                    $$\tag*{$\blacksquare$}$$
+                </em>
+          </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <h3 id="item-2">A Sense of Direction</h3>
+        <br/>
+        
+        <p> One would be led to think that since we have covered so much material on smooth manifolds, we are perfectly ready to jump into more advanced content regarding Riemannian manifolds. The overwhelmed reader should be happy to hear that this is not quite the case; in fact, much of what we will be doing for the remainder of this article will simply involve our tangent vectors. From my <a class="popLink" href="https://www.christopherdare.com/blogposts/manifoldpartii.html">second post</a>, we know that a vector field over some manifold \(M\) is simply a map \(X : M \to TM \) that acts as a right-inverse to the projection map \(\pi : TM \to M\) (i.e. \(\pi \circ X = id_M\)). However, when we look at our vector field over some coordinate chart \( (U, x_1, \dots, x_n)\), it resembles (and acts like) a differential operator:
+        </p>
+        $$
+        X\vert_U = a_1\vert_U \frac{\partial}{\partial x_1} + \dots + a_n\vert_U  \frac{\partial}{\partial x_n}
+        $$
+        <p> If \(X\) is a smooth vector field, then the functions \(a_1(p), \dots, a_n(p)\) must be smooth as well (the converse also holds). Ultimately, we denote the set of all smooth vector fields over a manifold \(M\) as \(\mathfrak{X}(M)\). Now we already explored the structure of \(\mathfrak{X}(M)\) as a Lie algebra near the identity in the last section, so we will now turn our attention to <em><b>operators</b></em> on \(\mathfrak{X}(M)\).
+        </p>
+        <p> The first operator we wish to look at should be a fimiliar concept to those who have taken multivariable calculus of any kind; in particular, we will take advantage of both the vector-like nature and derivation nature of a tangent vector \(X_p \in T_pM\). In a coordinate neighborhood of \(p\) we denote the tangent vector \(X_p\) as
+        </p>
+        $$
+        X_p = a_1(p) \frac{\partial}{\partial x_1} \Big\vert_p + \dots + a_n(p) \frac{\partial}{\partial x_n}\Big\vert_p
+        $$
+        <p>  Alternatively, we could represent \(X_p\) in classical vector notation as some vector \(\overrightarrow{u} \in \mathbb{R}^n\)</p>
+        $$
+        \overrightarrow{u} = \begin{pmatrix}
+        a_1 \\ \vdots \\ a_n
+        \end{pmatrix}
+        $$
+        <p> Recall from multivariable calculus that we defined the directional derivative of a function \(f(\overrightarrow{x}) \) along \(\overrightarrow{u}\) at some point \(p \in \mathbb{R}^n\) to be </p>
+        $$
+        D_{\overrightarrow{u}} f = \lim_{h \to 0} \frac{ f(p + h\overrightarrow{u}) - f(p) }{h}
+        $$
+        <p> where \( p= (p_1, \dots, p_n)\). However, we may simplify this equation using the chain rule on our local chart to get the following:
+        </p>
+        $$
+        \begin{align}
+        D_{X_p} f &= \lim_{h \to 0} \frac{ f(p + h\overrightarrow{u}) - f(p) }{h} \\&= \frac{d}{dt} \Big\vert_{t=0} f(p + t\overrightarrow{u})
+        \\&= \sum_{i=1}^n \frac{ \partial f}{\partial x_i}\Big\vert_{p} \frac{\partial x_i}{\partial t}\vert_{t=0}
+        \\&= \sum_{i=1}^n \frac{ \partial f}{\partial x_i}\Big\vert_{p} \cdot a_i(p)
+        \\&= \left( \sum_{i=1}^n a_i(p) \frac{ \partial }{\partial x_i}\Big\vert_{p} \right) f
+        \\&= X_p f
+        \end{align}
+        $$
+        <p>Thus, we can see that our tangent vectors already act as directional derivatives on smooth functions! We lastly want to extend this notation a little bit further so that \(D_{X_p}\) acts as an operator on other vector fields over \(\mathbb{R}^n\). Thus, if we account for some second smooth vector field \(Y \in \mathfrak{X}(\mathbb{R}^n)\) with
+        </p>
+        $$
+        Y = b_1 \frac{\partial}{\partial x_1} + \dots + b_n \frac{\partial}{\partial x_n}
+        $$
+        <p>Then we may apply linearity to see that</p>
+        $$
+        \begin{align}
+        D_{X_p}Y &= D_{X_p}b_1 \frac{\partial}{\partial x_1} + \dots + D_{X_p}b_n \frac{\partial}{\partial x_n}
+        \\&= \sum_{i=1}^n (X_p b_i) \frac{\partial}{\partial x_i}
+        \end{align}
+        $$
+        <p>Thus, we have successfully converted the directional derivative into a smooth operator \(D : \mathfrak{X}(\mathbb{R}^n) \times \mathfrak{X}(\mathbb{R}^n) \to \mathfrak{X}(\mathbb{R}^n)\) using the identification \((D_X Y)_p = D_{X_p}Y\). As one typically does, the first thing we want to do is identify the properties of our newly-created operator \(D : \mathfrak{X}(\mathbb{R}^n) \times \mathfrak{X}(\mathbb{R}^n) \to \mathfrak{X}(\mathbb{R}^n)\). So what kind of properties do we want to explore? Well a pretty easy one is to ask whether the order of our inputs matters — that is, is \(D\) symmetric in the sense that \(D_XY = D_YX\)? Well if we let \(X = \sum_i a_i \frac{\partial}{\partial x_i}\) and \(Y = \sum_i b_i \frac{\partial}{\partial x_i}\), then we can take
+        </p>
+        $$
+        D_XY - D_YX = \sum_i (Xb_i - Ya_i) \frac{\partial}{\partial x_i} = \sum_i Xb_i \frac{\partial}{\partial x_i} - \sum_i Ya_i \frac{\partial}{\partial x_i} = XY - YX = [X, Y]
+        $$
+        <p>
+        to show that our directional derivative operator is symmetric if and only if our vector fields commute. Now that we have introduced the Lie bracket to our vector field operations, what can we say about the directional derivative's relationship with the Lie bracket? In particular, is the map \(X \mapsto D_X\) a Lie algebra homomorphism so that
+        </p>
+        $$
+        [D_X, D_Y] = D_{[X, Y]}
+        $$
+        <p>holds? Expanding the left-hand side, we see that for \(Z = \sum_i c_i \frac{\partial}{\partial x_i} \in \mathfrak{X}(\mathbb{R}^n)\)</p>
+        $$
+        \begin{align}
+        D_XD_YZ &= D_X\left( \sum_i (Yc_i) \frac{\partial}{\partial x_i} \right) = \sum_i (XYc_i) \frac{\partial}{\partial x_i}
+        \\ D_YD_XZ &= D_Y\left( \sum_i (Xc_i)\frac{\partial}{\partial x_i} \right) = \sum_i (YXc_i) \frac{\partial}{\partial x_i}
+        \end{align}
+        $$
+        <p>
+        Combining these two equations gives us
+        </p>
+        $$
+        D_XD_YZ - D_YD_XZ = \sum_i (XY - YX)c_i \frac{\partial}{\partial x_i} = D_{[X, Y]} Z
+        $$
+        <p> One last formula I want to show for good measure is the following: suppose we have three vector fields over \(\mathbb{R}^n\), say \(X, Y, Z \in \mathfrak{X}(\mathbb{R}^n)\). The reader may recall from multivariable calculus or linear algebra that we defined the dot product between two vectors \(u, v \in \mathbb{R}^n\) to be</p>
+        $$
+        \langle u, v \rangle = u \cdot v = \sum_i u_iv_i
+        $$
+        <p>At each point \(p \in \mathbb{R}^n\), our vector fields evaluated at that point are simply tangent vectors \(X_p, Y_p, Z_p\) — this allows us to define an inner product on our vector fields point-wise</p>
+        $$
+        (\langle X, Y \rangle)\vert_p = \langle X_p, Y_p \rangle
+        $$
+        <p>
+        In particular, since we can represent \(X = \sum_i a_i \frac{\partial}{\partial x_i}\) and \(Y = \sum_i b_i \frac{\partial}{\partial x_i}\), we may simplify the formula in the obvious way
+        </p>
+        $$
+        \langle X, Y \rangle = \sum_i a_ib_i
+        $$
+        <p>
+        Giving us a smooth function on \(\mathbb{R}^n\)! Using this function, the last formula for our directional derivative that I wanted to provide was the following:
+        </p>
+        $$
+        \begin{align}
+        X \langle Y, Z \rangle &= X \left( \sum_i a_ib_i \right)
+        \\&= \sum_i X(a_ib_i )
+        \\&= \sum_i X(a_i) b_i + \sum_i X(b_i)a_i
+        \\&= \langle D_XY, Z \rangle + \langle Y, D_XZ \rangle
+        \end{align}
+        $$
+        <p> Putting the pieces together, we have ultimately shown three things in this section:</p>
+        <br/>
+        <h6><b>Theorem:</b><h6> Let \(X, Y, Z \in \mathfrak{X}(\mathbb{R}^n)\) be smooth vector fields over \(\mathbb{R}^n\) and \(D : \mathfrak{X}(\mathbb{R}^n) \times \mathfrak{X}(\mathbb{R}^n) \to \mathfrak{X}(\mathbb{R}^n)\) denote the directional derivative. Then \(D\) satisfies
+        <ol>
+        <br/>
+        <li><b><u>Zero Torsion</u></b>: \(D_XY - D_YX - [X, Y] = 0\)</li>
+        <br/>
+        <li><b><u>Zero Curvature</u></b>: \(D_XD_YZ - D_YD_XZ - D_{[X, Y]}Z = 0\)</li>
+        <br/>
+        <li><b><u>Metric Compatibility</u></b>: \(X\langle Y, Z\rangle = \langle D_XY, Z\rangle + \langle Y, D_XZ\rangle\)</li>
+        </ol>
+        <div class="showbar">
+          <button type="button" id="showDirDerProp" onclick="showbutton('dirderprop', 'showDirDerProp', 'Proof')" class="btn btn-dark">Show Proof</button>
+          <div id="dirderprop" style="display: none; text-align: left; padding-left:15px; padding-right:15px; padding-bottom:15px;">
+            <h6><b>Proof:</b></h6>
+                    It's literally everything we've gone over in this section so far.
+                    $$\tag*{$\blacksquare$}$$
+                </em>
+          </div>
+        </div>
+        <br/>
+        <p> The reader should note that everything we have done in this section <em>has not</em> been on a general manifold \(M\) but instead on our prototype \(\mathbb{R}^n\). I feel that it was necessary to explain the directional derivative on \(\mathbb{R}^n\) first, however, since it gives an unprecedented exposition to <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A map which carries tangent vectors at one point to tangent vectors at another — in essence it generalizes the directional derivative">affine connections</a>. In most applications, it is enough to consider torsion and curvature from the perspective of the directional derivative on \(\mathbb{R}^n\); however, I hope that after a few more blog posts I will be able to construct a second <em>Manifolds Application</em> post to introduce a more general curvature.
+        </p>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <h3 id="item-3">An Introduction to Riemann and Gauss</h3>
+        <br/>
+        <p id="item-3-1">
+         You may have noticed by this point that I titled this series of blog posts "Riemannian Manifolds", and have done nothing to indicate thus far what a Riemannian manifold is. However, after proving the last property of the directional derivative in my previous section (known as metric compatibility), I feel I have set a good enough precedent. For many, one of the first things taught in a multivariable calculus or linear algebra class is the notion of the dot product \(v \cdot v\). Without even bringing manifolds into the discussion, the dot product may be abstractd to what is known as an <a class="popLink" href="http://mathworld.wolfram.com/InnerProduct.html">inner product</a>. As discussed in the link, an inner product \(\langle\, ,\,\rangle : V \times V \to k\) over a (real or complex) vector space \(V\) is simply a way to numerically (i.e. via a scalar) evaluate two vectors in a manner that satisfies:
+        </p>
+        <ol>
+        <li><b><u>Bilinearity</u></b>: \(\langle au + bv, w\rangle = a\langle u, w \rangle + b \langle v, w \rangle\) for all scalars \(a, b \in k\) and \(u ,v, w \in V\). </li>
+        <li><b><u>Conjugate Symmetry</u></b>: \(\langle u, v \rangle = \overline{\langle v , u \rangle}\) for all \( u, v \in V \) </li>
+        <li><b><u>Positive Definite</u></b>: \(\langle v , v \rangle \geq 0\) for all \(v \in V\) and \(\langle v, v \rangle = 0\) if and only if \(v = 0\).</li>
+        </ol>
+        <p>
+        As was the case for our dot product, we wish to evaluate vectors over our tangent bundle \(TM\) — unfortunately, our tangent bundle isn't actually a vector space in the majority of cases. However, at each point \(p \in M\), the tangent space \(T_pM\) <em>is</em> a vector space. Therefore, we may assign an inner product \(\langle\, ,\, \rangle_p : T_pM \times T_pM \to \mathbb{R} \) to each tangent space, ultimately giving us a map \( p \mapsto \langle \, , \,\rangle_p\). Ultimately, we denote this assignment by \(g : M \to \mathbb{R}\) and say that it is a <a class="popLink" href="https://en.wikipedia.org/wiki/Riemannian_manifold#Riemannian_metrics">Riemannian metric</a> if it is smooth. A <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A manifold which has just enough structure to interpret geometric information such as angles and curvature">Riemannian manifold</a> is simply a pair \(M, g\) where \(M\) is a smooth manifolds and \(g : M \to \mathbb{R}\) is a Riemannian metric on \(M\).
+        </p>
+        <p> An easy way to think of our Riemannian metric is as a generalization of our dot product on Eucliean space \(\mathbb{R}^n\) — at each point we may compare two tangent vectors \(X_p =\sum_i a_i(p) \frac{\partial}{\partial x_i}, Y_p = \sum_i b_i(p) \frac{\partial}{\partial x_i}\) in some way (for example, via
+        </p>
+        $$
+        g(p) = \sum_i a_i(p)b_i(p)
+        $$
+        <p>the standard dot product). However, once we allow \(p\) to vary it no longer holds that</p>
+        $$
+        g = \langle X, Y \rangle = \sum_i a_ib_i
+        $$
+        <p>
+        This proves to be an immense difficulty when trying to compare tangent vectors that do not lie on the same tangent plane.
+For example, when the directional derivative was introduced in the last section, we showed that properties such as torsion and curvature could be defined using our operator \(D : \mathfrak{X}(\mathbb{R}^n) \times \mathfrak{X}(\mathbb{R}^n) \to \mathfrak{X}(\mathbb{R}^n)\). Since we are no longer dealing with \(\mathbb{R}^n\) but now more general Riemannian manifolds \((M,g)\), we wish to find a map
+        </p>
+        $$
+        \nabla : \mathfrak{X}(M) \times \mathfrak{X}(M) \to \mathfrak{X}(M)
+        $$
+        <p>
+        that resembles our directional derivative as closely as possible. In particular, recall that we defined a derivation \(d\) to be a linear map that satisfies the Liebniz rule
+        </p>
+        $$
+        d(\alpha \beta) : D(\alpha)\beta + \alpha D(\beta)
+        $$
+        <p> Now our directional derivative \(D : \mathfrak{X}(\mathbb{R}^n) \times \mathfrak{X}(\mathbb{R}^n) \to \mathfrak{X}(\mathbb{R}^n)\) satisfied a similar property in the second input \(Y = \sum_i b_i \frac{\partial}{\partial x_i}\):
+        </p>
+        $$
+        D_X(f\,Y) = \sum_i X (fb_i)\frac{\partial}{\partial x_i} = \sum_i (X\,f)b_i \frac{\partial}{\partial x_i} + f\sum (X\,b_i)\frac{\partial}{\partial x_i} = (X\,f)Y + f\,D_XY
+        $$
+        <p> but not in the first input</p>
+        $$
+        D_{fX}Y = \sum_i fY(b_i)\frac{\partial}{\partial x_i} = f\,D_XY
+        $$
+        <p> Therefore, we define an <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="A map which allows differentiation across distinct vector spaces">affine connection</a> to be any map \( \nabla : \mathfrak{X}(M) \times \mathfrak{X}(M) \to \mathfrak{X}(M)\) that satisfies
+        </p>
+        $$
+        \begin{align}
+        \nabla_{fX}Y &= f\,\nabla_XY
+        \\ \nabla_X(fY) &= (X\,f)Y + f\nabla_XY
+        \end{align}
+        $$
+        <p>
+        for all smooth functions \(f \in C^\infty(M)\). We can, however, do a little bit better — I hinted at the terminology earlier, but what we now want to introduce are the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The amount that an object twists">torsion</a> and <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The amount an object bends, or deviates from being flat">curvature</a>. Mimicing our notation for the directional derivative, given an affine connection \(\nabla_XY\) on a Riemannian manifolds \(M\), we define the torsion and curvature to be
+        </p>
+        $$
+        \begin{align}
+        T(X, Y) &= \nabla_XY - \nabla_YX - [X, Y]
+        \\ R(X, Y) &= [\nabla_X, \nabla_Y] - \nabla_{[X, Y]}
+        \end{align}
+        $$
+        <p>respectively. Now I should point out that our torsion \(T\) is inherently different from the torsion groups defined in homological algebra; in particular, de Rham cohomology from my <a class="popLink" href="https://www.christopherdare.com/blogposts/manifoldpartiii.html">third post</a> is a much better tool for determining how much a shape twists. Our torsion map \(T\) more so measures how much our affine connection deviates from a Lie algebra homomorphism. Since we are trying to mimic the directional derivative as closely as possible, we also wish for an affine connection that acts as a Lie algebra homomorphism; in particular, this will allow us to transport structure from one tangent plane to another as desired. However, the reader should be aware by this point that not every manifold is necessarily flat. Consider the sphere for exampe — at each point the sphere has a positive (and constant) curvature, though we still wish to classify the sphere as a Riemannian manifold. Therefore, we cannot say anything about our curvature tensor \(R(X, Y)\) for a general manifold. Ultimately, we define a <a class="popLink" href="https://en.wikipedia.org/wiki/Levi-Civita_connection">Riemannian connection</a> to be an affine connection \(\nabla : \mathfrak{X}(M) \times \mathfrak{X}(M) \to \mathfrak{X}(M)\) that satisfies
+        </p>
+        <ol>
+        <li> <u><b>Torsion-Free</b></u>: \(T(X, Y) = 0\) for all \(X, Y \in \mathfrak{X}(M)\).</li>
+        <br/>
+        <li><u><b>Metric Compatibility</b></u>: \(Z\langle X, Y \rangle = \langle \nabla_ZX, Y \rangle + \langle X, \nabla_ZY\rangle\) for all \(X, Y, Z \in \mathfrak{X}(M)\).</li>
+        </ol>
+        <br/>
+        <h6><b>Theorem:</b><h6>Every Riemannian manifold \((M, g)\) has a unique Riemannian connection \(\nabla :\mathfrak{X}(M) \times \mathfrak{X}(M) \to \mathfrak{X}(M)\).
+        <div class="showbar">
+          <button type="button" id="showRiemannianConnection" onclick="showbutton('riemannianconnectionproof', 'showRiemannianConnection', 'Proof')" class="btn btn-dark">Show Proof</button>
+          <div id="riemannianconnectionproof" style="display: none; text-align: left; padding-left:15px; padding-right:15px; padding-bottom:15px;">
+            <h6><b>Proof:</b></h6>
+                    Since the Riemannian metric \(g\) maps any point \(p\) to an inner product \(\langle\cdot, \cdot\rangle_p\) on \(T_pM\), we will simplify notation by letting \(g(X, Y)\) be defined pointwise in the obvious manner \(g(X, Y)\vert_p = \langle X_p, Y_p\rangle\). Now \(g\) is clearly a symmetric linear map by definition. We will first prove uniqueness by assuming the existence of some Riemannian connection \(\nabla\). Then by metric compatibility, we may expand
+                    $$
+                    \begin{align}
+                    Y(g(Z, X)) &= g(\nabla_YZ, X) + g(Z, \nabla_YX)
+                    \\&= g(\nabla_YZ, X) + g(Z, \nabla_YX) + \left( g(Z, [X, Y]) - g(Z, [X, Y]) \right)
+                    \\&= g(\nabla_YZ, X) + \left( g(Z, \nabla_YX) + g(Z, \nabla_XY - \nabla_YX)\right) - g(Z, [X, Y])
+                    \\&= g(\nabla_YZ, X) + g(Z, \nabla_XY) - g(Z, [X, Y])
+                    \end{align}
+                    $$
+                    for arbitrary \(X, Y, Z \in \mathfrak{X}(M)\). Now by using symmetry of \(g\), we have that
+                    $$
+                    \begin{align}
+                    X(g(Y, Z)) - Z(g(X, Y)) &= g(\nabla_XY, Z) + g(Y, \nabla_XZ) - g(\nabla_ZX, Y) - g(X, \nabla_ZY)
+                    \\&= g(\nabla_XY, Z) + g(Y, [X, Z]) - g(X, \nabla_ZY)
+                    \end{align}
+                    $$
+                    By adding in our expansion for \(Y(g(Z, X))\) above, we get
+                    $$
+                    \begin{align}
+                    X(g(Y, Z)) - Z(g(X, Y)) + Y(g(Z, X)) &= g(\nabla_XY, Z) + g(Y, [X, Z]) - g(X, \nabla_ZY) + g(\nabla_YZ, X)
+                    \\&\hspace{3em}+ g(Z, \nabla_XY) - g(Z, [X, Y])
+                    \\&= 2g(\nabla_XY, Z) + g(Y, [X, Z]) + g(X, [Y, Z]) - g(Z, [X, Y])
+                    \end{align}
+                    $$
+                    Since \(Z\) is arbitrary, we may define \(\nabla_XY\) to be the unique connection which satisfies
+                    $$
+                    g(\nabla_XY, Z) = \frac{1}{2}X(g(Y, Z)) - \frac{1}{2}Z(g(X, Y)) + \frac{1}{2}Y(g(Z, X)) -\frac{1}{2} g(Y, [X, Z]) -\frac{1}{2} g(X, [Y, Z]) + \frac{1}{2} g(Z, [X, Y])
+                    $$
+                    $$\tag*{$\blacksquare$}$$
+                </em>
+          </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <p id="item-3-2">
+        To wrap this blog post up, I'll finish with a bit of content that hopefully you recognize from multivariable calculus. As some of you may have noticed, I have gone into excessive detail and applications of our <em>tangent</em> vectors, but failed to discuss anything regarding other types of vectors fields over a manifold \(M\) aside from \(TM\). In fact, the theory of vector bundles is incredibly extensive and will be covered in several future posts from both the differential and algebraic perspectives of geometry.
+        </p>
+        <p>Getting back on topic, lets consider the trivial example of \(\mathbb{R}^3\): given any surface \(S\), what are the three standard vectors that encompass the <a class="popLink" href="https://en.wikipedia.org/wiki/Frenet%E2%80%93Serret_formulas">Frenet frame</a>? I assume that if you didn't get the question then you probably clicked the link — in either case, the answer is the tangent vector \(\mathbf{T}\), the normal vector \(\mathbf{N}\) and the binormal vector \(\mathbf{B}\). We already discussed the tangent bundle \(TM\) consisting of all our tangent vectors, and the binormal vector won't really come into play — however, the unit normal vector will peak some interest.
+        </p>
+        <p> For starters, we can easily define the unit normal vector field \(N\) by associating each point \(p \in M\) to the unit normal vector \(N_p\) of our tangent plane \(T_pM\). Now clearly \(N_p\) is not an element of \(T_pM\) so its breaking a bit of notation to call \(N\) a vector field as it isn't a map \(M \to TM\) — we'll ignore this for now.
+        </p>
+        <p>
+        The most important application of our unit normal vector field \(N\) for the near future is to act as a placeholder for operators we have already defined. Indeed, much of what we have done up to this point is define operators over our Lie algebra \(T_eM\). For starters, given a Riemannian connection \(\nabla : \mathfrak{X}(M) \times \mathfrak{X}(M) \to \mathfrak{X}(M)\) over a Riemannian manifold \(M\), we define the <a style="color: #00c624;" data-toggle="tooltip" title data-original-title="The operator which dictates how much a vector field is shifting towards the normal direction at a given point">shape operator</a> \(L : \mathfrak{X}(M) \to \mathfrak{X}(M)\) to be
+        </p>
+        $$
+        L(X) = -\nabla_XN
+        $$
+        <p>
+        A nice property of our shape operator \(L\) is that it is self-adjoint with respect to our Riemannian metric \(g\). To see this, fix some smooth vector fields \(X, Y \in \mathfrak{X}(M)\) and note that we must have \(\langle X, N \rangle = \langle Y, N \rangle = 0\) since \(N\) is orthogonal to both \(X\) and \(Y\) by definition. But then
+        </p>
+        $$
+        \begin{align}
+        0 &= X\langle Y, N\rangle = \langle \nabla_XY, N\rangle + \langle Y, \nabla_XN \rangle = \langle \nabla_XY, N\rangle - \langle Y, L(X)\rangle
+       \\ 0 &= Y\langle X, N\rangle = \langle \nabla_YX, N\rangle + \langle X, \nabla_YN \rangle = \langle \nabla_YX, N\rangle - \langle X, L(Y)\rangle
+        \end{align}
+        $$
+        <p> so that by torsion-freeness of \(\nabla\)</p>
+        $$
+        \langle L(X), Y \rangle - \langle X, L(Y) \rangle = \langle \nabla_XY, N \rangle - \langle \nabla_YX, N \rangle =  \langle [X, Y], N \rangle
+        $$
+        <p>
+        However, \([X, Y]\) is also a tangent vector field on \(M\) so we must have \(\langle [X, Y], N\rangle = 0\). Therefore,
+        </p>
+        $$
+        \langle L(X), Y \rangle = \langle X, L(Y)\rangle
+        $$
+        <p>
+        The shape operator \(L\) may be a bit difficult to comprehend geometrically, but I find that the easiest way to grasp it is by using our connection \(D\) (i.e. the directional derivative). Using the directional derivative, we have that \(L(X)\) simplifies to \(L(X) = -D_XN\) — thus, our shape operator would measure how much our unit normal vector \(N_p\) changes along some unit vector field \(X\).
+        </p>
+        <p>
+        Ultimately, we want to measure this change in our normal vector via some scalar value. Thus, using our Riemannian metric \(g\) we are able to measure how much the change in our normal vector along \(X\) differs from our original unit vector field \(X\) via
+        </p>
+        $$
+        \langle L(X), X \rangle
+        $$
+        <p>We will refer to this map as the <a class="popLink" href="http://mathworld.wolfram.com/NormalCurvature.html">normal curvature</a>, denoted \(\kappa : \mathfrak{X}(M) \to \mathbb{R}\). Now the set of all unit vectors over a point \(p \in M\) (where \(M\) is \(n\)-dimensional) is isomorphic to \(S^n\). Since \(S^n\) is compact, the extreme value theorem tells us that \(\kappa(X_p)\) must have a minimum and maximum — we refer to these values as \(\kappa_1\) and \(\kappa_2\), respectively. Using these values, we may further define the <a class="popLink" href="https://en.wikipedia.org/wiki/Gaussian_curvature">Gaussian curvature</a> \(K\) to be the value
+        </p>
+        $$
+        K = \kappa_1\kappa_2
+        $$
+        <p> Now the Gaussian curvature indicates an extrodinary amount regarding the geometry of a shape, allowing us to easily classify spaces based on their sign. Assuming we are at some point \(p \in M\), if \(\kappa_1 < 0 < \kappa_2\) then \(K < 0\) and the surface is said to have a <em>saddle point</em> at \(p\). However, when both \(\kappa_1\) and \(\kappa_2\) have the same sign, we must have that \(K > \) so that \(p\) is an elliptic point and locally looks like a cusp. Lastly, when either \(\kappa_1 = 0\) or \(\kappa_2 = 0\), we have that \(K = 0\) so that our shape just looks like a flat plane thats been folded.
+        </p>
+        <p>Let's consider an example: the two-dimensional sphere \(S^2 \subset \mathbb{R}^3\) of radius \(r >0\). The first thing to is to identify our unit normal field \(N\) on \(S^2\) — however this is actually much easier than you would think, since at each point the outwards normal vector points in the same direction as the position vector. In other words, every line we draw through the origin will be perpendicular to the surface of our sphere. Therefore,
+        </p>
+        $$
+        N = \frac{x}{r} \frac{\partial}{\partial x} + \frac{y}{r} \frac{\partial}{\partial y} + \frac{z}{r} \frac{\partial}{\partial z}
+        $$
+        <figure style="padding-bottom: 30px; text-align: center;">
+            <img src="../images/normalsphere.jpg" style="width: 50%; border-radius: 5px 5px 5px 5px;"></img>
+        </figure>
+        <p>If we let \(X = f(x, y, z) \frac{\partial}{\partial x} + g(x, y, z) \frac{\partial}{\partial y} + h(x,y,z) \frac{\partial}{\partial z}\), then a simple calculation gives us</p>
+        $$
+        \begin{align}
+        L(X) &= -X(\frac{x}{r}) \frac{\partial}{\partial x} - X(\frac{y}{r}) \frac{\partial}{\partial y} - X(\frac{z}{r}) \frac{\partial}{\partial z}
+        \\&= -\frac{f(x,y,z)}{r}\frac{\partial}{\partial x} - \frac{g(x, y, z)}{r} \frac{\partial}{\partial y} - \frac{h(x, y, z)}{r} \frac{\partial}{\partial z}
+        \\&= \frac{-1}{r}X
+        \end{align}
+        $$
+        <p>If we choose \(X\) to specifically be any unit vector, then we have that the map \(\kappa(X) = \langle L(X), X \rangle = \frac{-1}{r}\langle X, X \rangle = \frac{-1}{r}\) is clearly constant. Ultimately, this tells us that the Gaussian curvature of the sphere is \(K = \frac{1}{r^2}\).
+        </p>
+        <p> The reader should note that if \(e_1, e_2\) is a basis for the tangent plane \(T_pM\) at some point \(p\), then we can express
+        </p>
+        $$
+        L(e_1) = ae_1 + be_2 \hspace{5em} L(e_2) = be_1 + ce_2 \ \ \ (\text{note}\ \text{we}\ \text{use}\ b\ \text{twice}\ \text{by}\ \text{self-adjointness})
+        $$
+        <p> where </p>
+        $$
+        a = \langle L(e_1), e_1 \rangle, \hspace{2em} b = \langle L(e_1), e_2 \rangle = \langle e_1, L(e_2) \rangle, \hspace{2em} c = \langle L(e_2), e_2 \rangle
+        $$
+        <p> However, since our curvature is defined by \(\kappa(X) = \langle L(X), X\rangle\), we have that the principle curvautres \(\kappa_1, \kappa_2\) are, in fact, the eigenvalues of the shape operator \(L\). Thus, our Gaussian curvature \(K\) is precisely </p>
+        $$
+        K = \kappa_1\kappa_2 = \text{det}L = ac - b^2 = \langle L(e_1), e_1 \rangle  \langle L(e_2), e_2 \rangle - \langle L(e_1), e_2 \rangle \langle e_1, L(e_2) \rangle
+        $$
+        <br/>
+        <h5><b>Gauss' Curvature Equation:</b></h5>Let \(M\) be an oriented surface in \(\mathbb{R}^3\), \(\nabla\) its Riemannian connection, \(R\) the curvature operator with respect to \(\nabla\) and \(L\) its shape operator. Then
+        $$
+        R(X, Y)Z = \langle L(Y), Z \rangle L(X) - \langle L(X) , Z \rangle L(Y)
+        $$
+        <div class="showbar">
+          <button type="button" id="showGaussCurvature" onclick="showbutton('gausscurvatureequation', 'showGaussCurvature', 'Proof')" class="btn btn-dark">Show Proof</button>
+          <div id="gausscurvatureequation" style="display: none; text-align: left; padding-left:15px; padding-right:15px; padding-bottom:15px;">
+            <h6><b>Proof:</b></h6>
+                    Since the directional derivative \(D_XY\) is not, in general, tangent to our surface \(M\), we generally use the Riemannian connection
+                    $$
+                    \nabla_XY = \text{pr}(D_XY) = D_XY - \langle D_XY, N\rangle N
+                    $$
+                    to transport tangent vectors on \(M\). Since \(D_XY\) is not always a tangent vector, we may thus decompose it into its tangent and normal components:
+                    $$
+                    \begin{align}
+                    D_XY &= \nabla_XY + \langle D_XY, N\rangle N
+                    \\&= \nabla_XY + \langle L(X), Y\rangle N \hspace{5em}(\star\star)
+                    \end{align}
+                    $$
+                    for unit tangent vector fields \(X, Y\), where \(N\) denotes the unit normal vector field. Therefore, if we consider a unit third vector field \(Z\), we have that
+                    $$
+                    \begin{align}
+                    D_XD_YZ &= D_X \nabla_YZ + D_X (\langle L(Y), Z \rangle N)
+                    \\&= \left( \nabla_X\nabla_YZ + \langle L(X), \nabla_YZ \rangle N \right) + X \langle L(Y), Z \rangle N + \langle L(Y), Z\rangle D_XN
+                    \\&= \nabla_X\nabla_YZ - \langle L(Y), Z \rangle L(X) + \left( \langle L(X), \nabla_YZ \rangle  + X \langle L(Y), Z \rangle\right) N
+                    \end{align}
+                    $$
+                    Before going forward, it is worth pointing out that we have separated the above equation into its tangent components (i.e. \(\nabla_X\nabla_YZ - \langle L(X), Z \rangle L(X)\)) and its normal components (i.e. \(\left( \langle L(X), \nabla_YZ \rangle  + X \langle L(Y), Z \rangle\right) N\)). If we interchange \(X\) and \(Y\) we get a similar equation
+                    $$
+                    D_YD_XZ = \nabla_Y\nabla_XZ - \langle L(X), Z \rangle L(Y) + \left( \langle L(Y), \nabla_XZ \rangle  + Y \langle L(X), Z \rangle\right) N
+                    $$
+                    Mimicing our technique for \((\star\star)\) above, we can see that
+                    $$
+                    D_{[X,Y]}Z = \nabla_{[X,Y]}Z + \langle L([X,Y]), Z \rangle N
+                    $$
+                    Putting all the pieces together, we see that
+                    $$
+                    R_D(X,Y)Z = R_\nabla(X,Y)Z - \langle L(Y), Z \rangle L(X) + \langle L(X), Z \rangle L(Y) + (\dots) N
+                    $$
+                    However, since the directional derivative \(D\) satisfies 0 curvature, we must have that the normal components (i.e. the condensed \((\dots)N\)) are equal to zero and the tangential components are equal to zero. In particular, the tangential components give us
+                    $$
+                     R_\nabla(X,Y)Z = \langle L(Y), Z \rangle L(X) - \langle L(X), Z \rangle L(Y)
+                    $$
+                    $$\tag*{$\blacksquare$}$$
+                    
+                    <em>Adapted from:<br/>
+                    Tu, Loring W. Differential Geometry. Springer International Publishing, 2017.
+                    </em>
+                </em>
+          </div>
+        </div>
+        <br/>
+        <br/>
+        <p>At long last, we have come to the pinnacle of this blog post: Gauss' Theorema Egregium. Now to be quite honest, I haven't talked much about the category of Riemannian manifolds \(\textrm{Rm}\) — in other words, I havent really talked much about how to tell when two Riemannian manifolds are basically the same object. For example, when we look locally at a horizontal cylinder of infinite length, it simply looks like a plane thats been rolled up. If that hand-waiving didn't convince you, we could simply consider \(M = \{ (x, y, z) \in \mathbb{R}^3 \mid x^2 + y^2 = 1\}\) and look at the local isometry \(\phi : \mathbb{R}^2 \to M\) given by \(\phi(x, y) = (\cos x, \sin x, y)\). If we look at the tangent plane \(T_pM = \text{span}(e_1, e_2)\), then
+        </p>
+        $$
+        d\phi(e_1) = \frac{\partial \phi}{\partial x} = (-\sin x, \cos x, 0)
+        \\ d\phi(e_2) = \frac{\partial \phi}{\partial y} = (0, 0, 1)
+        $$
+        <p>which tells us \(\langle d\phi(X), d\phi(Y) \rangle = \langle X, Y \rangle \) for all \(X, Y \in T_pM\)</p>
+        <figure style="padding-bottom: 30px; text-align: center;">
+            <img src="../images/cylinderplane.jpg" style="width: 90%; border-radius: 5px 5px 5px 5px;"></img>
+        </figure>
+        
+        <p> We use this example to motivate what is known as an <a class="popLink" href="https://en.wikipedia.org/wiki/Isometry">isometry</a> between Riemannian manifolds — in particular, we define an isometry \(\phi : (M, g) \to (\widetilde{M}, \widetilde{g})\) to be a diffeomorphism which satisfies
+        </p>
+        $$
+        g(X, Y) = \widetilde{g}(\phi_*X, \phi_*Y) \hspace{4em} \forall X, Y \in \mathfrak{X}(M)
+        $$
+        <p>This was the last piece of machinery needed to state Gauss' Theorema Egregium:</p>
+        <br/>
+        <h5><b>Theorema Egregium:</b></h5> Let \((M,g)\) be a Riemannian manifold in \(\mathbb{R}^3\) and \(p \in M\) be a point. Then our Gaussian curvature can be given by
+        $$
+        K_p = g(R_p(e_1, e_2)e_2, e_1)
+        $$
+        where \(e_1, e_2 \in T_pM\) form an orthogonal basis. Moreover, the Gaussian curvature is an isometric invariant, such that if \(\phi : (M, g) \to (\widetilde{M}, \widetilde{g})\) is an isometry and
+        $$
+        \nabla_XY = (\phi^{-1})_* \left( \widetilde{\nabla}_{\phi_*X}\phi_*Y \right)
+        $$
+        is the induced affince connection, then \(K_p = K_{\phi(p)}\).
+        <div class="showbar">
+          <button type="button" id="showTheoremaEgregium" onclick="showbutton('theoremaegregium', 'showTheoremaEgregium', 'Proof')" class="btn btn-dark">Show Proof</button>
+          <div id="theoremaegregium" style="display: none; text-align: left; padding-left:15px; padding-right:15px; padding-bottom:15px;">
+            <h6><b>Proof:</b></h6>
+                    We first show that our induced connection \(\widetilde{\nabla}\) is, in fact, a Riemannian connection on \(\widetilde{M}\). We get torsion-freeness by linearity of our pushforward:
+                    $$
+                    \begin{align}
+\nabla_XY - \nabla_YX - [X, Y] &= (\phi^{-1})_* \left( \widetilde{\nabla}_{\phi_*X}\phi_*Y \right) - (\phi^{-1})_* \left( \widetilde{\nabla}_{\phi_*Y}\phi_*X \right) - [X, Y]
+\\&= (\phi^{-1})_* \left( \widetilde{\nabla}_{\phi_*X}\phi_*Y - \widetilde{\nabla}_{\phi_*Y}\phi_*X \right) - [X, Y]
+\\&= (\phi_*)^{-1} [\phi_*X, \phi_*Y] - [X, Y]
+\\&= [X, Y] - [X, Y] = 0
+\end{align}
+                    $$
+                    Moreover, since \(\phi\) is an isometry we have that
+                    $$
+                    \begin{align}
+g( \nabla_ZX, Y ) + g( X, \nabla_ZY ) &= g( \phi_*^{-1} \left( \widetilde{\nabla}_{\phi_*Z}\phi_*X \right), Y ) + g( X, \phi_*^{-1}\left( \widetilde{\nabla}_{\phi_*Z}\phi_*Y \right) )
+\\&= \widetilde{g}( \widetilde{\nabla}_{\phi_*Z}\phi_*X, \phi_*Y ) + \widetilde{g} ( \phi_*X, \widetilde{\nabla}_{\phi_*Z}\phi_*Y )
+\end{align}
+                    $$
+                    Thus, since \(\nabla\) is compatible with the metric \(\widetilde{\nabla}\) must be as well. Thus, \(\widetilde{\nabla}\) is a Riemannian connection on \(\widetilde{M}\).
+                    <br/>
+                    <br/>
+                    To prove our equation for Gaussian curvature, we recall that the Gaussian curvature is the determinant of the shape operator \(L\):
+                    $$
+                    K = \text{det}L = \langle L(e_1), e_1 \rangle  \langle L(e_2), e_2 \rangle - \langle L(e_1), e_2 \rangle \langle e_1, L(e_2) \rangle
+                    $$
+                    However, by Gauss' curvature equation we get the following:
+                    $$
+                    R(e_1,e_2)e_2 = \langle L(e_2),e_2 \rangle L(e_1) - \langle L(e_1), e_2 \rangle L(e_2)
+                    $$
+                    Therefore,
+                    $$
+                    \langle R(e_1, e_2) e_2, e_1\rangle = \det L = K
+                    $$
+                    <br/>
+                    <br/>
+                    Finally, if we consider our isometry \(\phi : (M, g) \to (\widetilde{M}, \widetilde{g})\), we have that
+                    $$
+                    \begin{align}
+\phi_*\left( R(X, Y)Z \right) &= \phi_*\left( \nabla_X\nabla_YZ - \nabla_Y\nabla_XZ - \nabla_{[X, Y]}Z \right)
+\\&= \phi_*\left( \nabla_X ( \phi_*^{-1}( \widetilde{\nabla}_{\phi_*Y}\phi_*Z)) \right) - \phi_*\left( \nabla_Y(\phi_*^{-1}(\widetilde{\nabla}_{\phi_*X}\phi_*Z)) \right)
+\\&\hspace{3em} - \phi_* \left( \phi_*^{-1}(\widetilde{\nabla}_{\phi_*[X, Y]} \phi_*Z) \right)
+\\&= \widetilde{\nabla}_{\phi_*X}\widetilde{\nabla}_{\phi_*Y}\phi_*Z - \widetilde{\nabla}_{\phi_*Y} \widetilde{\nabla}_{\phi_*X} \phi_*Z - \widetilde{\nabla}_{[\phi_*X, \phi_*Y]}\phi_*Z
+\\&= \tilde{R}(\phi_*X, \phi_*Y)\phi_*Z
+\end{align}
+                    $$
+                    If we use \(g\) instead of \(\langle \cdot, \cdot \rangle\) for clarity, then
+                    $$
+                    \begin{align}
+                    K_p &= g( R(e_1, e_2) e_2, e_1)
+                    \\&= \widetilde{g}(\phi_8(R(e_1, e_2)e_2), \phi_*(e_1))
+                    \\&= \widetilde{g}(\widetilde{R}(\phi_*e_1, \phi_*e_2)\phi_*e_2, \phi_*e_1 )
+                    \\&= K_{\phi(p)}
+                    \end{align}
+                    $$
+                    $$\tag*{$\blacksquare$}$$
+                    
+                    <em>Adapted from:<br/>
+                    Tu, Loring W. Differential Geometry. Springer International Publishing, 2017.
+                    </em>
+                </em>
+          </div>
+        </div>
+        <br/>
+        <br/>
+        <p>This was a more mechanical proof, and for good reason; Gauss' Theorema Egregium is an incredibly important theorem that describes the inherent nature of an object's curvature. Indeed, even if we cut a slit at the top of a ball, there is no way that we can force a ball into a flat plane without tearing or stretching the ball in some way. As many sources will tell you, Gauss' Theorema Egregium is the primary reason we cannot have a flat map of the Earth without at least distorting some part of the globe.
+        </p>
+        <p> A final closing example I'll give before I go eat dinner was proposed to me by my masters advisior during my first differential geometry course: consider how you hold a piece of pizza. If you simply support the middle, the front-end of the pizza is bound to droop down (on account of gravity). However, if you fold the pizza like a taco (so that the crust forms a parabola-like shape), then the front-end of the pizza will not droop down (regardless of gravity or other forces)! This is not a physical phenomenon — this is the Theorema Egregium. Like everything else in our reality, a piece of pizza has an intrinsic curvature to it; thus, that pizza cannot curve in both a positive and negative direction (positive along the taco curve, negative along the frontal droop).
+        <br/>
+        <br/>
+        <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/b9434BoGkNQ" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div> <!-- end col-9 -->
+    
+  </div> <!-- end row -->
+</div> <!-- end container -->
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = 'https://christopherdare.com/blogposts/riemanniani.html';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = 'riemanniani'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://christopherdare.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+<!-- webpage footer -->
+<div class="jumbotron vertical-center footer">
+  <h6>All webpages are self-coded using a combination of HTML5, CSS3, Bootstrap4, and JavaScript</h6>
+  <h6>No third-party software is used except to host the domain root directory</h6>
+</div>
+
+<!-- Bootstrap 4.1 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+

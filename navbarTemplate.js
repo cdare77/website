@@ -9,11 +9,12 @@ manifoldsi_active = (document.title == 'Manifolds: Part I' ? "active" : "");
 manifoldsii_active = (document.title == 'Manifolds: Part II' ? "active" : "");
 manifoldsiii_active = (document.title == 'Manifolds: Part III' ? "active" : "");
 maxwellseq_active = (document.title == "Manifolds Application: Maxwell's Equations" ? "active" : "");
+riemanniani_active = (document.title == 'Riemannian Manifolds: Part I' ? "active" : "");
 // Boolean flags for code pages
 aes_active = (document.title == 'AES Rundown' ? "active" : "");
 prince_active = (document.title == 'PRINCE Cipher Rundown' ? "active" : "");
 // Boolean flags for directories
-blog_active = (blogpage_active || manifoldsi_active || manifoldsii_active || manifoldsiii_active || maxwellseq_active ? "active" : "");
+blog_active = (blogpage_active || manifoldsi_active || manifoldsii_active || manifoldsiii_active || maxwellseq_active || riemanniani_active ? "active" : "");
 code_active = (codepage_active || aes_active || prince_active ? "active" : "");
 
 // Dynamic navbar
@@ -37,6 +38,7 @@ navbar = `<!-- Navigation bar -->
           <a class="dropdown-item ` + manifoldsii_active + `" href="https://www.christopherdare.com/blogposts/manifoldpartii.html">Manifolds: Part II</a>
           <a class="dropdown-item ` + manifoldsiii_active + `" href="https://www.christopherdare.com/blogposts/manifoldpartiii.html">Manifolds: Part III</a>
           <a class="dropdown-item ` + maxwellseq_active + `" href="https://www.christopherdare.com/blogposts/maxwellseq.html">Maxwell&#39;s Equations</a>
+          <a class="dropdown-item ` + riemanniani_active + `" href="https://www.christopherdare.com/blogposts/riemanniani.html">Riemannian Manifolds: Part I</a>
         </div>
       </li>
       <!-- Code Dropdown -->
